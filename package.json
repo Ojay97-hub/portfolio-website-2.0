@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://ojay97-hub.github.io/portfolio-website-2.0/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
