@@ -85,14 +85,14 @@ function App() {
           {/* Contact Info Section */}
           <ContactInfo />
           
-          {/* Contact Form Section */}
-          <ContactForm />
-          
           {/* Benefits Section */}
           <Benefits />
           
           {/* Education Section */}
           <Education />
+          
+          {/* Contact Form Section */}
+          <ContactForm />
         </motion.div>
       </main>
       

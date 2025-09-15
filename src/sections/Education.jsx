@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, Trophy, Code, Award, Calendar, Users } from 'lucide-react'
+import * as Icons from 'lucide-react'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
-import { education } from '../data/profile'
+import { education, qualifications } from '../data/profile'
 
 const Education = () => {
   return (
@@ -27,7 +27,7 @@ const Education = () => {
             <Card className="h-full">
               <div className="mb-4 flex items-start gap-4">
                 <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <GraduationCap size={24} className="text-accent" />
+                  <Icons.GraduationCap size={24} className="text-accent" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-text mb-1">
@@ -36,13 +36,13 @@ const Education = () => {
                   <p className="text-accent font-medium mb-2">
                     {edu.institution}
                   </p>
-                  <div className="flex items-center gap-4 text-sm text-muted mb-4">
+                    <div className="flex items-center gap-4 text-sm text-muted mb-4">
                     <div className="flex items-center gap-1">
-                      <Calendar size={14} />
+                      <Icons.Calendar size={14} />
                       <span>{edu.completion}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Award size={14} />
+                      <Icons.Award size={14} />
                       <span>{edu.credentials}</span>
                     </div>
                   </div>
@@ -57,7 +57,7 @@ const Education = () => {
               <div className="space-y-4">
                 <div>
                   <h4 className="text-sm font-medium text-text mb-2 flex items-center gap-2">
-                    <Code size={14} />
+                    <Icons.Code size={14} />
                     {edu.projects}
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -73,6 +73,60 @@ const Education = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Academic Qualifications Subsection */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        viewport={{ once: true }}
+        className="mb-16"
+      >
+        <h3 className="text-2xl font-bold text-text mb-8 text-center">
+          Academic Qualifications
+        </h3>
+        
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {qualifications.map((qualification, index) => {
+            const Icon = Icons[qualification.icon] || Icons.GraduationCap
+            
+            return (
+              <motion.div
+                key={qualification.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Card className="text-center h-full">
+                  <div className="mb-6 flex justify-center">
+                    <div className="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center">
+                      <Icon size={28} className="text-accent" />
+                    </div>
+                  </div>
+                  
+                  <h4 className="text-2xl font-semibold text-text mb-2">
+                    {qualification.title}
+                  </h4>
+                  
+                  <div className="mb-4">
+                    <p className="text-accent font-medium">
+                      {qualification.field}
+                    </p>
+                    <p className="text-muted text-sm">
+                      {qualification.institution} • {qualification.year}
+                    </p>
+                  </div>
+                  
+                  <p className="text-muted text-sm leading-relaxed">
+                    {qualification.description}
+                  </p>
+                </Card>
+              </motion.div>
+            )
+          })}
+        </div>
+      </motion.div>
 
       {/* Achievements & Highlights */}
       <motion.div
@@ -90,7 +144,7 @@ const Education = () => {
           <Card className="text-center">
             <div className="mb-4 flex justify-center">
               <div className="w-14 h-14 bg-accent/20 rounded-2xl flex items-center justify-center">
-                <Trophy size={28} className="text-accent" />
+                <Icons.Trophy size={28} className="text-accent" />
               </div>
             </div>
             <h4 className="text-lg font-semibold text-text mb-2">
@@ -107,7 +161,7 @@ const Education = () => {
           <Card className="text-center">
             <div className="mb-4 flex justify-center">
               <div className="w-14 h-14 bg-accent/20 rounded-2xl flex items-center justify-center">
-                <Code size={28} className="text-accent" />
+                <Icons.Code size={28} className="text-accent" />
               </div>
             </div>
             <h4 className="text-lg font-semibold text-text mb-2">
@@ -124,7 +178,7 @@ const Education = () => {
           <Card className="text-center">
             <div className="mb-4 flex justify-center">
               <div className="w-14 h-14 bg-accent/20 rounded-2xl flex items-center justify-center">
-                <Users size={28} className="text-accent" />
+                <Icons.Users size={28} className="text-accent" />
               </div>
             </div>
             <h4 className="text-lg font-semibold text-text mb-2">

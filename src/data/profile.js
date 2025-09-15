@@ -269,6 +269,25 @@ export const uiDesigns = [
   }
 ]
 
+export const qualifications = [
+  {
+    title: 'BA (Hons) Events Management',
+    institution: 'Leeds Beckett University',
+    field: '1st Class Honours', 
+    year: '2017–2021',
+    description: 'First-class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills.',
+    icon: 'GraduationCap'
+  },
+  {
+    title: 'MSc International Events Management',
+    institution: 'Leeds Beckett University',
+    field: 'Merit',
+    year: '2022–2023',
+    description: 'Advanced postgraduate study in international event management with Merit classification. Specialized in global event planning and cross-cultural project coordination.',
+    icon: 'Award'
+  }
+]
+
 export const featuresList = [
   {
     title: 'Frontend Development',

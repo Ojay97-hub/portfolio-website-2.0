@@ -11,6 +11,8 @@ const FeaturedProjects = () => {
   const featuredProjects = projects.filter(project => project.featured)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   // Auto-play functionality
   useEffect(() => {
@@ -38,6 +40,31 @@ const FeaturedProjects = () => {
     setIsAutoPlaying(false)
   }
 
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e) => {
+    setTouchEnd(0) // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe && featuredProjects.length > 0) {
+      nextProject()
+    }
+    if (isRightSwipe && featuredProjects.length > 0) {
+      prevProject()
+    }
+  }
+
   if (featuredProjects.length === 0) return null
 
   const currentProject = featuredProjects[currentIndex]
@@ -47,11 +74,37 @@ const FeaturedProjects = () => {
       id="featured-projects"
       title="Featured Projects"
       description="Showcase of my most significant development work, demonstrating full-stack capabilities and problem-solving skills."
-      className="bg-surface/30"
+      className="bg-surface/30 relative"
     >
       <div className="relative">
+        {/* Navigation Arrows - Hidden on Mobile, Visible on Desktop */}
+        {featuredProjects.length > 1 && (
+          <>
+            <button
+              onClick={prevProject}
+              className="hidden md:flex absolute left-1 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/90 backdrop-blur-sm border border-border rounded-full items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-50 shadow-lg"
+              aria-label="Previous project"
+            >
+              <ChevronLeft size={30} />
+            </button>
+            
+            <button
+              onClick={nextProject}
+              className="hidden md:flex absolute right-1 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/90 backdrop-blur-sm border border-border rounded-full items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-50 shadow-lg"
+              aria-label="Next project"
+            >
+              <ChevronRight size={30} />
+            </button>
+          </>
+        )}
+        
         {/* Main Carousel */}
-        <div className="relative overflow-hidden rounded-2xl">
+        <div 
+          className="relative overflow-hidden rounded-2xl max-w-5xl mx-auto my-12"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -157,26 +210,6 @@ const FeaturedProjects = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation Arrows */}
-          {featuredProjects.length > 1 && (
-            <>
-              <button
-                onClick={prevProject}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/80 backdrop-blur-sm border border-border rounded-full flex items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-10"
-                aria-label="Previous project"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              
-              <button
-                onClick={nextProject}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/80 backdrop-blur-sm border border-border rounded-full flex items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-10"
-                aria-label="Next project"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </>
-          )}
         </div>
 
         {/* Dots Navigation */}
