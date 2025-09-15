@@ -14,15 +14,13 @@ import Benefits from './sections/Benefits'
 import Education from './sections/Education'
 import Footer from './sections/Footer'
 
-// Development-only theme preview component
-const ThemePreview = () => {
-  // Theme preview removed as requested
-  return null
-}
 
 function App() {
   // Enable smooth scrolling and handle hash navigation
   useEffect(() => {
+    // Note: Removed image preloading to avoid "preload not used" warnings
+    // since all images are lazy loaded and may not be above the fold
+
     // Handle initial hash in URL
     if (window.location.hash) {
       const element = document.getElementById(window.location.hash.slice(1))
@@ -99,26 +97,16 @@ function App() {
       {/* Footer */}
       <Footer />
       
-      {/* Development Theme Preview */}
-      <ThemePreview />
-      
-      {/* Scroll Progress Indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-accent/20 z-50"
-        initial={{ scaleX: 0 }}
-        style={{
-          transformOrigin: '0%'
-        }}
-      >
-        <motion.div
-          className="h-full bg-accent"
+      {/* Scroll Progress Indicator - Simplified for better performance */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-accent/20 z-50">
+        <div
+          className="h-full bg-accent transition-transform duration-100 origin-left"
           style={{
-            scaleX: typeof window !== 'undefined' ? 
-              window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) : 0
+            transform: `scaleX(${typeof window !== 'undefined' ? 
+              Math.min(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight), 1) : 0})`
           }}
-          transition={{ duration: 0.1 }}
         />
-      </motion.div>
+      </div>
     </div>
   )
 }

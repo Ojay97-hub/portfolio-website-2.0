@@ -2,7 +2,8 @@ import { ExternalLink, Github } from 'lucide-react'
 import Card from './Card'
 import Badge from './Badge'
 import Button from './Button'
-import { getImageUrl } from '../lib/imageUtils'
+import LazyImage from './LazyImage'
+import { getResponsiveImageProps } from '../lib/imageUtils'
 
 const ProjectCard = ({ project, className = '' }) => {
   const { title, description, image, technologies, liveUrl, githubUrl, featured, projectType } = project
@@ -12,8 +13,8 @@ const ProjectCard = ({ project, className = '' }) => {
       {/* Project Image */}
       <div className="relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-accent/5">
         {image ? (
-          <img
-            src={getImageUrl(image)}
+          <LazyImage
+            {...getResponsiveImageProps(image, 'project')}
             alt={`${title} preview`}
             className="w-full h-48 object-contain object-center p-2"
           />

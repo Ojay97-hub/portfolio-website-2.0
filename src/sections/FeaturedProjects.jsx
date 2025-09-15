@@ -5,8 +5,9 @@ import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
+import LazyImage from '../components/LazyImage'
 import { projects } from '../data/profile'
-import { getImageUrl } from '../lib/imageUtils'
+import { getResponsiveImageProps } from '../lib/imageUtils'
 
 const FeaturedProjects = () => {
   const featuredProjects = projects.filter(project => project.featured)
@@ -120,10 +121,10 @@ const FeaturedProjects = () => {
                   {/* Project Image */}
                   <div className="relative h-48 sm:h-64 lg:h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
                     {currentProject.image ? (
-                      <img
-                        src={getImageUrl(currentProject.image)}
+                      <LazyImage
+                        {...getResponsiveImageProps(currentProject.image, 'featured')}
                         alt={`${currentProject.title} preview`}
-                        className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full hover:scale-105 transition-transform duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
