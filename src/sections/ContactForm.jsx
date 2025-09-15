@@ -79,6 +79,7 @@ const ContactForm = () => {
         publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key'
       }
 
+
       // Check if EmailJS is properly configured
       if (emailJSConfig.serviceId === 'your_service_id' || 
           emailJSConfig.templateId === 'your_template_id' || 
