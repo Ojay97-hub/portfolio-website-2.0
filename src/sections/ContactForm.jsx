@@ -139,7 +139,9 @@ const ContactForm = () => {
                     label="Full Name"
                     name="name"
                     type="text"
+                    id="full-name"
                     placeholder="Enter your full name"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     error={errors.name}
@@ -151,7 +153,9 @@ const ContactForm = () => {
                     label="Email Address"
                     name="email"
                     type="email"
+                    id="email"
                     placeholder="Enter your email address"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     error={errors.email}
@@ -163,7 +167,9 @@ const ContactForm = () => {
                 <Textarea
                   label="Message"
                   name="message"
+                  id="message"
                   placeholder="Please hire me, I want to get started! Tell me about the role and how I can contribute..."
+                  autoComplete="off"
                   value={formData.message}
                   onChange={handleInputChange}
                   error={errors.message}

@@ -74,7 +74,7 @@ export const projects = [
   {
     title: 'Jungle Peaks Brewing E-Commerce (P5)',
     description: 'Full-stack e-commerce platform for a brewery with user authentication, payment processing using Stripe, and complete admin functionality.',
-    image: '/screenshot-responsive_jps.png',
+    image: '/project-pics/jp-brewing.webp',
     technologies: ['Django', 'Python', 'PostgreSQL', 'Stripe', 'Bootstrap', 'JavaScript'],
     liveUrl: 'https://jungle-peaks-brewing-29d2cf7236c2.herokuapp.com/',
     githubUrl: 'https://github.com/Ojay97-hub/Jungle-Peaks-Brewing-Co',
@@ -84,7 +84,7 @@ export const projects = [
   {
     title: 'Eventory Event Scheduler (P4)',
     description: 'Event scheduling application allowing users to create, manage, and track events with user authentication and CRUD functionality.',
-    image: '/responsive_screenshots_eventory.png',
+    image: '/project-pics/eventory.webp',
     technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
     liveUrl: 'https://eventory-5d4c90f0ec37.herokuapp.com/',
     githubUrl: 'https://github.com/Ojay97-hub/event-scheduler',
@@ -94,7 +94,7 @@ export const projects = [
   {
     title: 'Blackjack Game (P3)',
     description: 'Interactive Blackjack card game built with Python, featuring game logic, scoring system, and user interaction.',
-    image: '/screenshots_blackjack.png',
+    image: '/project-pics/blackjack.webp',
     technologies: ['Python', 'Object-Oriented Programming', 'Game Logic'],
     liveUrl: 'https://black-jack-lvl1-25fdd631e5ae.herokuapp.com/',
     githubUrl: 'https://github.com/Ojay97-hub/black-jack-game',
@@ -104,7 +104,7 @@ export const projects = [
   {
     title: 'Dinosaur Quiz (P2)',
     description: 'Educational quiz application about dinosaurs with interactive questions, scoring, and responsive design.',
-    image: '/responsive-screenshot-dinosaurquiz.jpg',
+    image: '/project-pics/dino-quiz.webp',
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'DOM Manipulation'],
     liveUrl: 'https://ojay97-hub.github.io/Dinosaur-Quiz-/',
     githubUrl: 'https://github.com/Ojay97-hub/Dinosaur-Quiz-',
@@ -114,7 +114,7 @@ export const projects = [
   {
     title: 'The Winchester Pub Website (P1)',
     description: 'Static website for a pub featuring responsive design, accessibility considerations, and modern HTML/CSS techniques.',
-    image: '/website-screenshots-winchester.jpeg',
+    image: '/project-pics/winchester.webp',
     technologies: ['HTML5', 'CSS3', 'Responsive Design', 'Accessibility'],
     liveUrl: 'https://ojay97-hub.github.io/The-Winchester/',
     githubUrl: 'https://github.com/Ojay97-hub/The-Winchester',
@@ -124,7 +124,7 @@ export const projects = [
   {
     title: 'SheCanGitIt Hackathon - Team 4 (3rd Place)',
     description: 'Collaborative project developed during a hackathon, showcasing teamwork and rapid development skills. Achieved 3rd place.',
-    image: '/amiresponsive_shegitsit.png',
+    image: '/project-pics/shegitsit.webp',
     technologies: ['HTML5', 'CSS3', 'JavaScript', 'Team Collaboration'],
     liveUrl: 'https://she-gits-it-8555f0353cc7.herokuapp.com/',
     githubUrl: 'https://github.com/Carlos-n21/Team-4-SheCanGitIt',
