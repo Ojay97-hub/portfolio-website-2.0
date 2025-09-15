@@ -4,6 +4,7 @@ import Section from '../components/Section'
 import Badge from '../components/Badge'
 import Card from '../components/Card'
 import { profile, skills } from '../data/profile'
+import { getImageUrl } from '../lib/imageUtils'
 
 const About = () => {
   const stats = [
@@ -98,7 +99,7 @@ const About = () => {
           <Card className="p-8">
             <div className="aspect-square bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
               <img
-                src="/owen-profile.jpg"
+                src={getImageUrl('/owen-profile.jpg')}
                 alt="Owen Cotter with his dogs"
                 className="w-full h-full object-cover rounded-2xl"
               />

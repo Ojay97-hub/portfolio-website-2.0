@@ -118,7 +118,7 @@ const FeaturedProjects = () => {
               <Card className="p-0 overflow-hidden max-w-4xl mx-auto">
                 <div className="flex flex-col">
                   {/* Project Image */}
-                  <div className="relative h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
+                  <div className="relative h-48 sm:h-64 lg:h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
                     {currentProject.image ? (
                       <img
                         src={getImageUrl(currentProject.image)}
@@ -137,33 +137,33 @@ const FeaturedProjects = () => {
                   </div>
 
                   {/* Project Details */}
-                  <div className="p-6 lg:p-8">
+                  <div className="p-4 sm:p-6 lg:p-8">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <div className="flex justify-between items-start mb-4">
-                        <h3 className="text-2xl lg:text-3xl font-bold text-text">
+                      <div className="flex justify-between items-start mb-3 sm:mb-4">
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-text">
                           {currentProject.title}
                         </h3>
-                        <div className="bg-background/90 backdrop-blur-sm text-text px-3 py-1.5 text-sm font-medium rounded-full shadow-lg border border-border/50 ml-4">
+                        <div className="bg-background/90 backdrop-blur-sm text-text px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-full shadow-lg border border-border/50 ml-2 sm:ml-4">
                           {currentProject.projectType}
                         </div>
                       </div>
                       
-                      <p className="text-base text-muted mb-6 leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted mb-4 sm:mb-6 leading-relaxed">
                         {currentProject.description}
                       </p>
 
                       {/* Technologies */}
-                      <div className="mb-8">
-                        <h4 className="text-sm font-semibold text-text mb-3 uppercase tracking-wide">
+                      <div className="mb-4 sm:mb-6 lg:mb-8">
+                        <h4 className="text-xs sm:text-sm font-semibold text-text mb-2 sm:mb-3 uppercase tracking-wide">
                           Technologies Used
                         </h4>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {currentProject.technologies.map((tech, index) => (
-                            <Badge key={index} variant="default" size="md">
+                            <Badge key={index} variant="default" size="sm">
                               {tech}
                             </Badge>
                           ))}
@@ -171,15 +171,15 @@ const FeaturedProjects = () => {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                         {currentProject.liveUrl && currentProject.liveUrl !== '#' && (
                           <a
                             href={currentProject.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background bg-accent text-background hover:brightness-110 active:brightness-95 px-8 py-4 text-lg rounded-2xl gap-2"
+                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background bg-accent text-background hover:brightness-110 active:brightness-95 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl sm:rounded-2xl gap-2"
                           >
-                            <ExternalLink size={20} />
+                            <ExternalLink size={18} className="sm:w-5 sm:h-5" />
                             View Live Site
                           </a>
                         )}
@@ -189,9 +189,9 @@ const FeaturedProjects = () => {
                             href={currentProject.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background border border-border text-text hover:bg-surface active:bg-primary/20 px-8 py-4 text-lg rounded-2xl gap-2"
+                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background border border-border text-text hover:bg-surface active:bg-primary/20 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl sm:rounded-2xl gap-2"
                           >
-                            <Github size={20} />
+                            <Github size={18} className="sm:w-5 sm:h-5" />
                             View Code
                           </a>
                         )}
