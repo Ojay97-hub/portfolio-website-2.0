@@ -1,2 +1,9 @@
 node_modules
 .env
+
+# Original unoptimized images
+*-original.webp
+
+# Optimization scripts
+scripts/optimize-images.js
+scripts/get-dimensions.js

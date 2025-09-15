@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
+import { Code, Server, Palette, ShoppingCart } from 'lucide-react'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import { featuresList } from '../data/profile'
+
+const iconMap = {
+  Code,
+  Server,
+  Palette,
+  ShoppingCart
+}
 
 const WorkTypes = () => {
   return (
@@ -14,7 +21,7 @@ const WorkTypes = () => {
     >
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {featuresList.map((feature, index) => {
-          const Icon = Icons[feature.icon] || Icons.Circle
+          const Icon = iconMap[feature.icon] || Code
           
           return (
             <motion.div
