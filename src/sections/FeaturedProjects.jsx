@@ -6,6 +6,7 @@ import Card from '../components/Card'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
 import { projects } from '../data/profile'
+import { getImageUrl } from '../lib/imageUtils'
 
 const FeaturedProjects = () => {
   const featuredProjects = projects.filter(project => project.featured)
@@ -120,7 +121,7 @@ const FeaturedProjects = () => {
                   <div className="relative h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
                     {currentProject.image ? (
                       <img
-                        src={currentProject.image}
+                        src={getImageUrl(currentProject.image)}
                         alt={`${currentProject.title} preview`}
                         className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                       />
