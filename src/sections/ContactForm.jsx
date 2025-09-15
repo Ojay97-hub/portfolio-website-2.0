@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Loader2 } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Input from '../components/Input'
@@ -71,57 +72,43 @@ const ContactForm = () => {
     setIsSubmitting(true)
 
     try {
-      // Simulate API call - replace with actual implementation
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // EmailJS configuration - you'll need to replace these with your actual values
+      const emailJSConfig = {
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'your_service_id',
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'your_template_id',
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key'
+      }
+
+      // Check if EmailJS is properly configured
+      if (emailJSConfig.serviceId === 'your_service_id' || 
+          emailJSConfig.templateId === 'your_template_id' || 
+          emailJSConfig.publicKey === 'your_public_key') {
+        throw new Error('EmailJS not configured. Please set up your environment variables.')
+      }
       
-      // Simulate random success/failure for demo purposes
-      const isSuccess = Math.random() > 0.3 // 70% success rate
+      await emailjs.send(
+        emailJSConfig.serviceId,
+        emailJSConfig.templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_name: 'Owen Cotter', // Your name
+          reply_to: formData.email
+        },
+        emailJSConfig.publicKey
+      )
+
+      showToast('Message sent successfully! I\'ll get back to you soon.', 'success')
+      setFormData({ name: '', email: '', message: '' })
       
-      if (isSuccess) {
-        showToast('Message sent successfully! I\'ll get back to you soon.', 'success')
-        setFormData({ name: '', email: '', message: '' })
-        
-        // Uncomment and implement actual form submission:
-        /*
-        // EmailJS implementation example:
-        const emailJSConfig = {
-          serviceId: 'your_service_id',
-          templateId: 'your_template_id', 
-          publicKey: 'your_public_key'
-        }
-        
-        await emailjs.send(
-          emailJSConfig.serviceId,
-          emailJSConfig.templateId,
-          {
-            from_name: formData.name,
-            from_email: formData.email,
-            message: formData.message
-          },
-          emailJSConfig.publicKey
-        )
-        */
-        
-        /*
-        // Netlify Forms implementation example:
-        const netlifyFormData = new FormData()
-        netlifyFormData.append('form-name', 'contact')
-        netlifyFormData.append('name', formData.name)
-        netlifyFormData.append('email', formData.email)
-        netlifyFormData.append('message', formData.message)
-        
-        await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(netlifyFormData)
-        })
-        */
+    } catch (error) {
+      console.error('Form submission error:', error)
+      if (error.message.includes('EmailJS not configured')) {
+        showToast('Contact form is not yet configured. Please email me directly.', 'error')
       } else {
         showToast('Failed to send message. Please try again later.', 'error')
       }
-    } catch (error) {
-      console.error('Form submission error:', error)
-      showToast('Failed to send message. Please try again later.', 'error')
     } finally {
       setIsSubmitting(false)
     }
@@ -145,9 +132,6 @@ const ContactForm = () => {
         >
           <Card>
             <form onSubmit={handleSubmit} noValidate>
-              {/* Netlify Forms hidden input - uncomment when using Netlify */}
-              {/* <input type="hidden" name="form-name" value="contact" /> */}
-              
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <Input
