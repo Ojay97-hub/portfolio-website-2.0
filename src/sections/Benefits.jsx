@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Eye, BookOpen, Building, Code, Palette, Users } from 'lucide-react'
+import { Eye, BookOpen, Building, Code, Palette, Users, ArrowRight } from 'lucide-react'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Button from '../components/Button'
@@ -87,7 +87,7 @@ const Benefits = () => {
               className="group"
             >
               Let's Connect
-              <Icons.ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
           
