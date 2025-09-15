@@ -23,14 +23,30 @@ export const skills = [
   'Bootstrap',
   'PostgreSQL',
   'Stripe',
-  'UI/UX',
+  'UI Design',
   'Figma',
   'Accessibility',
   'Responsive Design',
   'Agile',
+  'Kanban',
+  'Sprint Iterations',
+  'MVP',
+  'User Stories',
   'React',
   'TailwindCSS',
   'Git',
+  'SEO',
+  'Semantic HTML',
+  'Heroku Deployment',
+  'AWS S3',
+  'Components & Variants',
+  'Typography',
+  'Color Theory',
+  'Interactivity',
+  'Layout Design',
+  'Branding & Personality',
+  'Design Systems',
+  'Wireframing'
 ]
 
 export const services = [
@@ -47,10 +63,10 @@ export const services = [
     certificate: 'Code Institute Full Stack Software Development'
   },
   {
-    title: 'UI/UX Design',
-    description: 'User-centered design principles with modern design tools and methodologies.',
-    skills: ['Figma Design', 'User Research', 'Wireframing', 'Prototyping'],
-    certificate: 'UI/UX Design Certification'
+    title: 'UI Design',
+    description: 'User interface design principles with modern design tools and methodologies.',
+    skills: ['Figma Design', 'Visual Design', 'Wireframing', 'Layout Design'],
+    certificate: 'UI Design Certification'
   }
 ]
 
@@ -121,14 +137,14 @@ export const education = [
   {
     title: 'Full Stack Software Development',
     institution: 'Code Institute',
-    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 6 portfolio projects demonstrating full-stack development skills.',
+    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 5 portfolio projects demonstrating full-stack development skills.',
     completion: '2025',
     credentials: 'Diploma',
-    projects: '6 Portfolio Projects',
+    projects: '5 Portfolio Projects',
     skills: ['HTML5/CSS3', 'JavaScript', 'Python', 'Django', 'PostgreSQL', 'Git/GitHub']
   },
   {
-    title: 'UI/UX Design Certification',
+    title: 'UI Design Certification',
     institution: 'Professional Design Institute',
     description: 'User-centered design principles, wireframing, prototyping, and design systems. Created a comprehensive banking application with 9 responsive screens across mobile, tablet, and desktop platforms.',
     completion: '2025',
@@ -174,12 +190,12 @@ export const benefits = [
   },
   {
     title: 'Project Experience',
-    description: 'Hands-on experience from 6 diverse projects, including e-commerce platforms and interactive applications.',
+    description: 'Hands-on experience from 5 diverse projects, including e-commerce platforms and interactive applications.',
     icon: 'Code'
   },
   {
     title: 'Design-Minded',
-    description: 'Combined technical skills with UI/UX design knowledge for well-rounded development approach.',
+    description: 'Combined technical skills with UI design knowledge for well-rounded development approach.',
     icon: 'Palette'
   },
   {
@@ -275,7 +291,7 @@ export const qualifications = [
     institution: 'Leeds Beckett University',
     field: '1st Class Honours', 
     year: '2017–2021',
-    description: 'First-class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills.',
+    description: 'First-class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills. My dissertation focused on drug-related deaths and harm-reduction strategies for nightlife & festivals.',
     icon: 'GraduationCap'
   },
   {
@@ -283,7 +299,7 @@ export const qualifications = [
     institution: 'Leeds Beckett University',
     field: 'Merit',
     year: '2022–2023',
-    description: 'Advanced postgraduate study in international event management with Merit classification. Specialized in global event planning and cross-cultural project coordination.',
+    description: 'Advanced postgraduate study in international event management with Merit classification. Specialized in experiential marketing and brand event transfer, further understanding the importance of brand and personality fit.',
     icon: 'Award'
   }
 ]
@@ -300,7 +316,7 @@ export const featuresList = [
     icon: 'Server'
   },
   {
-    title: 'UI/UX Design',
+    title: 'UI Design',
     description: 'User-centered design process from research to high-fidelity prototypes.',
     icon: 'Palette'
   },

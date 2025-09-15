@@ -114,15 +114,15 @@ const FeaturedProjects = () => {
               transition={{ duration: 0.5, ease: "easeInOut" }}
               className="w-full"
             >
-              <Card className="p-0 overflow-hidden max-w-5xl mx-auto">
-                <div className="grid lg:grid-cols-2 gap-0 min-h-[400px]">
+              <Card className="p-0 overflow-hidden max-w-4xl mx-auto">
+                <div className="flex flex-col">
                   {/* Project Image */}
-                  <div className="relative h-80 lg:h-[400px] bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden">
+                  <div className="relative h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
                     {currentProject.image ? (
                       <img
                         src={currentProject.image}
                         alt={`${currentProject.title} preview`}
-                        className="w-full h-full object-contain object-center scale-110 hover:scale-115 transition-transform duration-700 p-2"
+                        className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -133,33 +133,25 @@ const FeaturedProjects = () => {
                       </div>
                     )}
                     
-                    {/* Featured Badge */}
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-accent text-background px-3 py-1.5 text-sm font-medium rounded-full shadow-lg">
-                        Featured
-                      </div>
-                    </div>
-
-                    {/* Project Type Badge */}
-                    <div className="absolute top-4 left-4">
-                      <div className="bg-background/90 backdrop-blur-sm text-text px-3 py-1.5 text-sm font-medium rounded-full shadow-lg border border-border/50">
-                        {currentProject.projectType}
-                      </div>
-                    </div>
                   </div>
 
                   {/* Project Details */}
-                  <div className="p-6 lg:p-8 flex flex-col justify-center">
+                  <div className="p-6 lg:p-8">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <h3 className="text-3xl lg:text-4xl font-bold text-text mb-4">
-                        {currentProject.title}
-                      </h3>
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-2xl lg:text-3xl font-bold text-text">
+                          {currentProject.title}
+                        </h3>
+                        <div className="bg-background/90 backdrop-blur-sm text-text px-3 py-1.5 text-sm font-medium rounded-full shadow-lg border border-border/50 ml-4">
+                          {currentProject.projectType}
+                        </div>
+                      </div>
                       
-                      <p className="text-lg text-muted mb-6 leading-relaxed">
+                      <p className="text-base text-muted mb-6 leading-relaxed">
                         {currentProject.description}
                       </p>
 

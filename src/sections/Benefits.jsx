@@ -2,7 +2,9 @@ import { motion } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import Section from '../components/Section'
 import Card from '../components/Card'
+import Button from '../components/Button'
 import { benefits } from '../data/profile'
+import { scrollToSection } from '../lib/utils'
 
 const Benefits = () => {
   return (
@@ -61,6 +63,25 @@ const Benefits = () => {
             Let's discuss how I can contribute to your team's success while growing my skills 
             in a professional environment.
           </p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="mb-8"
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => scrollToSection('contact-form')}
+              className="group"
+            >
+              Let's Connect
+              <Icons.ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
+          
           <div className="flex flex-wrap justify-center gap-8 text-sm text-muted">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full"></div>

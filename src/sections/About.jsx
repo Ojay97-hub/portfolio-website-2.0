@@ -7,7 +7,7 @@ import { profile, skills } from '../data/profile'
 
 const About = () => {
   const stats = [
-    { icon: Code, label: 'Projects Built', value: '6' },
+    { icon: Code, label: 'Projects Built', value: '5' },
     { icon: Coffee, label: 'Learning Hours', value: '500+' },
     { icon: User, label: 'Hackathon Place', value: '3rd' },
   ]
@@ -37,7 +37,7 @@ const About = () => {
               <p>
                 I'm a recent Code Institute graduate and passionate junior developer seeking my first role in the tech industry. 
                 Through my comprehensive bootcamp training, I've built a strong foundation in modern web technologies 
-                and gained hands-on experience with 6 diverse portfolio projects.
+                and gained hands-on experience with 5 diverse portfolio projects.
               </p>
               
               <p>
@@ -47,7 +47,7 @@ const About = () => {
               </p>
               
               <p>
-                Combined with my UI/UX design certification, I bring both technical skills and design sensibility 
+                Combined with my UI design certification, I bring both technical skills and design sensibility 
                 to create well-rounded web solutions. I'm eager to contribute to a team and continue learning 
                 in a professional development environment.
               </p>

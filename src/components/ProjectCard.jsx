@@ -4,26 +4,21 @@ import Badge from './Badge'
 import Button from './Button'
 
 const ProjectCard = ({ project, className = '' }) => {
-  const { title, description, image, technologies, liveUrl, githubUrl, featured } = project
+  const { title, description, image, technologies, liveUrl, githubUrl, featured, projectType } = project
 
   return (
     <Card className={`h-full flex flex-col ${className}`}>
       {/* Project Image */}
-      <div className="relative mb-4 overflow-hidden rounded-xl bg-primary/20">
+      <div className="relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-accent/5">
         {image ? (
           <img
             src={image}
             alt={`${title} preview`}
-            className="w-full h-48 object-cover"
+            className="w-full h-48 object-contain object-center p-2"
           />
         ) : (
           <div className="w-full h-48 flex items-center justify-center bg-gradient-to-br from-primary to-surface">
             <p className="text-muted text-sm">Project Preview</p>
-          </div>
-        )}
-        {featured && (
-          <div className="absolute top-3 right-3">
-            <Badge variant="accent" size="sm">Featured</Badge>
           </div>
         )}
       </div>
@@ -31,7 +26,7 @@ const ProjectCard = ({ project, className = '' }) => {
       {/* Project Info */}
       <div className="flex-1 flex flex-col">
         <h3 className="text-xl font-semibold text-text mb-2">{title}</h3>
-        <p className="text-muted text-sm mb-4 flex-1">{description}</p>
+        <p className="text-muted text-sm mb-4 flex-1 leading-relaxed">{description}</p>
 
         {/* Technologies */}
         <div className="flex flex-wrap gap-2 mb-4">
@@ -43,7 +38,7 @@ const ProjectCard = ({ project, className = '' }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 mb-4">
           {liveUrl && liveUrl !== '#' && (
             <Button
               variant="primary"
@@ -53,7 +48,7 @@ const ProjectCard = ({ project, className = '' }) => {
               aria-label={`View ${title} live demo`}
             >
               <ExternalLink size={16} className="mr-2" />
-              Live Demo
+              View Live Site
             </Button>
           )}
           {githubUrl && githubUrl !== '#' && (
@@ -65,8 +60,22 @@ const ProjectCard = ({ project, className = '' }) => {
               aria-label={`View ${title} source code`}
             >
               <Github size={16} className="mr-2" />
-              Code
+              View Code
             </Button>
+          )}
+        </div>
+
+        {/* Project Badges - Bottom */}
+        <div className="flex justify-between items-center">
+          {projectType && (
+            <Badge variant="outline" size="sm">
+              {projectType}
+            </Badge>
+          )}
+          {featured && (
+            <Badge variant="accent" size="sm">
+              Featured
+            </Badge>
           )}
         </div>
       </div>
