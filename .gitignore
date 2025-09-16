@@ -1,5 +1,8 @@
 node_modules
+
+# Environment variables
 .env
+
 
 # Original unoptimized images
 *-original.webp
