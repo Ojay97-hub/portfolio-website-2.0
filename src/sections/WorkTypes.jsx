@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code, Server, Palette, ShoppingCart } from 'lucide-react'
+import { Code, Server, Palette, ShoppingCart } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import { featuresList } from '../data/profile'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, Tablet, Smartphone, Monitor } from 'lucide-react'
+import { ExternalLink, Tablet, Smartphone, Monitor } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'

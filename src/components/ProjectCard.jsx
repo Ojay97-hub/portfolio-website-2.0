@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from 'lucide-react'
+import { ExternalLink, Github } from '../lib/icons'
 import Card from './Card'
 import Badge from './Badge'
 import Button from './Button'

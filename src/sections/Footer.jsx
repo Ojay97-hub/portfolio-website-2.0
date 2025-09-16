@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Heart, Mail, Linkedin, Github, ArrowUp } from 'lucide-react'
+import { Heart, Mail, Linkedin, Github, ArrowUp } from '../lib/icons'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
 

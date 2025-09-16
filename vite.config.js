@@ -9,30 +9,73 @@ export default defineConfig({
     // Optimize bundle splitting
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Separate vendor chunks
-          vendor: ['react', 'react-dom'],
-          motion: ['framer-motion'],
-          icons: ['lucide-react']
-        }
+        // Better chunk splitting strategy
+        manualChunks: (id) => {
+          // Split vendor chunks by package
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor'
+            }
+            if (id.includes('framer-motion')) {
+              return 'motion'
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons'
+            }
+            if (id.includes('@emailjs')) {
+              return 'emailjs'
+            }
+            // Other vendor modules
+            return 'vendor'
+          }
+        },
+        // Optimize chunk names
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
-    // Enable minification
+    // Enable minification with better settings
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Remove console.log in production
-        drop_debugger: true
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+        passes: 2
+      },
+      format: {
+        comments: false,
+      },
+      mangle: {
+        safari10: true
       }
     },
+    // Better tree shaking
+    treeshake: {
+      preset: 'recommended',
+      moduleSideEffects: false
+    },
+    // Optimize CSS
+    cssCodeSplit: true,
+    cssMinify: true,
+    // Report compressed size
+    reportCompressedSize: false,
     // Optimize chunk size warnings
-    chunkSizeWarningLimit: 1000,
-    // Enable source maps for production debugging (optional)
+    chunkSizeWarningLimit: 500,
+    // Disable source maps for better performance
     sourcemap: false
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'framer-motion'],
+    exclude: ['@emailjs/browser']
   },
   // Optimize dev server
   server: {
-    // Enable compression
-    compress: true
+    compress: true,
+    hmr: {
+      overlay: false
+    }
   }
 })

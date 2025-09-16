@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X } from '../lib/icons'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../components/Button'
 import { scrollToSection } from '../lib/utils'

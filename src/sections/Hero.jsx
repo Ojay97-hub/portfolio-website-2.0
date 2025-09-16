@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowDown, Download, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowDown, Download, Github, Linkedin, Mail } from '../lib/icons'
 import Button from '../components/Button'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'

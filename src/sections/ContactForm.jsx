@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Loader2 } from 'lucide-react'
+import { Send, Loader2 } from '../lib/icons'
 import emailjs from '@emailjs/browser'
 import Section from '../components/Section'
 import Card from '../components/Card'

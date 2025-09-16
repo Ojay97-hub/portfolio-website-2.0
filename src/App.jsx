@@ -1,18 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
+
+// Critical components loaded immediately
 import Navbar from './sections/Navbar'
 import Hero from './sections/Hero'
-import About from './sections/About'
-import WorkTypes from './sections/WorkTypes'
-import Services from './sections/Services'
-import FeaturedProjects from './sections/FeaturedProjects'
-import UIDesigns from './sections/UIDesigns'
-import CTA from './sections/CTA'
-import ContactInfo from './sections/ContactInfo'
-import ContactForm from './sections/ContactForm'
-import Benefits from './sections/Benefits'
-import Education from './sections/Education'
-import Footer from './sections/Footer'
+
+// Lazy load non-critical sections for better performance
+const About = lazy(() => import('./sections/About'))
+const WorkTypes = lazy(() => import('./sections/WorkTypes'))
+const Services = lazy(() => import('./sections/Services'))
+const FeaturedProjects = lazy(() => import('./sections/FeaturedProjects'))
+const UIDesigns = lazy(() => import('./sections/UIDesigns'))
+const CTA = lazy(() => import('./sections/CTA'))
+const ContactInfo = lazy(() => import('./sections/ContactInfo'))
+const ContactForm = lazy(() => import('./sections/ContactForm'))
+const Benefits = lazy(() => import('./sections/Benefits'))
+const Education = lazy(() => import('./sections/Education'))
+const Footer = lazy(() => import('./sections/Footer'))
 
 
 function App() {
@@ -59,54 +63,54 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Hero Section */}
+          {/* Hero Section - Always loaded immediately */}
           <Hero />
           
-          {/* About Section */}
-          <About />
-          
-          {/* Work Types Section */}
-          <WorkTypes />
-          
-          {/* Services Section */}
-          <Services />
-          
-          {/* Featured Projects Section */}
-          <FeaturedProjects />
-          
-          {/* UI Design Showcase Section */}
-          <UIDesigns />
-          
-          {/* CTA Section */}
-          <CTA />
-          
-          {/* Contact Info Section */}
-          <ContactInfo />
-          
-          {/* Benefits Section */}
-          <Benefits />
-          
-          {/* Education Section */}
-          <Education />
-          
-          {/* Contact Form Section */}
-          <ContactForm />
+          {/* Lazy-loaded sections with fallback */}
+          <Suspense fallback={
+            <div className="min-h-[200px] flex items-center justify-center">
+              <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+            </div>
+          }>
+            {/* About Section */}
+            <About />
+            
+            {/* Work Types Section */}
+            <WorkTypes />
+            
+            {/* Services Section */}
+            <Services />
+            
+            {/* Featured Projects Section */}
+            <FeaturedProjects />
+            
+            {/* UI Design Showcase Section */}
+            <UIDesigns />
+            
+            {/* CTA Section */}
+            <CTA />
+            
+            {/* Contact Info Section */}
+            <ContactInfo />
+            
+            {/* Benefits Section */}
+            <Benefits />
+            
+            {/* Education Section */}
+            <Education />
+            
+            {/* Contact Form Section */}
+            <ContactForm />
+          </Suspense>
         </motion.div>
       </main>
       
       {/* Footer */}
-      <Footer />
+      <Suspense fallback={<div className="h-20" />}>
+        <Footer />
+      </Suspense>
       
-      {/* Scroll Progress Indicator - Simplified for better performance */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-accent/20 z-50">
-        <div
-          className="h-full bg-accent transition-transform duration-100 origin-left"
-          style={{
-            transform: `scaleX(${typeof window !== 'undefined' ? 
-              Math.min(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight), 1) : 0})`
-          }}
-        />
-      </div>
+      {/* Removed scroll progress indicator to improve performance */}
     </div>
   )
 }

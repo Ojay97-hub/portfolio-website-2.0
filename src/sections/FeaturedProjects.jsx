@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ExternalLink, Github } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'

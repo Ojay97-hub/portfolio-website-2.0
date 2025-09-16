@@ -1,4 +1,4 @@
-import { Star, Quote } from 'lucide-react'
+import { Star, Quote } from '../lib/icons'
 import Card from './Card'
 
 const TestimonialCard = ({ testimonial, className = '' }) => {

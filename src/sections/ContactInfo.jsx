@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Linkedin, Github, ExternalLink } from 'lucide-react'
+import { Mail, MapPin, Linkedin, Github, ExternalLink } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import { profile } from '../data/profile'

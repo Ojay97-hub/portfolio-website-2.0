@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Eye, BookOpen, Building, Code, Palette, Users, ArrowRight } from 'lucide-react'
+import { Eye, BookOpen, Building, Code, Palette, Users, ArrowRight } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Button from '../components/Button'

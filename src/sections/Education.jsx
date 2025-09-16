@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
+import Icons from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'

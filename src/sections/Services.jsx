@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { Check } from '../lib/icons'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Button from '../components/Button'

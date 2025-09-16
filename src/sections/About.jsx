@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { User, MapPin, Coffee, Code } from 'lucide-react'
+import { User, MapPin, Coffee, Code } from '../lib/icons'
 import Section from '../components/Section'
 import Badge from '../components/Badge'
 import Card from '../components/Card'

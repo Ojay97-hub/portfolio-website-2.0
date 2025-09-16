@@ -1,4 +1,4 @@
-import * as Icons from 'lucide-react'
+import Icons from '../lib/icons'
 
 const IconBadge = ({ 
   icon, 

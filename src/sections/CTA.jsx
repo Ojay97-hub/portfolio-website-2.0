@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from '../lib/icons'
 import Section from '../components/Section'
 import Button from '../components/Button'
 import { scrollToSection } from '../lib/utils'
