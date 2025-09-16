@@ -1,10 +1,19 @@
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
+import { Eye, BookOpen, Building, Code, Palette, Users, ArrowRight } from 'lucide-react'
 import Section from '../components/Section'
 import Card from '../components/Card'
 import Button from '../components/Button'
 import { benefits } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
+
+const iconMap = {
+  Eye,
+  BookOpen,
+  Building,
+  Code,
+  Palette,
+  Users
+}
 
 const Benefits = () => {
   return (
@@ -16,7 +25,7 @@ const Benefits = () => {
     >
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {benefits.map((benefit, index) => {
-          const Icon = Icons[benefit.icon] || Icons.Circle
+          const Icon = iconMap[benefit.icon] || Code
           
           return (
             <motion.div
@@ -78,7 +87,7 @@ const Benefits = () => {
               className="group"
             >
               Let's Connect
-              <Icons.ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
           

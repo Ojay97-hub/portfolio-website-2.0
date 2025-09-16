@@ -1,3 +1,14 @@
+// Image dimensions data for responsive images
+const IMAGE_DIMENSIONS = {
+  '/owen-profile.webp': { width: 400, height: 530 },
+  '/project-pics/blackjack.webp': { width: 800, height: 450 },
+  '/project-pics/dino-quiz.webp': { width: 800, height: 436 },
+  '/project-pics/eventory.webp': { width: 800, height: 433 },
+  '/project-pics/jp-brewing.webp': { width: 800, height: 390 },
+  '/project-pics/shegitsit.webp': { width: 800, height: 290 },
+  '/project-pics/winchester.webp': { width: 800, height: 435 }
+}
+
 export const getImageUrl = (path) => {
   // Get the base URL from Vite's import.meta.env
   const base = import.meta.env.BASE_URL;
@@ -49,12 +60,16 @@ export const generateSizes = (usage = 'default') => {
   return sizeMap[usage] || sizeMap.default;
 };
 
-// Helper to get responsive image props
+// Helper to get responsive image props with dimensions
 export const getResponsiveImageProps = (imagePath, usage = 'default') => {
+  const dimensions = IMAGE_DIMENSIONS[imagePath] || { width: 800, height: 600 }
+  
   return {
     src: getImageUrl(imagePath),
     srcSet: generateSrcSet(imagePath),
-    sizes: generateSizes(usage)
+    sizes: generateSizes(usage),
+    width: dimensions.width,
+    height: dimensions.height
   };
 };
 
