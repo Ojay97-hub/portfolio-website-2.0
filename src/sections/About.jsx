@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion'
-import { User, MapPin, Coffee, Code } from '../lib/icons'
+import { User, MapPin, Coffee, Code, BookOpen } from '../lib/icons'
 import Section from '../components/Section'
 import Badge from '../components/Badge'
 import Card from '../components/Card'
 import LazyImage from '../components/LazyImage'
 import { profile, skills } from '../data/profile'
 import { getResponsiveImageProps } from '../lib/imageUtils'
+import Button from '../components/Button'
 
 const About = () => {
   const stats = [
@@ -13,6 +14,8 @@ const About = () => {
     { icon: Coffee, label: 'Learning Hours', value: '500+' },
     { icon: User, label: 'Hackathon Place', value: '3rd' },
   ]
+
+  const journeyUrl = `${import.meta.env.BASE_URL}journey.html`
 
   return (
     <Section
@@ -55,6 +58,34 @@ const About = () => {
               </p>
             </div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="p-6 bg-surface/60 border border-border rounded-2xl shadow-lg shadow-background/30"
+          >
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                <BookOpen size={20} className="text-accent" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-text">Explore the Journey Blog</h3>
+                <p className="text-sm text-muted">
+                  Dive deeper into how events management, world travel, and Code Institute shaped my path into remote-friendly software development.
+                </p>
+              </div>
+            </div>
+            <Button
+              size="sm"
+              onClick={() => {
+                window.location.href = journeyUrl
+              }}
+            >
+              Read the full story
+            </Button>
+          </motion.div>
 
           {/* Location */}
           <div className="flex items-center gap-2 text-muted">
