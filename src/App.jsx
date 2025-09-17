@@ -7,7 +7,6 @@ import Hero from './sections/Hero'
 
 // Lazy load non-critical sections for better performance
 const About = lazy(() => import('./sections/About'))
-const JourneyBlog = lazy(() => import('./sections/JourneyBlog'))
 const WorkTypes = lazy(() => import('./sections/WorkTypes'))
 const Services = lazy(() => import('./sections/Services'))
 const FeaturedProjects = lazy(() => import('./sections/FeaturedProjects'))
@@ -75,9 +74,6 @@ function App() {
           }>
             {/* About Section */}
             <About />
-
-            {/* Journey Blog Section */}
-            <JourneyBlog />
 
             {/* Work Types Section */}
             <WorkTypes />
