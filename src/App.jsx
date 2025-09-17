@@ -74,7 +74,7 @@ function App() {
           }>
             {/* About Section */}
             <About />
-            
+
             {/* Work Types Section */}
             <WorkTypes />
             
