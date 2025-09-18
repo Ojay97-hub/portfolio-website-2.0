@@ -1,7 +1,7 @@
 {
   "name": "owen-cotter-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "homepage": "https://ojay97-hub.github.io/portfolio-website-2.0/",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "vite build",
     "build:analyze": "vite build --mode analyze",
     "start": "serve -s dist -l $PORT",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "clean": "rm -rf dist node_modules/.cache"

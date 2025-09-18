@@ -68,7 +68,7 @@ const Navbar = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="hidden md:flex items-center space-x-8"
             >
-              {navItems.map((item, index) => {
+              {navItems.map((item, _index) => {
                 const sectionId = item.href.slice(1)
                 const isActive = activeSection === sectionId
                 

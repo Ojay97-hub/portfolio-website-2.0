@@ -3,21 +3,38 @@
   "short_name": "Owen Cotter",
   "description": "Junior Full-Stack Developer & UI Designer portfolio showcasing web development projects and UI designs",
   "start_url": "/portfolio-website-2.0/",
+  "scope": "/portfolio-website-2.0/",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#8ab4f8",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "dir": "ltr",
   "icons": [
     {
-      "src": "/vite.svg",
+      "src": "/portfolio-website-2.0/icons/icon-192x192.svg",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "/vite.svg",
+      "src": "/portfolio-website-2.0/icons/icon-512x512.svg",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
-  "categories": ["portfolio", "developer", "design"]
+  "categories": ["portfolio", "developer", "design"],
+  "screenshots": [
+    {
+      "src": "/portfolio-website-2.0/owen-profile.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
 }

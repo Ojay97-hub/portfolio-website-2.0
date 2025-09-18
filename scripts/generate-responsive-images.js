@@ -13,17 +13,17 @@
  */
 
 import fs from 'fs';
-import path from 'path';
+import _path from 'path';
 
 // Image sizes to generate
-const SIZES = [400, 800, 1200, 1600];
+const _SIZES = [400, 800, 1200, 1600];
 
 // Source images directory
-const SOURCE_DIR = './public';
+const _SOURCE_DIR = './public';
 const OUTPUT_DIR = './public/optimized';
 
 // Image extensions to process
-const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
+const _IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
 
 console.log('📸 Responsive Image Generator');
 console.log('================================');

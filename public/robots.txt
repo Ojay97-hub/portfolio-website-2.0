@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ojay97-hub.github.io/portfolio-website-2.0/sitemap.xml
+
+# Disallow crawling of admin areas (if any)
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/

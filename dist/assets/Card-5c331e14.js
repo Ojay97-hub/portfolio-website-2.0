@@ -1,0 +1,1 @@
+import{j as r}from"./react-vendor-d21d389f.js";const e=({children:e,className:o="",hover:s=!0,...a})=>{const d=s?"card-hover":"";return r.jsx("div",{className:`bg-surface border border-border rounded-2xl p-6 shadow-soft transition ${d} ${o}`,...a,children:e})};export{e as C};

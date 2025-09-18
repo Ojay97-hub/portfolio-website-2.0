@@ -5,13 +5,15 @@ import './index.css'
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('SW registered:', registration)
-      })
-      .catch(error => {
-        console.log('SW registration failed:', error)
-      })
+      navigator.serviceWorker.register('/portfolio-website-2.0/sw.js')
+        .then(registration => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('SW registered:', registration)
+          }
+        })
+        .catch(error => {
+          console.error('SW registration failed:', error)
+        })
   })
 }
 

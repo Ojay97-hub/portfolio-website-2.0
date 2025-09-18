@@ -148,7 +148,9 @@ const UIDesigns = () => {
                     className="w-full"
                     onClick={() => {
                       // This would open a larger view or external link to the design
-                      console.log(`View ${design.title} design`)
+                      if (process.env.NODE_ENV === 'development') {
+                        console.log(`View ${design.title} design`)
+                      }
                     }}
                     aria-label={`View ${design.title} design`}
                   >

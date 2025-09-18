@@ -1,7 +1,7 @@
 // Service Worker for Owen Cotter Portfolio
 // Version 1.0.0
 
-const CACHE_NAME = 'portfolio-v1'
+const CACHE_NAME = 'portfolio-v1.0.0'
 const urlsToCache = [
   '/',
   '/index.html',

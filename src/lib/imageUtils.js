@@ -19,7 +19,7 @@ export const getImageUrl = (path) => {
 };
 
 // Generate responsive image sources
-export const getResponsiveImageUrl = (path, width) => {
+export const getResponsiveImageUrl = (path, _width) => {
   const baseUrl = getImageUrl(path);
   // For now, return the base URL. In production, you could implement
   // server-side image resizing or use a CDN like Cloudinary
