@@ -84,7 +84,10 @@ const ContactForm = () => {
       if (emailJSConfig.serviceId === 'your_service_id' || 
           emailJSConfig.templateId === 'your_template_id' || 
           emailJSConfig.publicKey === 'your_public_key') {
-        throw new Error('EmailJS not configured. Please set up your environment variables.')
+        // For now, just show a success message instead of throwing an error
+        showToast('Form submitted successfully! (EmailJS not configured - this is just a demo)', 'success')
+        setFormData({ name: '', email: '', message: '' })
+        return
       }
       
       await emailjs.send(
