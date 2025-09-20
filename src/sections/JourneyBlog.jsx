@@ -370,14 +370,13 @@ const JourneyBlog = () => {
                     
                     {/* Mobile Card */}
                     <motion.div
-                      className="flex-1 cursor-pointer"
+                      className="flex-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 active:outline-none active:ring-0"
                       onClick={() => handleCardClick(index)}
-                      whileTap={{ scale: 0.98 }}
                     >
                       {/* Collapsed View */}
                       <div className={`transition-all duration-300 ${isActive ? 'mb-4' : ''}`}>
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                             <Icon size={14} className="text-accent" />
                           </div>
                           <div className="flex-1">
@@ -402,24 +401,22 @@ const JourneyBlog = () => {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
-                        <Card className="bg-gradient-to-br from-white/8 to-white/2 border-white/10 backdrop-blur-sm shadow-lg">
-                          <div className="p-4 sm:p-6">
-                            <ul className="space-y-3">
-                              {entry.description.map((item, itemIndex) => (
-                                <motion.li
-                                  key={itemIndex}
-                                  initial={{ opacity: 0, y: 10 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: itemIndex * 0.1 }}
-                                  className="text-sm text-muted leading-relaxed flex items-start"
-                                >
-                                  <span className="text-accent mr-2 mt-1 flex-shrink-0">•</span>
-                                  <span>{item}</span>
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-                        </Card>
+                        <div className="p-4 sm:p-6 rounded-lg bg-white/5 border border-white/10">
+                          <ul className="space-y-3">
+                            {entry.description.map((item, itemIndex) => (
+                              <motion.li
+                                key={itemIndex}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: itemIndex * 0.1 }}
+                                className="text-sm text-muted leading-relaxed flex items-start"
+                              >
+                                <span className="text-accent mr-2 mt-1 flex-shrink-0">•</span>
+                                <span>{item}</span>
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
                       </motion.div>
                     </motion.div>
                   </motion.div>
