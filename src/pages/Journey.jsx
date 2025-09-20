@@ -63,10 +63,10 @@ const JourneyPage = () => {
               Personal retrospective
             </span>
             <h1 className="text-3xl md:text-5xl font-semibold text-balance">
-              From events stages to engineering sprints
+            Wireframes over Floorplans
             </h1>
             <p className="text-lg text-muted max-w-3xl mx-auto">
-              A long-form reflection on how a global shutdown became the catalyst for travel-fuelled curiosity, Code Institute studies, and a remote-first development career.
+              A long-form reflection on how a global shutdown became the catalyst for travel-fuelled curiosity, Code Institute studies & UX Design Institute, showcasing a career change in motion.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Button
