@@ -210,78 +210,87 @@ export const benefits = [
 export const uiDesigns = [
   // Mobile Designs - Banking Application
   {
-    title: 'Accounts Overview - Mobile',
+    title: 'My Accounts - Mobile',
     category: 'Mobile',
     description: 'Banking home screen showing account overview with current, savings, and joint accounts. Clean navigation to other banking features.',
-    image: '/ui-mobile-accounts.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My Accounts - mobile - 13th iteration.png',
     tools: ['Figma', 'Mobile UI', 'Financial UX'],
-    type: 'Mobile App'
+    type: 'Mobile App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
     title: 'Current Account - Mobile',
     category: 'Mobile',
     description: 'Day-to-day spending account interface with recent transactions and quick links to regular payees for mobile users.',
-    image: '/ui-mobile-current.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - mobile - 17th iteration.png',
     tools: ['Figma', 'Mobile Design', 'Banking UX'],
-    type: 'Mobile App'
+    type: 'Mobile App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
-    title: 'Spending Insights - Mobile',
+    title: 'My Spending - Mobile',
     category: 'Mobile',
     description: 'Mobile spending analysis with savings goals, spending over time, and data visualization for financial insights.',
-    image: '/ui-mobile-spending.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - mobile - 13th iteration.png',
     tools: ['Figma', 'Data Visualization', 'Mobile UI'],
-    type: 'Mobile App'
+    type: 'Mobile App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   // Tablet Designs - Banking Application
   {
-    title: 'Accounts Overview - Tablet',
+    title: 'My Accounts - Tablet',
     category: 'Tablet',
     description: 'Tablet-optimized banking dashboard with enhanced account overview and improved navigation for medium-sized screens.',
-    image: '/ui-tablet-accounts.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My Accounts - tablet - 12th iteration.png',
     tools: ['Figma', 'Tablet UI', 'Financial UX'],
-    type: 'Banking App'
+    type: 'Banking App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
     title: 'Current Account - Tablet',
     category: 'Tablet',
     description: 'Enhanced current account view for tablets with expanded transaction history and improved payee management interface.',
-    image: '/ui-tablet-current.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - tablet - 8th iteration.png',
     tools: ['Figma', 'Tablet Design', 'Banking UX'],
-    type: 'Banking App'
+    type: 'Banking App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
-    title: 'Spending Insights - Tablet',
+    title: 'My Spending - Tablet',
     category: 'Tablet',
     description: 'Comprehensive spending analysis optimized for tablet screens with detailed charts, goals tracking, and financial planning tools.',
-    image: '/ui-tablet-spending.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - tablet - 11th iteration.png',
     tools: ['Figma', 'Data Visualization', 'Tablet UI'],
-    type: 'Banking App'
+    type: 'Banking App',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   // Desktop Designs - Banking Application
   {
-    title: 'Accounts Overview - Desktop',
+    title: 'My Accounts - Desktop',
     category: 'Desktop',
     description: 'Full-featured desktop banking dashboard with comprehensive account overview, quick actions, and detailed financial summary.',
-    image: '/ui-desktop-accounts.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My accounts - desktop - 8th iteration.png',
     tools: ['Figma', 'Desktop UI', 'Financial UX'],
-    type: 'Banking Platform'
+    type: 'Banking Platform',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
     title: 'Current Account - Desktop',
     category: 'Desktop',
     description: 'Desktop current account interface with extensive transaction management, advanced filtering, and detailed payee controls.',
-    image: '/ui-desktop-current.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - desktop - 7th iteration.png',
     tools: ['Figma', 'Desktop Design', 'Banking UX'],
-    type: 'Banking Platform'
+    type: 'Banking Platform',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   },
   {
-    title: 'Spending Insights - Desktop',
+    title: 'My Spending - Desktop',
     category: 'Desktop',
     description: 'Advanced desktop spending analytics with comprehensive data visualization, detailed reporting, and financial planning features.',
-    image: '/ui-desktop-spending.jpg', // Replace with actual design screenshot
+    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - desktop - 9th iteration.png',
     tools: ['Figma', 'Data Visualization', 'Desktop UI'],
-    type: 'Banking Platform'
+    type: 'Banking Platform',
+    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   }
 ]
 

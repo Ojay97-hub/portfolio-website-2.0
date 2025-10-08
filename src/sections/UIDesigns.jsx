@@ -5,12 +5,14 @@ import Section from '../components/Section'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
+import LazyImage from '../components/LazyImage'
 import { uiDesigns } from '../data/profile'
 
 const UIDesigns = () => {
   const [activeFilter, setActiveFilter] = useState('All')
   
   const categories = ['All', 'Mobile', 'Tablet', 'Desktop']
+  const figmaUrl = 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
   
   const filteredDesigns = activeFilter === 'All' 
     ? uiDesigns 
@@ -64,6 +66,17 @@ const UIDesigns = () => {
             </Button>
           )
         })}
+        
+        {/* Figma Button */}
+        <Button
+          variant="outline"
+          size="md"
+          onClick={() => window.open(figmaUrl, '_blank', 'noopener,noreferrer')}
+          className="flex items-center gap-2 border-accent/50 text-accent hover:bg-accent/10"
+        >
+          <ExternalLink size={16} />
+          View Designs in Figma
+        </Button>
       </motion.div>
 
       {/* Design Grid */}
@@ -83,37 +96,26 @@ const UIDesigns = () => {
               <Card className="h-full flex flex-col">
                 {/* Design Image */}
                 <div className="relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-accent/10">
-                  <div className="w-full h-48 flex flex-col items-center justify-center relative">
-                    <CategoryIcon size={48} className="text-accent/30 mb-2" />
-                    <p className="text-muted text-sm mb-1">Design Preview</p>
+                  <div className="w-full h-48 relative">
+                    <LazyImage
+                      src={design.image}
+                      alt={`${design.title} design preview`}
+                      className="w-full h-full object-cover"
+                      width={400}
+                      height={300}
+                    />
                     {design.title.includes('Work in Progress') && (
                       <div className="absolute top-2 right-2 bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full text-xs font-medium">
                         WIP
                       </div>
                     )}
-                    {design.title.includes('Banking') && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-green-500/10 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">🏦</div>
-                          <p className="text-xs text-muted">Banking App Design</p>
-                        </div>
+
+                    {/* Category Badge */}
+                    <div className="absolute top-3 right-3">
+                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getCategoryColor(design.category)}`}>
+                        <CategoryIcon size={12} />
+                        {design.category}
                       </div>
-                    )}
-                    {design.title.includes('Portfolio') && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-2xl mb-2">💼</div>
-                          <p className="text-xs text-muted">Portfolio Design</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Category Badge */}
-                  <div className="absolute top-3 right-3">
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getCategoryColor(design.category)}`}>
-                      <CategoryIcon size={12} />
-                      {design.category}
                     </div>
                   </div>
                 </div>
@@ -147,12 +149,10 @@ const UIDesigns = () => {
                     size="sm"
                     className="w-full"
                     onClick={() => {
-                      // This would open a larger view or external link to the design
-                      if (process.env.NODE_ENV === 'development') {
-                        console.log(`View ${design.title} design`)
-                      }
+                      // Open the exported design image in a new tab
+                      window.open(design.image, '_blank', 'noopener,noreferrer')
                     }}
-                    aria-label={`View ${design.title} design`}
+                    aria-label={`View ${design.title} design image`}
                   >
                     <ExternalLink size={16} className="mr-2" />
                     View Design

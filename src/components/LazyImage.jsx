@@ -16,15 +16,16 @@ const LazyImage = ({
   const [error, setError] = useState(false)
   const imgRef = useRef(null)
 
-  // Generate AVIF and WebP sources from the src path
+  // Generate AVIF, WebP, and PNG sources from the src path
   const getImageSources = (imagePath) => {
-    if (!imagePath) return { avif: '', webp: '', jpeg: '' }
-    
+    if (!imagePath) return { avif: '', webp: '', jpeg: '', png: '' }
+
     const pathWithoutExtension = imagePath.replace(/\.(webp|jpg|jpeg|png)$/i, '')
     return {
       avif: `${pathWithoutExtension}.avif`,
       webp: `${pathWithoutExtension}.webp`,
-      jpeg: `${pathWithoutExtension}.jpg`
+      jpeg: `${pathWithoutExtension}.jpg`,
+      png: `${pathWithoutExtension}.png`
     }
   }
 
@@ -74,13 +75,14 @@ const LazyImage = ({
         />
       )}
       
-      {/* Actual image with AVIF, WebP, JPEG fallbacks */}
+      {/* Actual image with AVIF, WebP, JPEG, PNG fallbacks */}
       {isInView && !error && (
         <picture>
           <source srcSet={sources.avif} type="image/avif" />
           <source srcSet={sources.webp} type="image/webp" />
+          <source srcSet={sources.jpeg} type="image/jpeg" />
           <img
-            src={sources.jpeg}
+            src={sources.png}
             srcSet={srcSet}
             sizes={sizes}
             alt={alt}
