@@ -5,6 +5,7 @@ const IMAGE_DIMENSIONS = {
   '/project-pics/dino-quiz.webp': { width: 800, height: 436 },
   '/project-pics/eventory.webp': { width: 800, height: 433 },
   '/project-pics/jp-brewing.webp': { width: 800, height: 390 },
+  '/project-pics/updated-jungle-peaks.webp': { width: 800, height: 390 },
   '/project-pics/shegitsit.webp': { width: 800, height: 290 },
   '/project-pics/winchester.webp': { width: 800, height: 435 }
 }

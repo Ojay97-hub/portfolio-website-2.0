@@ -73,10 +73,10 @@ export const services = [
 export const projects = [
   {
     title: 'Jungle Peaks Brewing E-Commerce (P5)',
-    description: 'Full-stack e-commerce platform for a brewery with user authentication, payment processing using Stripe, and complete admin functionality.',
-    image: '/project-pics/jp-brewing.webp',
+    description: 'Full-stack e-commerce platform for a brewery with user authentication, payment processing using Stripe, and complete admin functionality. Recently updated based on assessor feedback with improved responsive design and accessibility features.',
+    image: '/project-pics/updated-jungle-peaks.webp',
     technologies: ['Django', 'Python', 'PostgreSQL', 'Stripe', 'Bootstrap', 'JavaScript'],
-    liveUrl: 'https://jungle-peaks-brewing-29d2cf7236c2.herokuapp.com/',
+    liveUrl: 'https://jungle-peaks-update-01b3f62083c2.herokuapp.com/',
     githubUrl: 'https://github.com/Ojay97-hub/Jungle-Peaks-Brewing-Co',
     featured: true,
     projectType: 'Full Stack'

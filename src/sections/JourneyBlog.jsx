@@ -84,12 +84,13 @@ const timeline = [
   },
   {
     period: 'Autumn 2025',
-    title: 'Goals include: Portfolio, assessments, applications',
+    title: 'Active iteration: Portfolio refinement & job prep',
     description: [
-      'Complete the UI design course; refine Code Institute portfolio',
-      'Continue ongoing work on my custom portfolio',
-      'Targeted job hunting and applying to roles',
-      'Outcome: job-ready materials prepared for interviews and securing a role'
+      'Complete the UI design course; refine Code Institute portfolio projects',
+      'Updated Jungle Peaks Brewing based on assessor feedback—responsive fixes, accessibility improvements',
+      'Continue ongoing work on custom portfolio with journey timeline',
+      'Targeted job hunting and applications with polished, employer-ready materials',
+      'Outcome: demonstrating receptiveness to feedback and continuous improvement'
     ],
     icon: 'Briefcase'
   }
