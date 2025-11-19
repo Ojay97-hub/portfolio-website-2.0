@@ -6,6 +6,7 @@ const IMAGE_DIMENSIONS = {
   '/project-pics/eventory.webp': { width: 800, height: 433 },
   '/project-pics/jp-brewing.webp': { width: 800, height: 390 },
   '/project-pics/updated-jungle-peaks.webp': { width: 800, height: 390 },
+  '/project-pics/jungle-peaks-portfolio.webp': { width: 1920, height: 1080 },
   '/project-pics/shegitsit.webp': { width: 800, height: 290 },
   '/project-pics/winchester.webp': { width: 800, height: 435 }
 }

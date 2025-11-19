@@ -5,6 +5,10 @@ import { scrollToSection } from '../lib/utils'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  
+  // Check if we're on the journey page
+  const isJourneyPage = window.location.pathname.includes('/journey')
   
   const socialLinks = [
     { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
@@ -20,8 +24,24 @@ const Footer = () => {
   ]
 
   const handleLinkClick = (href) => {
-    const sectionId = href.slice(1)
-    scrollToSection(sectionId)
+    if (isJourneyPage) {
+      // If on journey page, navigate to main page with hash
+      window.location.href = `${baseUrl}${href}`
+    } else {
+      // If on main page, use smooth scroll
+      const sectionId = href.slice(1)
+      scrollToSection(sectionId)
+    }
+  }
+
+  const handleBackToTop = () => {
+    if (isJourneyPage) {
+      // On journey page, just scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // On main page, scroll to hero section
+      scrollToSection('hero')
+    }
   }
 
   return (
@@ -148,7 +168,7 @@ const Footer = () => {
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              onClick={() => scrollToSection('hero')}
+              onClick={handleBackToTop}
               className="flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-2 py-1"
               aria-label="Back to top"
             >
