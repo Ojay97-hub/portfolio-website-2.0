@@ -151,10 +151,21 @@ const About = () => {
                   key={skill}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  whileHover={{ 
+                    scale: 1.1, 
+                    rotate: Math.random() * 4 - 2, // Subtle random tilt
+                    transition: { type: "spring", stiffness: 400, damping: 10 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.3, delay: index * 0.02 }} // Faster stagger
                   viewport={{ once: true }}
                 >
-                  <Badge variant="default">{skill}</Badge>
+                  <Badge 
+                    variant="default" 
+                    className="cursor-default hover:bg-accent hover:text-background hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 border border-transparent hover:border-accent/30 select-none"
+                  >
+                    {skill}
+                  </Badge>
                 </motion.div>
               ))}
             </div>

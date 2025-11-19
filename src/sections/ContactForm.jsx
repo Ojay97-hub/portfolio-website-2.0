@@ -9,6 +9,37 @@ import Button from '../components/Button'
 import Toast from '../components/Toast'
 import { validateEmail, validateRequired } from '../lib/utils'
 
+const AnimatedCharacters = ({ text, className, delay = 0, isAccent = false }) => {
+  // Split text into words to handle wrapping correctly
+  const words = text.split(" ");
+
+  return (
+    <span className={className}>
+      {words.map((word, index) => (
+        <span key={index} className="inline-block whitespace-nowrap mr-[0.25em] last:mr-0">
+          {word.split("").map((char, i) => (
+            <motion.span
+              key={i}
+              initial={{ y: 20, opacity: 0, rotateX: -90 }}
+              whileInView={{ y: 0, opacity: 1, rotateX: 0 }}
+              transition={{
+                type: "spring",
+                damping: 12,
+                stiffness: 200,
+                delay: delay + (index * 0.1) + (i * 0.03)
+              }}
+              viewport={{ once: true }}
+              className={`inline-block ${isAccent ? 'text-accent' : ''}`}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </span>
+  );
+};
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -96,12 +127,12 @@ const ContactForm = () => {
               Ready to Start My Career?
             </motion.div>
             
-            <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight font-heading">
-              Ready to Start My{' '}
-              <span className="text-accent">
-                 Career
-              </span>{' '}
-              Journey
+            <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight font-heading overflow-hidden py-2">
+              <AnimatedCharacters text="Ready to Start My" delay={0.2} />
+              {' '}
+              <AnimatedCharacters text="Career" className="text-accent" delay={0.6} isAccent />
+              {' '}
+              <AnimatedCharacters text="Journey" delay={0.8} />
             </h2>
             
             <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto text-balance mb-8">

@@ -10,7 +10,7 @@ const Badge = ({
   const variants = {
     default: 'bg-primary/20 text-text',
     accent: 'bg-accent/20 text-accent',
-    soft: 'bg-accentSoft/20 text-accentSoft'
+    soft: 'bg-accent/10 text-accent border border-accent/20'
   }
   
   const sizes = {

@@ -60,7 +60,10 @@ import {
   Wrench,
   Code2,
   Laptop,
-  Search
+  Search,
+  Beer,
+  Ghost,
+  Gamepad2
 } from 'lucide-react'
 
 // Export individual icons
@@ -123,7 +126,10 @@ export {
   Wrench,
   Code2,
   Laptop,
-  Search
+  Search,
+  Beer,
+  Ghost,
+  Gamepad2
 }
 
 // Export all icons as object for dynamic access
@@ -185,7 +191,10 @@ const Icons = {
   FileCode,
   Wrench,
   Code2,
-  Laptop
+  Laptop,
+  Beer,
+  Ghost,
+  Gamepad2
 }
 
 export default Icons

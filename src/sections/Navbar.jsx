@@ -11,10 +11,10 @@ const Navbar = () => {
 
   const navItems = [
     { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#services' },
     { label: 'Projects', href: '#featured-projects' },
     { label: 'Designs', href: '#ui-designs' },
+    { label: 'About', href: '#about' },
+    { label: 'Skills', href: '#services' },
     { label: 'Contact', href: '#contact-form' },
   ]
 

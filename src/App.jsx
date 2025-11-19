@@ -7,7 +7,6 @@ import Hero from './sections/Hero'
 
 // Lazy load non-critical sections for better performance
 const About = lazy(() => import('./sections/About'))
-const WorkTypes = lazy(() => import('./sections/WorkTypes'))
 const Services = lazy(() => import('./sections/Services'))
 const FeaturedProjects = lazy(() => import('./sections/FeaturedProjects'))
 const UIDesigns = lazy(() => import('./sections/UIDesigns'))
@@ -72,23 +71,17 @@ function App() {
               <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
             </div>
           }>
-            {/* About Section */}
-            <About />
-
-            {/* Work Types Section */}
-            <WorkTypes />
-            
-            {/* Services Section */}
-            <Services />
-            
             {/* Featured Projects Section */}
             <FeaturedProjects />
             
             {/* UI Design Showcase Section */}
             <UIDesigns />
-            
-            {/* Contact Info Section - Moved up */}
-            <ContactInfo />
+
+            {/* About Section */}
+            <About />
+
+            {/* Services Section (Combined Skills & What I Do) */}
+            <Services />
             
             {/* Benefits Section */}
             <Benefits />
@@ -98,6 +91,9 @@ function App() {
             
             {/* Contact Form Section (Includes CTA) */}
             <ContactForm />
+
+            {/* Contact Info Section */}
+            <ContactInfo />
           </Suspense>
         </motion.div>
       </main>

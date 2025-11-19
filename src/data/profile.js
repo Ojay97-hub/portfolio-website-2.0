@@ -41,7 +41,7 @@ export const skills = [
   'AWS S3',
   'Components & Variants',
   'Typography',
-  'Color Theory',
+  'Colour Theory',
   'Interactivity',
   'Layout Design',
   'Branding & Personality',
