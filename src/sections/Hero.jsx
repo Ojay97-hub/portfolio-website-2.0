@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowDown, Download, Github, Linkedin, Mail } from '../lib/icons'
+import { ArrowDown, Search, Github, Linkedin, Mail } from '../lib/icons'
 import Button from '../components/Button'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
@@ -85,12 +85,12 @@ const Hero = () => {
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open('https://docs.google.com/document/d/e/2PACX-1vRV88aRGtEw0lXd1FmHovZtZ_i-VvlK63gXJVnzM6ncy1kT7K-JbRt2wOfwBcWTZaMcT7y9O1akMrgt/pub', '_blank')}
+              onClick={() => window.open('https://docs.google.com/document/d/e/2PACX-1vSh1Ac-VeQQmYs33lwZyxFvAXA2qHl4X9isSWcIzDQfE1UZRkbCuswvW3PuJIafSidHIm4fW5VOkLWR/pub?embedded=true', '_blank')}
               className="w-full sm:w-auto"
-              aria-label="Download CV"
+              aria-label="View CV"
             >
-              <Download size={20} className="mr-2" />
-              Download CV
+              <Search size={20} className="mr-2" />
+              View CV
             </Button>
           </motion.div>
 

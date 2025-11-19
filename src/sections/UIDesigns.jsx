@@ -29,19 +29,20 @@ const UIDesigns = () => {
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'Mobile': return 'bg-blue-500/20 text-blue-400'
-      case 'Tablet': return 'bg-green-500/20 text-green-400' 
-      case 'Desktop': return 'bg-purple-500/20 text-purple-400'
-      default: return 'bg-accent/20 text-accent'
+      case 'Mobile': return 'bg-blue-100 text-blue-600'
+      case 'Tablet': return 'bg-green-100 text-green-600' 
+      case 'Desktop': return 'bg-purple-100 text-purple-600'
+      default: return 'bg-accent/10 text-accent'
     }
   }
 
   return (
     <Section
       id="ui-designs"
-      title="UI/UX Design Showcase - Work in Progress"
-      description="A comprehensive banking application design featuring 9 responsive screens across mobile, tablet, and desktop platforms. Created for a fictional challenger banking brand emphasizing Clear, Playful, and Trustworthy design principles."
+      title="UI/UX Design Showcase"
+      description="A comprehensive banking application design featuring 9 responsive screens across mobile, tablet, and desktop platforms."
       titleAlign="center"
+      className="bg-background"
     >
       {/* Filter Buttons */}
       <motion.div
@@ -49,7 +50,7 @@ const UIDesigns = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="flex flex-wrap justify-center gap-4 mb-12"
+        className="flex flex-wrap justify-center gap-4 mb-16"
       >
         {categories.map((category) => {
           const Icon = getCategoryIcon(category)
@@ -59,7 +60,7 @@ const UIDesigns = () => {
               variant={activeFilter === category ? 'primary' : 'outline'}
               size="md"
               onClick={() => setActiveFilter(category)}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${activeFilter !== category ? 'bg-surface border-gray-200 shadow-sm hover:bg-gray-50' : ''}`}
             >
               {category !== 'All' && <Icon size={16} />}
               {category}
@@ -72,7 +73,7 @@ const UIDesigns = () => {
           variant="outline"
           size="md"
           onClick={() => window.open(figmaUrl, '_blank', 'noopener,noreferrer')}
-          className="flex items-center gap-2 border-accent/50 text-accent hover:bg-accent/10"
+          className="flex items-center gap-2 border-accent text-accent hover:bg-accent/5 bg-surface shadow-sm"
         >
           <ExternalLink size={16} />
           View Designs in Figma
@@ -80,7 +81,7 @@ const UIDesigns = () => {
       </motion.div>
 
       {/* Design Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {filteredDesigns.map((design, index) => {
           const CategoryIcon = getCategoryIcon(design.category)
           
@@ -93,27 +94,23 @@ const UIDesigns = () => {
               viewport={{ once: true }}
               layout
             >
-              <Card className="h-full flex flex-col">
-                {/* Design Image */}
-                <div className="relative mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-accent/10">
-                  <div className="w-full h-48 relative">
+              <Card className="h-full flex flex-col p-8 shadow-lg border-gray-200/80 hover:shadow-xl hover:border-accent/30 transition-all duration-300 group bg-surface">
+                {/* Design Image Container */}
+                <div className="relative mb-8 overflow-hidden rounded-2xl bg-gray-50 border border-gray-100 shadow-inner group-hover:shadow-none transition-all duration-300">
+                  <div className="w-full aspect-[4/3] relative">
                     <LazyImage
                       src={design.image}
                       alt={`${design.title} design preview`}
-                      className="w-full h-full object-cover"
-                      width={400}
-                      height={300}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     />
-                    {design.title.includes('Work in Progress') && (
-                      <div className="absolute top-2 right-2 bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full text-xs font-medium">
-                        WIP
-                      </div>
-                    )}
-
-                    {/* Category Badge */}
-                    <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getCategoryColor(design.category)}`}>
-                        <CategoryIcon size={12} />
+                    
+                    {/* Floating Category Badge */}
+                    <div className="absolute top-4 right-4">
+                      <div className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm backdrop-blur-md bg-white/90 ${
+                         design.category === 'Mobile' ? 'text-blue-600' : 
+                         design.category === 'Tablet' ? 'text-green-600' : 'text-purple-600'
+                      }`}>
+                        <CategoryIcon size={14} />
                         {design.category}
                       </div>
                     </div>
@@ -121,23 +118,23 @@ const UIDesigns = () => {
                 </div>
 
                 {/* Design Info */}
-                <div className="flex-1 flex flex-col">
-                  <div className="mb-3">
-                    <h3 className="text-xl font-semibold text-text mb-2">
+                <div className="flex-1 flex flex-col gap-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-text mb-2 group-hover:text-primary transition-colors">
                       {design.title}
                     </h3>
-                    <p className="text-sm text-accent font-medium mb-2">
+                    <p className="text-sm font-medium text-accent uppercase tracking-wide mb-3">
                       {design.type}
                     </p>
-                    <p className="text-muted text-sm flex-1">
+                    <p className="text-muted leading-relaxed">
                       {design.description}
                     </p>
                   </div>
 
                   {/* Tools/Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mt-auto pt-4">
                     {design.tools.map((tool, toolIndex) => (
-                      <Badge key={toolIndex} variant="default" size="sm">
+                      <Badge key={toolIndex} variant="outline" size="sm" className="bg-gray-50 border-gray-200 text-muted">
                         {tool}
                       </Badge>
                     ))}
@@ -146,16 +143,14 @@ const UIDesigns = () => {
                   {/* View Design Button */}
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="w-full"
+                    size="md"
+                    className="w-full mt-6 border-gray-200 hover:border-accent hover:text-accent group-hover:bg-accent/5 transition-all"
                     onClick={() => {
-                      // Open the exported design image in a new tab
                       window.open(design.image, '_blank', 'noopener,noreferrer')
                     }}
-                    aria-label={`View ${design.title} design image`}
                   >
-                    <ExternalLink size={16} className="mr-2" />
-                    View Design
+                    <ExternalLink size={18} className="mr-2" />
+                    View Full Design
                   </Button>
                 </div>
               </Card>
@@ -170,34 +165,34 @@ const UIDesigns = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         viewport={{ once: true }}
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
+        className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
       >
-        <div>
-          <div className="flex justify-center mb-3">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center">
-              <Smartphone className="text-blue-400" size={24} />
+        <div className="p-6 rounded-2xl bg-surface border border-gray-200 shadow-sm">
+          <div className="flex justify-center mb-4">
+            <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center">
+              <Smartphone className="text-blue-600" size={28} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-text mb-1">3</div>
-          <div className="text-muted text-sm">Mobile Designs</div>
+          <div className="text-3xl font-bold text-text mb-1">3</div>
+          <div className="text-muted font-medium">Mobile Designs</div>
         </div>
-        <div>
-          <div className="flex justify-center mb-3">
-            <div className="w-12 h-12 bg-green-500/20 rounded-2xl flex items-center justify-center">
-              <Tablet className="text-green-400" size={24} />
+        <div className="p-6 rounded-2xl bg-surface border border-gray-200 shadow-sm">
+          <div className="flex justify-center mb-4">
+            <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center">
+              <Tablet className="text-green-600" size={28} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-text mb-1">3</div>
-          <div className="text-muted text-sm">Tablet Designs</div>
+          <div className="text-3xl font-bold text-text mb-1">3</div>
+          <div className="text-muted font-medium">Tablet Designs</div>
         </div>
-        <div>
-          <div className="flex justify-center mb-3">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center">
-              <Monitor className="text-purple-400" size={24} />
+        <div className="p-6 rounded-2xl bg-surface border border-gray-200 shadow-sm">
+          <div className="flex justify-center mb-4">
+            <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center">
+              <Monitor className="text-purple-600" size={28} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-text mb-1">3</div>
-          <div className="text-muted text-sm">Desktop Designs</div>
+          <div className="text-3xl font-bold text-text mb-1">3</div>
+          <div className="text-muted font-medium">Desktop Designs</div>
         </div>
       </motion.div>
 
@@ -207,26 +202,26 @@ const UIDesigns = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
         viewport={{ once: true }}
-        className="mt-12 text-center"
+        className="mt-20 text-center"
       >
-        <Card className="max-w-2xl mx-auto">
-          <h3 className="text-2xl font-bold text-text mb-4">
-            Interested in My Design Process?
+        <div className="max-w-3xl mx-auto bg-surface border border-gray-200 rounded-3xl p-10 shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
+          
+          <h3 className="text-3xl font-bold text-text mb-4">
+            Ready to see the full process?
           </h3>
-          <p className="text-muted mb-6">
-            This banking application demonstrates my ability to create user-centered designs that balance 
-            trustworthiness with modern aesthetics. Each screen is thoughtfully crafted to work seamlessly 
-            across mobile, tablet, and desktop platforms while maintaining the brand's core values of being 
-            Clear, Playful, and Trustworthy.
+          <p className="text-muted mb-8 text-lg max-w-xl mx-auto">
+            From user research and wireframing to high-fidelity prototyping. Let's walk through the design decisions behind this banking application.
           </p>
           <Button
             variant="primary"
             size="lg"
+            className="shadow-lg shadow-accent/20"
             onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Let's Discuss Design
+            Discuss My Design Process
           </Button>
-        </Card>
+        </div>
       </motion.div>
     </Section>
   )

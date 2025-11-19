@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, ExternalLink, Github } from '../lib/icons'
+import { ExternalLink, Github } from '../lib/icons'
 import Section from '../components/Section'
-import Card from '../components/Card'
 import Badge from '../components/Badge'
-import Button from '../components/Button'
 import LazyImage from '../components/LazyImage'
 import { projects } from '../data/profile'
 import { getResponsiveImageProps } from '../lib/imageUtils'
@@ -12,60 +10,6 @@ import { getResponsiveImageProps } from '../lib/imageUtils'
 const FeaturedProjects = () => {
   const featuredProjects = projects.filter(project => project.featured)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying || featuredProjects.length <= 1) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % featuredProjects.length)
-    }, 8000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, featuredProjects.length])
-
-  const nextProject = () => {
-    setCurrentIndex((prev) => (prev + 1) % featuredProjects.length)
-    setIsAutoPlaying(false)
-  }
-
-  const prevProject = () => {
-    setCurrentIndex((prev) => (prev - 1 + featuredProjects.length) % featuredProjects.length)
-    setIsAutoPlaying(false)
-  }
-
-  const goToProject = (index) => {
-    setCurrentIndex(index)
-    setIsAutoPlaying(false)
-  }
-
-  // Touch handlers for swipe functionality
-  const handleTouchStart = (e) => {
-    setTouchEnd(0) // Reset touchEnd
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe && featuredProjects.length > 0) {
-      nextProject()
-    }
-    if (isRightSwipe && featuredProjects.length > 0) {
-      prevProject()
-    }
-  }
 
   if (featuredProjects.length === 0) return null
 
@@ -75,192 +19,125 @@ const FeaturedProjects = () => {
     <Section
       id="featured-projects"
       title="Featured Projects"
-      description="Showcase of my most significant development work, demonstrating full-stack capabilities and problem-solving skills."
-      className="bg-surface/30 relative"
+      description="Showcase of my most significant development work."
+      className="bg-background relative overflow-hidden"
     >
-      <div className="relative">
-        {/* Navigation Arrows - Hidden on Mobile, Visible on Desktop */}
-        {featuredProjects.length > 1 && (
-          <>
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
+        {/* Project Navigation List */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-3">
+          {featuredProjects.map((project, index) => (
             <button
-              onClick={prevProject}
-              className="hidden md:flex absolute left-1 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/90 backdrop-blur-sm border border-border rounded-full items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-50 shadow-lg"
-              aria-label="Previous project"
+              key={project.title}
+              onClick={() => setCurrentIndex(index)}
+              className={`group text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${
+                index === currentIndex
+                  ? 'bg-surface border-accent/50 shadow-lg'
+                  : 'bg-transparent border-transparent hover:bg-surface/30'
+              }`}
             >
-              <ChevronLeft size={30} />
+              {/* Active Indicator */}
+              {index === currentIndex && (
+                <motion.div
+                  layoutId="activeProject"
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+              )}
+              
+              <div className="relative z-10 pl-3">
+                <h3 className={`text-xl font-bold mb-2 transition-colors ${
+                  index === currentIndex ? 'text-accent' : 'text-text group-hover:text-text'
+                }`}>
+                  {project.title}
+                </h3>
+                <p className={`text-sm line-clamp-2 transition-colors ${
+                  index === currentIndex ? 'text-text/80' : 'text-muted group-hover:text-text/60'
+                }`}>
+                  {project.description}
+                </p>
+              </div>
             </button>
-            
-            <button
-              onClick={nextProject}
-              className="hidden md:flex absolute right-1 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/90 backdrop-blur-sm border border-border rounded-full items-center justify-center text-text hover:bg-accent/20 hover:border-accent/50 transition-all duration-200 z-50 shadow-lg"
-              aria-label="Next project"
-            >
-              <ChevronRight size={30} />
-            </button>
-          </>
-        )}
-        
-        {/* Main Carousel */}
-        <div 
-          className="relative overflow-hidden rounded-2xl max-w-5xl mx-auto my-12"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+          ))}
+        </div>
+
+        {/* Project Display Area */}
+        <div className="w-full lg:w-2/3 relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 300 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -300 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="w-full"
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="h-full"
             >
-              <Card className="p-0 overflow-hidden max-w-4xl mx-auto">
-                <div className="flex flex-col">
-                  {/* Project Image */}
-                  <div className="relative h-48 sm:h-64 lg:h-80 bg-gradient-to-br from-primary/10 to-accent/5 overflow-hidden rounded-2xl">
-                    {currentProject.image ? (
-                      <LazyImage
-                        {...getResponsiveImageProps(currentProject.image, 'featured')}
-                        alt={`${currentProject.title} preview`}
-                        className="w-full h-full hover:scale-105 transition-transform duration-700"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-4xl mb-4">🚀</div>
-                          <p className="text-muted">Project Preview</p>
-                        </div>
-                      </div>
-                    )}
-                    
-                  </div>
-
-                  {/* Project Details */}
-                  <div className="p-4 sm:p-6 lg:p-8">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <div className="flex justify-between items-start mb-3 sm:mb-4">
-                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-text">
-                          {currentProject.title}
-                        </h3>
-                        <div className="bg-background/90 backdrop-blur-sm text-text px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-full shadow-lg border border-border/50 ml-2 sm:ml-4">
-                          {currentProject.projectType}
-                        </div>
-                      </div>
-                      
-                      <p className="text-sm sm:text-base text-muted mb-4 sm:mb-6 leading-relaxed">
-                        {currentProject.description}
-                      </p>
-
-                      {/* Technologies */}
-                      <div className="mb-4 sm:mb-6 lg:mb-8">
-                        <h4 className="text-xs sm:text-sm font-semibold text-text mb-2 sm:mb-3 uppercase tracking-wide">
-                          Technologies Used
-                        </h4>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {currentProject.technologies.map((tech, index) => (
-                            <Badge key={index} variant="default" size="sm">
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        {currentProject.liveUrl && currentProject.liveUrl !== '#' && (
-                          <a
-                            href={currentProject.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background bg-accent text-background hover:brightness-110 active:brightness-95 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl sm:rounded-2xl gap-2"
-                          >
-                            <ExternalLink size={18} className="sm:w-5 sm:h-5" />
-                            View Live Site
-                          </a>
-                        )}
-                        
-                        {currentProject.githubUrl && (
-                          <a
-                            href={currentProject.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background border border-border text-text hover:bg-surface active:bg-primary/20 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl sm:rounded-2xl gap-2"
-                          >
-                            <Github size={18} className="sm:w-5 sm:h-5" />
-                            View Code
-                          </a>
-                        )}
-                      </div>
-                    </motion.div>
+              <div className="bg-surface/20 border border-border rounded-3xl overflow-hidden p-2 md:p-3 h-full flex flex-col backdrop-blur-sm">
+                {/* Image Container */}
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface shadow-inner">
+                  {currentProject.image ? (
+                    <LazyImage
+                      {...getResponsiveImageProps(currentProject.image, 'featured')}
+                      alt={currentProject.title}
+                      className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-5xl">
+                      🚀
+                    </div>
+                  )}
+                  
+                  {/* Floating Type Badge */}
+                  <div className="absolute top-4 right-4 bg-background/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-text border border-border/50 shadow-lg">
+                    {currentProject.projectType}
                   </div>
                 </div>
-              </Card>
+                
+                {/* Content Area */}
+                <div className="p-4 md:p-6 flex-1 flex flex-col">
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {currentProject.technologies.map(tech => (
+                      <Badge key={tech} variant="outline" className="bg-surface/50 hover:bg-accent/10 transition-colors cursor-default">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                  <div className="flex-1">
+                    <p className="text-muted text-lg leading-relaxed">
+                      {currentProject.description}
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-border/50">
+                    {currentProject.liveUrl && currentProject.liveUrl !== '#' && (
+                      <a 
+                        href={currentProject.liveUrl} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-background rounded-xl font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-accent/20"
+                      >
+                        <ExternalLink size={20} /> View Live Site
+                      </a>
+                    )}
+                    {currentProject.githubUrl && (
+                      <a 
+                        href={currentProject.githubUrl} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-border text-text rounded-xl font-medium hover:bg-surface hover:border-text/20 active:scale-95 transition-all"
+                      >
+                        <Github size={20} /> View Code
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
-
         </div>
-
-        {/* Dots Navigation */}
-        {featuredProjects.length > 1 && (
-          <div className="flex justify-center gap-3 mt-8">
-            {featuredProjects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToProject(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                  index === currentIndex 
-                    ? 'bg-accent scale-125' 
-                    : 'bg-border hover:bg-accent/50'
-                }`}
-                aria-label={`Go to project ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Project Counter */}
-        {featuredProjects.length > 1 && (
-          <div className="text-center mt-4">
-            <span className="text-sm text-muted">
-              {currentIndex + 1} of {featuredProjects.length}
-            </span>
-          </div>
-        )}
       </div>
-
-      {/* All Projects Link */}
-      {projects.length > featuredProjects.length && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <Card className="max-w-md mx-auto">
-            <h4 className="text-lg font-semibold text-text mb-3">
-              Want to see more?
-            </h4>
-            <p className="text-muted text-sm mb-4">
-              I have {projects.length} total projects showcasing various technologies and skills.
-            </p>
-            <Button
-              variant="outline"
-              size="md"
-              onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full"
-            >
-              Get in Touch to Learn More
-            </Button>
-          </Card>
-        </motion.div>
-      )}
     </Section>
   )
 }

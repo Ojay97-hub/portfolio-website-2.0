@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Card from '../components/Card'
 import Icons from '../lib/icons'
+import { ChevronRight, X } from '../lib/icons'
 
 const timeline = [
   {
@@ -125,7 +126,7 @@ const JourneyBlog = () => {
           >
             <header className="mb-12">
               <div className="w-16 h-1 bg-accent mb-8"></div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">From physical spaces to digital experiences</h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-6 leading-tight">From physical spaces to digital experiences</h1>
               <p className="text-lg sm:text-xl text-muted font-light max-w-2xl">
                 A reflective blog on the pivots, places, and people that shaped my career change from a potential events manager to web development and UI design.
               </p>
@@ -190,7 +191,7 @@ const JourneyBlog = () => {
             viewport={{ once: true }}
             className="flex flex-col gap-8 sm:gap-12"
           >
-            <Card className="bg-gradient-to-br from-accent/10 to-primary/10 border-none backdrop-blur-sm">
+            <Card className="bg-surface border-border shadow-soft">
               <div className="p-6 sm:p-8">
                 <p className="text-sm uppercase tracking-wider text-accent font-semibold mb-4">The Why</p>
                 <h3 className="text-lg sm:text-xl font-semibold text-text mb-4">From one experience to another</h3>
@@ -201,7 +202,7 @@ const JourneyBlog = () => {
               </div>
             </Card>
 
-            <Card className="backdrop-blur-sm">
+            <Card className="bg-surface border-border shadow-soft">
               <div className="p-6 sm:p-8">
                 <p className="text-sm uppercase tracking-wider text-accent font-semibold mb-4">What I bring forward</p>
                 <ul className="space-y-3">
@@ -219,7 +220,7 @@ const JourneyBlog = () => {
       </div>
 
       {/* Timeline Section - Responsive layout */}
-      <div className="bg-black/20 border-t border-white/10 py-8 sm:py-16">
+      <div className="bg-surface border-t border-border py-8 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-20">
           <motion.header
             initial={{ opacity: 0, y: 20 }}
@@ -229,201 +230,196 @@ const JourneyBlog = () => {
             className="mb-8 sm:mb-12"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-6 h-6 bg-accent rounded flex items-center justify-center text-background font-bold text-sm">
+              <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent font-bold text-lg">
                 ⚡
               </div>
-              <h2 className="text-xl sm:text-2xl font-semibold">2017–2025: Employer-ready highlights</h2>
+              <h2 className="text-xl sm:text-3xl font-bold text-text">2017–2025: Employer-ready highlights</h2>
             </div>
+            
+            <p className="text-muted mb-8 max-w-2xl">
+                Click on any milestone to see the details of my journey.
+            </p>
             
             {/* Desktop timeline header */}
-            <div className="hidden lg:flex items-center justify-between text-sm text-muted">
-              <span className="font-semibold">2017</span>
-              <div className="flex-1 mx-4 h-px bg-gradient-to-r from-accent/20 via-accent/40 to-accent/20"></div>
-              <span className="font-semibold">Present Day</span>
-            </div>
-            
-            {/* Mobile timeline header */}
-            <div className="lg:hidden text-sm text-muted text-center">
-              <p>Tap any milestone to explore details</p>
+            <div className="hidden lg:flex items-center justify-between text-sm text-muted/60 uppercase tracking-wider font-medium">
+              <span>2017</span>
+              <div className="flex-1 mx-6 h-px bg-border dashed-line"></div>
+              <span>Present Day</span>
             </div>
           </motion.header>
 
           {/* Desktop Timeline - Horizontal */}
-          <div className="relative hidden lg:block">
-            {/* Curved Timeline Line */}
-            <div className="absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
-              <svg width="100%" height="4" viewBox="0 0 1000 4" className="overflow-visible">
-                <path
-                  d="M 0 2 Q 250 0 500 2 T 1000 2"
-                  stroke="url(#timelineGradient)"
-                  strokeWidth="4"
-                  fill="none"
-                  className="drop-shadow-sm"
-                />
-                <defs>
-                  <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgb(255, 215, 0)" stopOpacity="0.2" />
-                    <stop offset="50%" stopColor="rgb(255, 215, 0)" stopOpacity="0.6" />
-                    <stop offset="100%" stopColor="rgb(255, 215, 0)" stopOpacity="0.2" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
+          <div className="relative hidden lg:block py-12">
+            {/* Horizontal Line */}
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-border -translate-y-1/2" />
             
-            {/* Timeline Cards */}
-            <div className="flex justify-between items-center relative py-20">
+            {/* Timeline Nodes */}
+            <div className="relative grid grid-cols-9 gap-4">
               {timeline.map((entry, index) => {
                 const Icon = Icons[entry.icon] || Icons.Circle
-                const isEven = index % 2 === 0
                 const isActive = activeCard === index
-                const isMajorMilestone = index === 0 || index === 4 || index === 8
-                const dotSize = isMajorMilestone ? 'w-6 h-6' : 'w-4 h-4'
-                const dotBorderSize = isMajorMilestone ? 'border-[3px]' : 'border-2'
-
+                
                 return (
-                  <motion.div
-                    key={entry.title}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="relative group flex-1 flex justify-center cursor-pointer"
-                    onClick={() => handleCardClick(index)}
-                  >
-                    {/* Timeline Dot */}
-                    <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${dotSize} rounded-full ${dotBorderSize} border-background z-20 transition-all duration-300 ${
-                      isActive 
-                        ? 'bg-accent scale-150 shadow-lg shadow-accent/50' 
-                        : 'bg-accent group-hover:scale-125 group-hover:shadow-md group-hover:shadow-accent/30'
-                    }`}></div>
-                    
-                    {/* Card */}
-                    <motion.div
-                      className={`absolute transition-all duration-500 ease-out ${
-                        isEven 
-                          ? `bottom-0 ${isActive ? '-translate-y-4' : 'group-hover:-translate-y-4'}` 
-                          : `top-0 ${isActive ? 'translate-y-4' : 'group-hover:translate-y-4'}`
-                      }`}
-                      whileHover={!isActive ? { scale: 1.05 } : {}}
-                    >
-                      <Card className={`w-80 bg-gradient-to-br from-white/8 to-white/2 border-white/10 backdrop-blur-sm transition-all duration-500 shadow-xl ${
-                        isActive 
-                          ? 'opacity-100 border-accent/50 shadow-accent/20' 
-                          : 'opacity-0 group-hover:opacity-100'
-                      }`}>
-                        <div className="p-6">
-                          <div className="flex items-start gap-3 mb-4">
-                            <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <Icon size={18} className="text-accent" />
-                            </div>
-                            <div className="flex-1">
-                              <p className="text-xs uppercase tracking-wider text-accent font-semibold mb-1">{entry.period}</p>
-                              <h3 className="text-lg font-bold leading-tight">{entry.title}</h3>
-                            </div>
-                          </div>
-                          <ul className="space-y-2">
-                            {entry.description.map((item, itemIndex) => (
-                              <li key={itemIndex} className="text-sm text-muted leading-relaxed flex items-start">
-                                <span className="text-accent mr-2 mt-1 flex-shrink-0">•</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  </motion.div>
+                  <div key={entry.title} className="relative flex flex-col items-center justify-center group">
+                     {/* Node Button */}
+                     <button
+                        onClick={() => handleCardClick(index)}
+                        className={`relative z-10 w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                            isActive 
+                                ? 'bg-accent border-accent text-background scale-125 shadow-lg shadow-accent/30' 
+                                : 'bg-background border-border text-muted hover:border-accent hover:text-accent'
+                        }`}
+                     >
+                        <Icon size={16} />
+                     </button>
+
+                     {/* Floating Card Overlay */}
+                     <AnimatePresence>
+                        {isActive && (
+                             <motion.div
+                                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                                transition={{ duration: 0.2 }}
+                                className={`absolute z-50 w-[320px] ${
+                                    index % 2 === 0 ? 'top-full mt-6' : 'bottom-full mb-6'
+                                }`}
+                                style={{
+                                    left: index === 0 ? '0' : index === timeline.length - 1 ? 'auto' : '50%',
+                                    right: index === timeline.length - 1 ? '0' : 'auto',
+                                    translateX: index === 0 || index === timeline.length - 1 ? '0' : '-50%'
+                                }}
+                             >
+                                <div className="bg-background border border-border shadow-soft p-6 rounded-2xl relative">
+                                    {/* Arrow Pointer */}
+                                    <div className={`absolute w-4 h-4 bg-background border-l border-t border-border transform rotate-45 ${
+                                        index % 2 === 0 
+                                            ? '-top-2.5 border-b-0 border-r-0' + (index === 0 ? ' left-4' : index === timeline.length - 1 ? ' right-4' : ' left-1/2 -ml-2')
+                                            : '-bottom-2.5 border-t-0 border-l-0' + (index === 0 ? ' left-4' : index === timeline.length - 1 ? ' right-4' : ' left-1/2 -ml-2')
+                                    }`}></div>
+
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div className="bg-accent/10 text-accent px-2 py-1 rounded text-xs font-bold uppercase tracking-wide">
+                                            {entry.period}
+                                        </div>
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); setActiveCard(null); }}
+                                            className="text-muted hover:text-text"
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                    
+                                    <h3 className="text-lg font-bold text-text mb-4 leading-tight">
+                                        {entry.title}
+                                    </h3>
+                                    
+                                    <ul className="space-y-2">
+                                        {entry.description.map((item, i) => (
+                                            <li key={i} className="flex items-start text-sm text-muted gap-2">
+                                                <span className="mt-1.5 w-1 h-1 bg-accent rounded-full flex-shrink-0" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                             </motion.div>
+                        )}
+                     </AnimatePresence>
+                     
+                     {/* Default Label (Always Visible if not active) */}
+                     {!isActive && (
+                         <div className={`absolute w-32 text-center text-xs font-medium text-muted transition-opacity duration-300 ${
+                             index % 2 === 0 ? 'top-full mt-4' : 'bottom-full mb-4'
+                         } ${activeCard !== null ? 'opacity-30' : 'opacity-100'}`}>
+                            {entry.period}
+                         </div>
+                     )}
+                  </div>
                 )
               })}
             </div>
           </div>
 
-          {/* Mobile Timeline - Vertical */}
-          <div className="relative lg:hidden">
-            {/* Vertical Timeline Line */}
-            <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-accent/20 via-accent/60 to-accent/20 rounded-full"></div>
-            
-            {/* Mobile Timeline Items */}
-            <div className="space-y-6">
+          {/* Mobile Timeline - Vertical Accordion */}
+          <div className="relative lg:hidden space-y-4">
+              {/* Vertical Line */}
+             <div className="absolute left-[19px] top-0 bottom-0 w-px bg-border" />
+
               {timeline.map((entry, index) => {
                 const Icon = Icons[entry.icon] || Icons.Circle
                 const isActive = activeCard === index
-                const isMajorMilestone = index === 0 || index === 4 || index === 8
-                const dotSize = isMajorMilestone ? 'w-6 h-6' : 'w-4 h-4'
 
                 return (
                   <motion.div
                     key={entry.title}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    transition={{ delay: index * 0.05 }}
                     viewport={{ once: true }}
-                    className="relative flex items-start gap-6"
+                    className="relative pl-12"
                   >
-                    {/* Timeline Dot */}
-                    <div className="relative flex-shrink-0">
-                      <div className={`${dotSize} rounded-full border-2 border-background bg-accent transition-all duration-300 ${
-                        isActive 
-                          ? 'scale-150 shadow-lg shadow-accent/50' 
-                          : 'hover:scale-125 hover:shadow-md hover:shadow-accent/30'
-                      }`}></div>
-                    </div>
-                    
-                    {/* Mobile Card */}
-                    <motion.div
-                      className="flex-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 active:outline-none active:ring-0"
-                      onClick={() => handleCardClick(index)}
+                    {/* Node on Line */}
+                    <button 
+                        onClick={() => handleCardClick(index)}
+                        className={`absolute left-0 top-0 w-10 h-10 rounded-full border-2 flex items-center justify-center z-10 transition-colors ${
+                            isActive 
+                                ? 'bg-accent border-accent text-background shadow-lg' 
+                                : 'bg-background border-border text-muted'
+                        }`}
                     >
-                      {/* Collapsed View */}
-                      <div className={`transition-all duration-300 ${isActive ? 'mb-4' : ''}`}>
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                            <Icon size={14} className="text-accent" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-xs uppercase tracking-wider text-accent font-semibold">{entry.period}</p>
-                            <h3 className="text-base sm:text-lg font-bold leading-tight">{entry.title}</h3>
-                          </div>
-                          <div className={`transition-transform duration-300 ${isActive ? 'rotate-180' : ''}`}>
-                            <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
+                        <Icon size={18} />
+                    </button>
 
-                      {/* Expanded View */}
-                      <motion.div
-                        initial={false}
-                        animate={{
-                          height: isActive ? "auto" : 0,
-                          opacity: isActive ? 1 : 0
-                        }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="p-4 sm:p-6 rounded-lg bg-white/5 border border-white/10">
-                          <ul className="space-y-3">
-                            {entry.description.map((item, itemIndex) => (
-                              <motion.li
-                                key={itemIndex}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: itemIndex * 0.1 }}
-                                className="text-sm text-muted leading-relaxed flex items-start"
-                              >
-                                <span className="text-accent mr-2 mt-1 flex-shrink-0">•</span>
-                                <span>{item}</span>
-                              </motion.li>
-                            ))}
-                          </ul>
-                        </div>
-                      </motion.div>
-                    </motion.div>
+                    {/* Content Card */}
+                    <div 
+                        className={`bg-background border transition-all duration-300 rounded-2xl overflow-hidden ${
+                            isActive ? 'border-accent/50 shadow-md' : 'border-border'
+                        }`}
+                    >
+                        <button 
+                            onClick={() => handleCardClick(index)}
+                            className="w-full flex items-center justify-between p-4 text-left"
+                        >
+                            <div>
+                                <div className="text-xs font-bold text-accent uppercase tracking-wider mb-1">
+                                    {entry.period}
+                                </div>
+                                <h3 className={`font-bold text-text ${isActive ? 'text-lg' : 'text-base'}`}>
+                                    {entry.title}
+                                </h3>
+                            </div>
+                            <ChevronRight 
+                                size={20} 
+                                className={`text-muted transition-transform duration-300 ${isActive ? 'rotate-90' : ''}`} 
+                            />
+                        </button>
+
+                        <AnimatePresence>
+                            {isActive && (
+                                <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className="px-4 pb-4 pt-0 border-t border-dashed border-border mt-2">
+                                        <ul className="space-y-3 mt-4">
+                                            {entry.description.map((item, i) => (
+                                                <li key={i} className="flex items-start text-sm text-muted gap-3">
+                                                    <span className="mt-1.5 w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                                                    <span className="leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                   </motion.div>
                 )
               })}
-            </div>
           </div>
         </div>
       </div>

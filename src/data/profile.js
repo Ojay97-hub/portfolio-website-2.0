@@ -135,15 +135,6 @@ export const projects = [
 
 export const education = [
   {
-    title: 'Full Stack Software Development',
-    institution: 'Code Institute',
-    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 5 portfolio projects demonstrating full-stack development skills.',
-    completion: '2025',
-    credentials: 'Diploma',
-    projects: '5 Portfolio Projects',
-    skills: ['HTML5/CSS3', 'JavaScript', 'Python', 'Django', 'PostgreSQL', 'Git/GitHub']
-  },
-  {
     title: 'UI Design Certification',
     institution: 'Professional Design Institute',
     description: 'User-centered design principles, wireframing, prototyping, and design systems. Created a comprehensive banking application with 9 responsive screens across mobile, tablet, and desktop platforms.',
@@ -153,13 +144,13 @@ export const education = [
     skills: ['Figma', 'User Research', 'Wireframing', 'Prototyping', 'Design Systems']
   },
   {
-    title: 'React Certificate',
-    institution: 'Scrimba',
-    description: 'Comprehensive React training covering modern React development, components, hooks, state management, and building interactive web applications.',
+    title: 'Full Stack Software Development',
+    institution: 'Code Institute',
+    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 5 portfolio projects demonstrating full-stack development skills.',
     completion: '2025',
-    credentials: 'Certificate',
-    projects: 'React Projects & Interactive Apps',
-    skills: ['React', 'JSX', 'Hooks', 'State Management', 'Component Architecture']
+    credentials: 'Diploma',
+    projects: '5 Portfolio Projects',
+    skills: ['HTML5/CSS3', 'JavaScript', 'Python', 'Django', 'PostgreSQL', 'Git/GitHub']
   },
   {
     title: 'Continuous Learning - In Progress',

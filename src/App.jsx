@@ -11,7 +11,7 @@ const WorkTypes = lazy(() => import('./sections/WorkTypes'))
 const Services = lazy(() => import('./sections/Services'))
 const FeaturedProjects = lazy(() => import('./sections/FeaturedProjects'))
 const UIDesigns = lazy(() => import('./sections/UIDesigns'))
-const CTA = lazy(() => import('./sections/CTA'))
+// CTA section merged into ContactForm, so we don't need it separately
 const ContactInfo = lazy(() => import('./sections/ContactInfo'))
 const ContactForm = lazy(() => import('./sections/ContactForm'))
 const Benefits = lazy(() => import('./sections/Benefits'))
@@ -87,10 +87,7 @@ function App() {
             {/* UI Design Showcase Section */}
             <UIDesigns />
             
-            {/* CTA Section */}
-            <CTA />
-            
-            {/* Contact Info Section */}
+            {/* Contact Info Section - Moved up */}
             <ContactInfo />
             
             {/* Benefits Section */}
@@ -99,7 +96,7 @@ function App() {
             {/* Education Section */}
             <Education />
             
-            {/* Contact Form Section */}
+            {/* Contact Form Section (Includes CTA) */}
             <ContactForm />
           </Suspense>
         </motion.div>

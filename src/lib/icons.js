@@ -59,7 +59,8 @@ import {
   FileCode,
   Wrench,
   Code2,
-  Laptop
+  Laptop,
+  Search
 } from 'lucide-react'
 
 // Export individual icons
@@ -121,7 +122,8 @@ export {
   FileCode,
   Wrench,
   Code2,
-  Laptop
+  Laptop,
+  Search
 }
 
 // Export all icons as object for dynamic access

@@ -7,21 +7,22 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: ['Nunito', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        heading: ['Outfit', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       colors: {
-        background: '#000814',
-        surface: '#001D3D',
-        primary: '#003566',
-        accent: '#FFC300',
-        accentSoft: '#FFD60A',
-        text: '#E6EDF7',
-        muted: '#8FA3BF',
-        card: '#001A31',
-        border: 'rgba(255,255,255,0.08)',
+        background: '#F9FAFB', // Very light gray/off-white
+        surface: '#FFFFFF',    // Pure white for cards/surfaces
+        primary: '#2563EB',    // Vibrant blue
+        accent: '#F59E0B',     // Vibrant amber/orange
+        accentSoft: '#FCD34D', // Softer amber
+        text: '#1F2937',       // Dark gray for main text (not pure black)
+        muted: '#6B7280',      // Medium gray for secondary text
+        card: '#FFFFFF',       // White for cards
+        border: 'rgba(0,0,0,0.08)', // Subtle dark border
       },
       boxShadow: {
-        soft: '0 6px 24px rgba(0,0,0,0.25)',
+        soft: '0 4px 20px -2px rgba(0, 0, 0, 0.05)', // Softer, lighter shadow
       },
       container: {
         center: true,
@@ -41,7 +42,7 @@ export default {
         DEFAULT: '2px',
       },
       ringColor: {
-        DEFAULT: '#FFC300',
+        DEFAULT: '#F59E0B',
       },
     },
   },

@@ -5,8 +5,7 @@
  * 
  * This is a template script showing how you could generate multiple image sizes
  * for better performance. In production, you'd use tools like:
- * - sharp (Node.js)
- * - imagemin
+ * - sharp (Node.js) - already installed in this project
  * - Cloudinary
  * - Next.js Image Optimization
  * - Vite image optimization plugins
