@@ -215,17 +215,17 @@ const DesignCard = forwardRef(({ design, index, getDeviceIcon }, ref) => {
                 className="col-span-1 md:col-span-2 lg:col-span-3 mb-12 last:mb-0 group"
             >
                 {/* Desktop Specific Layout - Large Frame with Browser Window */}
-                <div className="rounded-[2.5rem] bg-[#E2E8F0] dark:bg-slate-800 p-8 md:p-16 transition-all duration-500 hover:shadow-xl">
+                <div className="rounded-[2.5rem] bg-[#CCFBF1] dark:bg-[#115E59] p-8 md:p-16 transition-all duration-500 hover:shadow-xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15)]">
 
                     {/* Header Content */}
                     <div className="max-w-3xl mx-auto text-center mb-10">
                         <div className="flex items-center justify-center gap-2 mb-4">
-                            <span className="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-widest flex items-center gap-2">
+                            <span className="bg-white/70 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-teal-800 dark:text-white uppercase tracking-widest flex items-center gap-2">
                                 <DeviceIcon size={12} /> Desktop View
                             </span>
                         </div>
-                        <h3 className="text-base md:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{design.title}</h3>
-                        <p className="text-sm md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">{design.description}</p>
+                        <h3 className="text-base md:text-4xl font-bold text-teal-900 dark:text-white mb-4 leading-tight">{design.title}</h3>
+                        <p className="text-sm md:text-lg text-teal-800 dark:text-teal-100 leading-relaxed">{design.description}</p>
                     </div>
 
                     {/* Browser Window Mockup */}

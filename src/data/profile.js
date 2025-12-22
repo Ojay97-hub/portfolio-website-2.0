@@ -11,7 +11,7 @@ export const profile = {
     github: 'https://github.com/Ojay97-hub',
     portfolio: 'https://owencotter.dev', // Replace with your actual portfolio URL
   },
-  shortBio: 'Recent Code Institute graduate seeking my first role as a developer. Passionate about creating intuitive web applications and user experiences, with hands-on experience from 6 portfolio projects ranging from interactive games to full-stack e-commerce platforms.',
+  shortBio: "I bridge UI design and development to build web experiences that look considered and work seamlessly. From early Figma concepts to production-ready applications, I apply a designer’s eye to structure, interaction, and implementation.",
 }
 
 export const skills = [

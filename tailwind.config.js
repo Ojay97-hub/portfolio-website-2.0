@@ -14,8 +14,9 @@ export default {
         background: '#F9FAFB', // Very light gray/off-white
         surface: '#FFFFFF',    // Pure white for cards/surfaces
         primary: '#2563EB',    // Vibrant blue
-        accent: '#F59E0B',     // Vibrant amber/orange
-        accentSoft: '#FCD34D', // Softer amber
+        accent: '#0D9488',     // Teal 600 - Strong, accessible Teal
+        accentSoft: '#99F6E4', // Teal 200 - Soft background Teal
+        accentDark: '#0F766E', // Teal 700 - Dark accessible Teal
         text: '#1F2937',       // Dark gray for main text (not pure black)
         muted: '#6B7280',      // Medium gray for secondary text
         card: '#FFFFFF',       // White for cards
@@ -42,7 +43,7 @@ export default {
         DEFAULT: '2px',
       },
       ringColor: {
-        DEFAULT: '#F59E0B',
+        DEFAULT: '#0D9488',
       },
     },
   },

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowDown, Search, Github, Linkedin, Mail, X, ChevronDown, ChevronUp } from '../lib/icons'
+import { ArrowDown, Search, Github, Linkedin, Mail, X, ChevronDown, ChevronUp, ExternalLink } from '../lib/icons'
 import Button from '../components/Button'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
@@ -41,7 +41,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-accent font-medium mb-4"
+              className="text-accentDark font-medium mb-4"
             >
               Hello, I'm
             </motion.p>
@@ -59,7 +59,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-xl md:text-2xl text-accent mb-8"
+              className="text-xl md:text-2xl text-accentDark mb-8"
             >
               {profile.title}
             </motion.p>
@@ -79,34 +79,46 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+            className="flex flex-col items-center gap-6 mb-8"
           >
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => scrollToSection('contact-form')}
-              className="w-full sm:w-auto"
-            >
-              <Mail size={20} className="mr-2" />
-              Hire Me
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto">
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => scrollToSection('contact-form')}
+                className="w-full sm:w-auto min-w-[140px]"
+              >
+                <Mail size={20} className="mr-2" />
+                Hire Me
+              </Button>
 
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => setShowCV(!showCV)}
-              className="w-full sm:w-auto"
-              aria-label="View CV"
-              aria-expanded={showCV}
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setShowCV(!showCV)}
+                className="w-full sm:w-auto min-w-[140px]"
+                aria-label="View CV"
+                aria-expanded={showCV}
+              >
+                <Search size={20} className="mr-2" />
+                {showCV ? 'Hide CV' : 'View CV'}
+                {showCV ? (
+                  <ChevronUp size={18} className="ml-2" />
+                ) : (
+                  <ChevronDown size={18} className="ml-2" />
+                )}
+              </Button>
+            </div>
+
+            <a
+              href="https://www.novaformadesigns.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-accentDark hover:text-accent transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-3 py-2"
             >
-              <Search size={20} className="mr-2" />
-              {showCV ? 'Hide CV' : 'View CV'}
-              {showCV ? (
-                <ChevronUp size={18} className="ml-2" />
-              ) : (
-                <ChevronDown size={18} className="ml-2" />
-              )}
-            </Button>
+              <ExternalLink size={18} />
+              Nova Forma Designs
+            </a>
           </motion.div>
 
           {/* CV Dropdown Iframe */}
@@ -203,27 +215,7 @@ const Hero = () => {
             })}
           </motion.div>
 
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.6 }}
-            className="flex flex-col items-center"
-          >
-            <button
-              onClick={() => scrollToSection('about')}
-              className="flex flex-col items-center text-muted hover:text-accent transition-colors group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md p-2"
-              aria-label="Scroll to about section"
-            >
-              <span className="text-sm font-medium mb-2">Scroll to explore</span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <ArrowDown size={20} className="group-hover:text-accent transition-colors" />
-              </motion.div>
-            </button>
-          </motion.div>
+
         </div>
       </div>
     </section>
