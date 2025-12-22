@@ -1,15 +1,20 @@
-import { motion } from 'framer-motion'
-import { ArrowDown, Search, Github, Linkedin, Mail } from '../lib/icons'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowDown, Search, Github, Linkedin, Mail, X, ChevronDown, ChevronUp } from '../lib/icons'
 import Button from '../components/Button'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
 
 const Hero = () => {
+  const [showCV, setShowCV] = useState(false)
+
   const socialLinks = [
     { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
     { icon: Linkedin, href: profile.socials.linkedin, label: 'LinkedIn' },
     { icon: Github, href: profile.socials.github, label: 'GitHub' },
   ]
+
+  const cvUrl = 'https://docs.google.com/document/d/e/2PACX-1vTyJjgW7mDrfLh4epdEhhat08c-Nt5VT8MU3dXITv1fLd5pVfUMbMm4ExWwkTpRNkwQTQvgHO2Ztcc3/pub?embedded=true'
 
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-24 md:pt-20 pb-20">
@@ -36,7 +41,7 @@ const Hero = () => {
             >
               Hello, I'm
             </motion.p>
-            
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -45,7 +50,7 @@ const Hero = () => {
             >
               {profile.name}
             </motion.h1>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -54,7 +59,7 @@ const Hero = () => {
             >
               {profile.title}
             </motion.p>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -70,7 +75,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
           >
             <Button
               variant="primary"
@@ -81,18 +86,89 @@ const Hero = () => {
               <Mail size={20} className="mr-2" />
               Hire Me
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open('https://docs.google.com/document/d/e/2PACX-1vSh1Ac-VeQQmYs33lwZyxFvAXA2qHl4X9isSWcIzDQfE1UZRkbCuswvW3PuJIafSidHIm4fW5VOkLWR/pub?embedded=true', '_blank')}
+              onClick={() => setShowCV(!showCV)}
               className="w-full sm:w-auto"
               aria-label="View CV"
+              aria-expanded={showCV}
             >
               <Search size={20} className="mr-2" />
-              View CV
+              {showCV ? 'Hide CV' : 'View CV'}
+              {showCV ? (
+                <ChevronUp size={18} className="ml-2" />
+              ) : (
+                <ChevronDown size={18} className="ml-2" />
+              )}
             </Button>
           </motion.div>
+
+          {/* CV Dropdown Iframe */}
+          <AnimatePresence>
+            {showCV && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                className="overflow-hidden mb-8"
+              >
+                <motion.div
+                  initial={{ y: -20 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: -20 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="relative bg-white rounded-2xl shadow-2xl border border-border overflow-hidden"
+                >
+                  {/* CV Header Bar */}
+                  <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary to-primary/80 text-white">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                      </div>
+                      <span className="text-sm font-medium">Owen Cotter - CV</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={cvUrl.replace('?embedded=true', '')}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg transition-colors"
+                      >
+                        Open Full Screen
+                      </a>
+                      <button
+                        onClick={() => setShowCV(false)}
+                        className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                        aria-label="Close CV"
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* CV Iframe Container - A4 Aspect Ratio */}
+                  <div className="bg-gray-100 p-4">
+                    <div className="relative w-full mx-auto" style={{ maxWidth: '800px' }}>
+                      {/* A4 aspect ratio container (1:1.414) */}
+                      <div className="relative w-full" style={{ paddingBottom: '141.4%' }}>
+                        <iframe
+                          src={cvUrl}
+                          title="Owen Cotter CV"
+                          className="absolute inset-0 w-full h-full bg-white rounded-lg shadow-lg"
+                          style={{ border: 'none' }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Social Links */}
           <motion.div

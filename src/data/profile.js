@@ -196,92 +196,88 @@ export const benefits = [
   }
 ]
 
-// UI Design Showcase - Banking Application (9 responsive screens)
-// Challenger banking brand focused on Clear, Playful, and Trustworthy design principles
+// UI Design Showcase - FinWiz Banking App (9 Screens)
+// Mobile-first financial application design
+// NOTE: Images are prefixed with /portfolio-website-2.0 to match the Vite base path
+const BASE_PATH = '/portfolio-website-2.0';
+
 export const uiDesigns = [
-  // Mobile Designs - Banking Application
+  // DESKTOP DESIGNS (3)
   {
-    title: 'My Accounts - Mobile',
-    category: 'Mobile',
-    description: 'Banking home screen showing account overview with current, savings, and joint accounts. Clean navigation to other banking features.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My Accounts - mobile - 13th iteration.png',
-    tools: ['Figma', 'Mobile UI', 'Financial UX'],
-    type: 'Mobile App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "FinWiz - Cards & Magic",
+    category: "Desktop",
+    description: "The Cards page showcases the 'Magic' balance system with AI-powered financial tips. Features quick actions for money transfer, spending categories, and a detailed transaction ledger with real-time insights.",
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-desktop.png?v=8`,
+    tools: ["Figma", "Auto Layout", "Desktop"],
+    figmaUrl: "#"
   },
   {
-    title: 'Current Account - Mobile',
-    category: 'Mobile',
-    description: 'Day-to-day spending account interface with recent transactions and quick links to regular payees for mobile users.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - mobile - 17th iteration.png',
-    tools: ['Figma', 'Mobile Design', 'Banking UX'],
-    type: 'Mobile App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "FinWiz - Accounts Dashboard",
+    category: "Desktop",
+    description: "Gamified account overview with 'Total Coins' balance, achievement badges, and treasure tracker analytics. Includes spending visualization, upcoming payments, and partner perks for an engaging financial experience.",
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-desktop.png?v=8`,
+    tools: ["Figma", "Data Viz", "Dashboard"],
+    figmaUrl: "#"
   },
   {
-    title: 'My Spending - Mobile',
-    category: 'Mobile',
-    description: 'Mobile spending analysis with savings goals, spending over time, and data visualization for financial insights.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - mobile - 13th iteration.png',
-    tools: ['Figma', 'Data Visualization', 'Mobile UI'],
-    type: 'Mobile App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "FinWiz - Trends & Insights",
+    category: "Desktop",
+    description: "Comprehensive analytics dashboard with Crystal Ball Insights, spending breakdowns by category, and an interactive Wizard Spending Locator map. Features income allowances and multi-account balance tracking.",
+    image: `${BASE_PATH}/project-pics/figma-exports/current-account-desktop.png?v=8`,
+    tools: ["Figma", "Components", "Grid"],
+    figmaUrl: "#"
   },
-  // Tablet Designs - Banking Application
+
+  // TABLET DESIGNS (3)
   {
-    title: 'My Accounts - Tablet',
-    category: 'Tablet',
-    description: 'Tablet-optimized banking dashboard with enhanced account overview and improved navigation for medium-sized screens.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My Accounts - tablet - 12th iteration.png',
-    tools: ['Figma', 'Tablet UI', 'Financial UX'],
-    type: 'Banking App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
-  },
-  {
-    title: 'Current Account - Tablet',
-    category: 'Tablet',
-    description: 'Enhanced current account view for tablets with expanded transaction history and improved payee management interface.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - tablet - 8th iteration.png',
-    tools: ['Figma', 'Tablet Design', 'Banking UX'],
-    type: 'Banking App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "My Accounts - Tablet View",
+    category: "Tablet",
+    description: "Adaptive layout for tablet devices, maintaining the card-based structure while optimizing for touch interaction and medium-sized viewports.",
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-tablet.png?v=8`,
+    tools: ["Figma", "Responsive", "Tablet"],
+    figmaUrl: "#"
   },
   {
-    title: 'My Spending - Tablet',
-    category: 'Tablet',
-    description: 'Comprehensive spending analysis optimized for tablet screens with detailed charts, goals tracking, and financial planning tools.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - tablet - 11th iteration.png',
-    tools: ['Figma', 'Data Visualization', 'Tablet UI'],
-    type: 'Banking App',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
-  },
-  // Desktop Designs - Banking Application
-  {
-    title: 'My Accounts - Desktop',
-    category: 'Desktop',
-    description: 'Full-featured desktop banking dashboard with comprehensive account overview, quick actions, and detailed financial summary.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My accounts - desktop - 8th iteration.png',
-    tools: ['Figma', 'Desktop UI', 'Financial UX'],
-    type: 'Banking Platform',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "My Spending - Tablet Analytics",
+    category: "Tablet",
+    description: "Touch-friendly spending report interface, presenting charts and transaction lists in a layout optimized for tablet ergonomics.",
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-tablet.png?v=8`,
+    tools: ["Figma", "Auto Layout", "Tablet"],
+    figmaUrl: "#"
   },
   {
-    title: 'Current Account - Desktop',
-    category: 'Desktop',
-    description: 'Desktop current account interface with extensive transaction management, advanced filtering, and detailed payee controls.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/Current Account - desktop - 7th iteration.png',
-    tools: ['Figma', 'Desktop Design', 'Banking UX'],
-    type: 'Banking Platform',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "Current Account - Tablet View",
+    category: "Tablet",
+    description: "Tablet-optimized transaction history and account management, ensuring legibility and easy access to controls on portable screens.",
+    image: `${BASE_PATH}/project-pics/figma-exports/current-tablet.png?v=8`,
+    tools: ["Figma", "Components", "Tablet"],
+    figmaUrl: "#"
+  },
+
+  // MOBILE DESIGNS (3)
+  {
+    title: "My Accounts - Mobile App",
+    category: "Mobile",
+    description: "Mobile-first hub for accessing all accounts. Prioritizes essential information and one-handed navigation for on-the-go banking.",
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-mobile.png?v=8`,
+    tools: ["Figma", "Mobile System", "App"],
+    figmaUrl: "#"
   },
   {
-    title: 'My Spending - Desktop',
-    category: 'Desktop',
-    description: 'Advanced desktop spending analytics with comprehensive data visualization, detailed reporting, and financial planning features.',
-    image: '/portfolio-website-2.0/project-pics/ui-designs/My spending - desktop - 9th iteration.png',
-    tools: ['Figma', 'Data Visualization', 'Desktop UI'],
-    type: 'Banking Platform',
-    figmaUrl: 'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=1616-227&t=9HRmsyrL9al3LMFq-1'
+    title: "My Spending - Mobile Insights",
+    category: "Mobile",
+    description: "Compact spending summary and categorization for mobile devices, giving users quick insights into their financial habits anytime.",
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-mobile.png?v=8`,
+    tools: ["Figma", "Mobile", "Data"],
+    figmaUrl: "#"
+  },
+  {
+    title: "Current Account - Mobile View",
+    category: "Mobile",
+    description: "Streamlined transaction list and account actions for mobile, allowing users to check balances and manage funds effortlessly.",
+    image: `${BASE_PATH}/project-pics/figma-exports/current-mobile.png?v=8`,
+    tools: ["Figma", "Mobile", "UX"],
+    figmaUrl: "#"
   }
 ]
 

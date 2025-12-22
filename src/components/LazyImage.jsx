@@ -1,35 +1,20 @@
 import { useState, useRef, useEffect } from 'react'
 
-const LazyImage = ({ 
-  src, 
+const LazyImage = ({
+  src,
   srcSet,
   sizes,
-  alt, 
-  className = '', 
+  alt,
+  className = '',
   width,
   height,
   placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+',
-  ...props 
+  ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(false)
   const [error, setError] = useState(false)
   const imgRef = useRef(null)
-
-  // Generate AVIF, WebP, and PNG sources from the src path
-  const getImageSources = (imagePath) => {
-    if (!imagePath) return { avif: '', webp: '', jpeg: '', png: '' }
-
-    const pathWithoutExtension = imagePath.replace(/\.(webp|jpg|jpeg|png)$/i, '')
-    return {
-      avif: `${pathWithoutExtension}.avif`,
-      webp: `${pathWithoutExtension}.webp`,
-      jpeg: `${pathWithoutExtension}.jpg`,
-      png: `${pathWithoutExtension}.png`
-    }
-  }
-
-  const sources = getImageSources(src)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,28 +59,22 @@ const LazyImage = ({
           height={height}
         />
       )}
-      
-      {/* Actual image with AVIF, WebP, JPEG, PNG fallbacks */}
+
+      {/* Actual image - use original source directly */}
       {isInView && !error && (
-        <picture>
-          <source srcSet={sources.avif} type="image/avif" />
-          <source srcSet={sources.webp} type="image/webp" />
-          <source srcSet={sources.jpeg} type="image/jpeg" />
-          <img
-            src={sources.png}
-            srcSet={srcSet}
-            sizes={sizes}
-            alt={alt}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isLoaded ? 'opacity-100' : 'opacity-0'
+        <img
+          src={src}
+          srcSet={srcSet}
+          sizes={sizes}
+          alt={alt}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'
             }`}
-            onLoad={handleLoad}
-            onError={handleError}
-            loading="lazy"
-            width={width}
-            height={height}
-          />
-        </picture>
+          onLoad={handleLoad}
+          onError={handleError}
+          loading="lazy"
+          width={width}
+          height={height}
+        />
       )}
 
       {/* Error fallback */}
