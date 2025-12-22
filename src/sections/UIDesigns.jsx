@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, X, ChevronLeft, ChevronRight, Filter, Smartphone, Tablet, Monitor } from '../lib/icons'
+import { Filter, Smartphone, Tablet, Monitor } from '../lib/icons'
 import Section from '../components/Section'
-import Badge from '../components/Badge'
-import Button from '../components/Button'
 import LazyImage from '../components/LazyImage'
+import CustomDropdown from '../components/CustomDropdown'
 import { uiDesigns } from '../data/profile'
 
 // Add custom scrollbar hiding style
@@ -18,140 +17,8 @@ const scrollbarHideStyles = `
   }
 `
 
-const Lightbox = ({ design, onClose, onNext, onPrev, currentIndex, total, getDeviceIcon }) => {
-    const DeviceIcon = getDeviceIcon(design.category)
-
-    // Lock body scroll when modal is open
-    useEffect(() => {
-        document.body.style.overflow = 'hidden'
-        return () => {
-            document.body.style.overflow = 'unset'
-        }
-    }, [])
-
-    // Keyboard navigation
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') onClose()
-            if (e.key === 'ArrowRight') onNext()
-            if (e.key === 'ArrowLeft') onPrev()
-        }
-        window.addEventListener('keydown', handleKeyDown)
-        return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [onClose, onNext, onPrev])
-
-    const getDeviceFrameClass = () => {
-        switch (design.category) {
-            case 'Mobile': return 'max-w-[320px] aspect-[9/19] rounded-[2rem]'
-            case 'Tablet': return 'max-w-[700px] aspect-[4/3] rounded-xl'
-            default: return 'max-w-[1000px] aspect-[16/10] rounded-lg'
-        }
-    }
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/95 backdrop-blur-md"
-            onClick={onClose}
-        >
-            <style>{scrollbarHideStyles}</style>
-
-            {/* Close Button */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20"
-            >
-                <X size={24} />
-            </button>
-
-            {/* Navigation - Left */}
-            <button
-                onClick={(e) => { e.stopPropagation(); onPrev(); }}
-                className="absolute left-2 md:left-6 md:top-1/2 md:-translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20 hidden md:block"
-            >
-                <ChevronLeft size={24} />
-            </button>
-
-            {/* Navigation - Right */}
-            <button
-                onClick={(e) => { e.stopPropagation(); onNext(); }}
-                className="absolute right-2 md:right-6 md:top-1/2 md:-translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20 hidden md:block"
-            >
-                <ChevronRight size={24} />
-            </button>
-
-            {/* Content Container */}
-            <div
-                className="relative w-full h-full max-h-screen flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12"
-                onClick={e => e.stopPropagation()}
-            >
-                {/* Navigation - Mobile (Top) */}
-                <div className="flex md:hidden items-center justify-between w-full absolute top-0 px-2 py-4 z-10">
-                    <button onClick={onPrev} className="p-2 bg-black/50 rounded-full text-white"><ChevronLeft size={20} /></button>
-                    <span className="text-white/80 text-sm">{currentIndex + 1} / {total}</span>
-                    <button onClick={onNext} className="p-2 bg-black/50 rounded-full text-white"><ChevronRight size={20} /></button>
-                </div>
-
-                {/* Image Preview */}
-                <div className="flex-1 w-full h-full flex items-center justify-center overflow-y-auto hide-scrollbar p-4">
-                    <motion.div
-                        layoutId={`image-${design.title}`}
-                        className={`relative bg-gray-900 shadow-2xl overflow-hidden border-[6px] border-gray-800 ${getDeviceFrameClass()}`}
-                    >
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black rounded-b-xl z-10" />
-                        <LazyImage
-                            src={design.image}
-                            alt={design.title}
-                            className="w-full h-full object-cover object-top"
-                        />
-                    </motion.div>
-                </div>
-
-                {/* Info Sidebar (Desktop) / Bottom Sheet (Mobile) */}
-                <div className="w-full md:w-[350px] shrink-0 bg-surface/5 md:bg-transparent p-4 md:p-0 rounded-t-2xl md:rounded-none backdrop-blur-md md:backdrop-filter-none">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="outline" className="text-white border-white/20">
-                            <DeviceIcon size={12} className="mr-1" />
-                            {design.category}
-                        </Badge>
-                        <span className="text-white/50 text-sm">{currentIndex + 1} of {total}</span>
-                    </div>
-
-                    <h3 className="text-2xl font-bold text-white mb-2">{design.title}</h3>
-                    <p className="text-white/70 leading-relaxed mb-6">{design.description}</p>
-
-                    <div className="space-y-4">
-                        <div>
-                            <h4 className="text-white/90 text-sm font-semibold mb-2 uppercase tracking-wider">Tools Used</h4>
-                            <div className="flex flex-wrap gap-2">
-                                {design.tools.map((tool, i) => (
-                                    <span key={i} className="px-3 py-1 rounded-full bg-white/10 text-white/90 text-sm border border-white/10">
-                                        {tool}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        <Button
-                            href={design.figmaUrl}
-                            variant="primary"
-                            icon={ExternalLink}
-                            className="w-full justify-center mt-4 bg-[#F24E1E] hover:bg-[#D43B0F] border-none text-white"
-                        >
-                            Open in Figma
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-    )
-}
-
 export default function UIDesigns() {
     const [filter, setFilter] = useState('All')
-    const [selectedDesign, setSelectedDesign] = useState(null)
     const [tabletScreenIndex, setTabletScreenIndex] = useState(0)
     const [mobileScreenIndex, setMobileScreenIndex] = useState(0)
 
@@ -162,14 +29,6 @@ export default function UIDesigns() {
 
     // Screen type names for tabs
     const screenTypes = ['My Accounts', 'My Spending', 'Current Account']
-
-    const handleNext = useCallback(() => {
-        setSelectedDesign((prev) => (prev + 1) % uiDesigns.length)
-    }, [])
-
-    const handlePrev = useCallback(() => {
-        setSelectedDesign((prev) => (prev - 1 + uiDesigns.length) % uiDesigns.length)
-    }, [])
 
     const getDeviceIcon = (category) => {
         switch (category) {
@@ -192,8 +51,16 @@ export default function UIDesigns() {
     const showTablet = filter === 'All' || filter === 'Tablet'
     const showMobile = filter === 'All' || filter === 'Mobile'
 
+    // Prepare dropdown options with icons and counts
+    const dropdownOptions = filters.map(f => ({
+        value: f.name,
+        label: f.name === 'All' ? 'All 9 screen types' : `${f.name} (${uiDesigns.filter(d => d.category === f.name).length})`,
+        icon: f.icon
+    }))
+
     return (
         <Section id="ui-designs" className="bg-background-alt/30">
+            <style>{scrollbarHideStyles}</style>
             <div className="text-center max-w-2xl mx-auto mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">UI/UX Design Showcase</h2>
                 <p className="text-muted-foreground text-lg">
@@ -201,24 +68,37 @@ export default function UIDesigns() {
                 </p>
 
                 {/* Filter Buttons */}
-                <div className="flex flex-wrap justify-center gap-2 mt-8">
-                    {filters.map((f) => (
-                        <button
-                            key={f.name}
-                            onClick={() => setFilter(f.name)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === f.name
-                                ? 'bg-primary text-white shadow-lg scale-105'
-                                : 'bg-surface hover:bg-surface-hover text-gray-600 hover:text-primary border border-border'
-                                }`}
-                        >
-                            <f.icon size={14} />
-                            {f.name}
-                            <span className={`ml-1 text-[10px] px-1.5 py-0.5 rounded-full ${filter === f.name ? 'bg-white/20' : 'bg-gray-100'
-                                }`}>
-                                {f.name === 'All' ? uiDesigns.length : uiDesigns.filter(d => d.category === f.name).length}
-                            </span>
-                        </button>
-                    ))}
+                <div className="mt-8">
+                    {/* Mobile Dropdown */}
+                    <div className="md:hidden max-w-xs mx-auto">
+                        <CustomDropdown
+                            options={dropdownOptions}
+                            value={filter}
+                            onChange={(val) => setFilter(val)}
+                            placeholder="Filter designs..."
+                        />
+                    </div>
+
+                    {/* Desktop Buttons */}
+                    <div className="hidden md:flex flex-wrap justify-center gap-2">
+                        {filters.map((f) => (
+                            <button
+                                key={f.name}
+                                onClick={() => setFilter(f.name)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === f.name
+                                    ? 'bg-primary text-white shadow-lg scale-105'
+                                    : 'bg-surface hover:bg-surface-hover text-gray-600 hover:text-primary border border-border'
+                                    }`}
+                            >
+                                <f.icon size={14} />
+                                {f.name}
+                                <span className={`ml-1 text-[10px] px-1.5 py-0.5 rounded-full ${filter === f.name ? 'bg-white/20' : 'bg-gray-100'
+                                    }`}>
+                                    {f.name === 'All' ? uiDesigns.length : uiDesigns.filter(d => d.category === f.name).length}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
@@ -232,7 +112,6 @@ export default function UIDesigns() {
                                     key={`desktop-${index}`}
                                     design={design}
                                     index={index}
-                                    onClick={() => setSelectedDesign(uiDesigns.findIndex(d => d === design))}
                                     getDeviceIcon={getDeviceIcon}
                                 />
                             ))}
@@ -249,7 +128,6 @@ export default function UIDesigns() {
                         screenTypes={screenTypes}
                         activeIndex={tabletScreenIndex}
                         setActiveIndex={setTabletScreenIndex}
-                        onCardClick={(design) => setSelectedDesign(uiDesigns.findIndex(d => d === design))}
                         getDeviceIcon={getDeviceIcon}
                         bgColor="bg-[#F0FDF4]"
                     />
@@ -264,33 +142,17 @@ export default function UIDesigns() {
                         screenTypes={screenTypes}
                         activeIndex={mobileScreenIndex}
                         setActiveIndex={setMobileScreenIndex}
-                        onCardClick={(design) => setSelectedDesign(uiDesigns.findIndex(d => d === design))}
                         getDeviceIcon={getDeviceIcon}
                         bgColor="bg-[#FFF1F2]"
                     />
                 )}
             </div>
-
-            {/* Lightbox Modal */}
-            <AnimatePresence>
-                {selectedDesign !== null && (
-                    <Lightbox
-                        design={uiDesigns[selectedDesign]}
-                        onClose={() => setSelectedDesign(null)}
-                        onNext={handleNext}
-                        onPrev={handlePrev}
-                        currentIndex={selectedDesign}
-                        total={uiDesigns.length}
-                        getDeviceIcon={getDeviceIcon}
-                    />
-                )}
-            </AnimatePresence>
         </Section>
     )
 }
 
 // Tabbed section for Tablet/Mobile designs
-const TabbedDeviceSection = ({ title, icon: Icon, designs, screenTypes, activeIndex, setActiveIndex, onCardClick, getDeviceIcon, bgColor }) => {
+const TabbedDeviceSection = ({ title, icon: Icon, designs, screenTypes, activeIndex, setActiveIndex, getDeviceIcon, bgColor }) => {
     const activeDesign = designs[activeIndex]
 
     return (
@@ -314,8 +176,8 @@ const TabbedDeviceSection = ({ title, icon: Icon, designs, screenTypes, activeIn
                         key={screenType}
                         onClick={() => setActiveIndex(index)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${activeIndex === index
-                                ? 'bg-primary text-white shadow-md'
-                                : 'bg-surface hover:bg-surface-hover text-muted-foreground border border-border'
+                            ? 'bg-primary text-white shadow-md'
+                            : 'bg-surface hover:bg-surface-hover text-muted-foreground border border-border'
                             }`}
                     >
                         {screenType}
@@ -324,29 +186,18 @@ const TabbedDeviceSection = ({ title, icon: Icon, designs, screenTypes, activeIn
             </div>
 
             {/* Active Design Card */}
-            <AnimatePresence mode="wait">
-                {activeDesign && (
-                    <motion.div
-                        key={activeIndex}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <DesignCard
-                            design={activeDesign}
-                            index={activeIndex}
-                            onClick={() => onCardClick(activeDesign)}
-                            getDeviceIcon={getDeviceIcon}
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {activeDesign && (
+                <DesignCard
+                    design={activeDesign}
+                    index={activeIndex}
+                    getDeviceIcon={getDeviceIcon}
+                />
+            )}
         </motion.div>
     )
 }
 
-const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
+const DesignCard = forwardRef(({ design, index, getDeviceIcon }, ref) => {
     const DeviceIcon = getDeviceIcon(design.category)
     const isDesktop = design.category === 'Desktop'
 
@@ -359,14 +210,9 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
 
     if (isDesktop) {
         return (
-            <motion.div
-                layout
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="col-span-1 md:col-span-2 lg:col-span-3 mb-12 last:mb-0 group cursor-pointer"
-                onClick={onClick}
+            <div
+                ref={ref}
+                className="col-span-1 md:col-span-2 lg:col-span-3 mb-12 last:mb-0 group"
             >
                 {/* Desktop Specific Layout - Large Frame with Browser Window */}
                 <div className="rounded-[2.5rem] bg-[#E2E8F0] dark:bg-slate-800 p-8 md:p-16 transition-all duration-500 hover:shadow-xl">
@@ -378,8 +224,8 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
                                 <DeviceIcon size={12} /> Desktop View
                             </span>
                         </div>
-                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{design.title}</h3>
-                        <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">{design.description}</p>
+                        <h3 className="text-base md:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{design.title}</h3>
+                        <p className="text-sm md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">{design.description}</p>
                     </div>
 
                     {/* Browser Window Mockup */}
@@ -398,20 +244,12 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
                         </div>
 
                         {/* Image Window */}
-                        <div className="relative group-hover:opacity-95 transition-opacity">
+                        <div className="relative">
                             <LazyImage
                                 src={design.image}
                                 alt={design.title}
                                 className="w-full h-auto object-cover object-top"
                             />
-                            {/* Click to View Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/5 backdrop-blur-[1px]">
-                                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-md px-6 py-3 rounded-full shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                    <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                                        <ExternalLink size={16} /> View Full Detail
-                                    </span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -424,20 +262,15 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
                         ))}
                     </div>
                 </div>
-            </motion.div>
+            </div>
         )
     }
 
     // Default Layout for Tablet/Mobile
     return (
-        <motion.div
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4, delay: index * 0.05 }}
-            className="flex flex-col h-full group cursor-pointer"
-            onClick={onClick}
+        <div
+            ref={ref}
+            className="flex flex-col h-full group"
         >
             {/* Framed Image Container */}
             <div className={`relative flex-1 overflow-hidden rounded-[2rem] ${frameColors[design.category] || 'bg-gray-100'} p-8 transition-all duration-300 hover:shadow-lg`}>
@@ -447,17 +280,8 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
                     <LazyImage
                         src={design.image}
                         alt={design.title}
-                        className="w-full h-full object-cover object-top transform group-hover:scale-[1.02] transition-transform duration-500"
+                        className="w-full h-full object-cover object-top"
                     />
-
-                    {/* View Overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <div className="bg-white/95 backdrop-blur px-4 py-2 rounded-full shadow-xl transform scale-95 group-hover:scale-100 transition-transform duration-200">
-                            <span className="text-gray-900 font-semibold text-sm flex items-center gap-2">
-                                <ExternalLink size={14} /> View
-                            </span>
-                        </div>
-                    </div>
                 </div>
 
                 {/* Badge - Floating on the Frame (Top Right) */}
@@ -469,7 +293,7 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
 
             {/* Content - Below Frame */}
             <div className="mt-5 px-2">
-                <h4 className="text-foreground font-bold text-xl leading-tight mb-2 group-hover:text-primary transition-colors">{design.title}</h4>
+                <h4 className="text-foreground font-bold text-base md:text-xl leading-tight mb-2 group-hover:text-primary transition-colors">{design.title}</h4>
                 <p className="text-muted-foreground text-sm line-clamp-2 mb-3 leading-relaxed">{design.description}</p>
 
                 <div className="flex flex-wrap gap-2">
@@ -480,6 +304,8 @@ const DesignCard = ({ design, index, onClick, getDeviceIcon }) => {
                     ))}
                 </div>
             </div>
-        </motion.div>
+        </div>
     )
-}
+})
+
+DesignCard.displayName = 'DesignCard'

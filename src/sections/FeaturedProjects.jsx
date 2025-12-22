@@ -4,6 +4,7 @@ import { ExternalLink, Github } from '../lib/icons'
 import Section from '../components/Section'
 import Badge from '../components/Badge'
 import LazyImage from '../components/LazyImage'
+import CustomDropdown from '../components/CustomDropdown'
 import { projects } from '../data/profile'
 import { getResponsiveImageProps } from '../lib/imageUtils'
 
@@ -15,6 +16,12 @@ const FeaturedProjects = () => {
 
   const currentProject = featuredProjects[currentIndex]
 
+  // Prepare dropdown options
+  const dropdownOptions = featuredProjects.map((project, index) => ({
+    value: index,
+    label: project.title
+  }))
+
   return (
     <Section
       id="featured-projects"
@@ -24,42 +31,53 @@ const FeaturedProjects = () => {
     >
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
         {/* Project Navigation List */}
+        {/* Navigation Wrapper */}
         <div className="w-full lg:w-1/3 flex flex-col gap-3">
-          {featuredProjects.map((project, index) => (
-            <button
-              key={project.title}
-              onClick={() => setCurrentIndex(index)}
-              className={`group text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${
-                index === currentIndex
+          {/* Mobile Dropdown */}
+          <div className="lg:hidden">
+            <CustomDropdown
+              options={dropdownOptions}
+              value={currentIndex}
+              onChange={(val) => setCurrentIndex(val)}
+              placeholder="Select a project..."
+            />
+          </div>
+
+          {/* Desktop List */}
+          <div className="hidden lg:flex flex-col gap-3">
+            {featuredProjects.map((project, index) => (
+              <button
+                key={project.title}
+                onClick={() => setCurrentIndex(index)}
+                className={`group text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${index === currentIndex
                   ? 'bg-surface border-accent/50 shadow-lg'
                   : 'bg-transparent border-transparent hover:bg-surface/30'
-              }`}
-            >
-              {/* Active Indicator */}
-              {index === currentIndex && (
-                <motion.div
-                  layoutId="activeProject"
-                  className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                />
-              )}
-              
-              <div className="relative z-10 pl-3">
-                <h3 className={`text-xl font-bold mb-2 transition-colors ${
-                  index === currentIndex ? 'text-accent' : 'text-text group-hover:text-text'
-                }`}>
-                  {project.title}
-                </h3>
-                <p className={`text-sm line-clamp-2 transition-colors ${
-                  index === currentIndex ? 'text-text/80' : 'text-muted group-hover:text-text/60'
-                }`}>
-                  {project.description}
-                </p>
-              </div>
-            </button>
-          ))}
+                  }`}
+              >
+                {/* Active Indicator */}
+                {index === currentIndex && (
+                  <motion.div
+                    layoutId="activeProject"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  />
+                )}
+
+                <div className="relative z-10 pl-3">
+                  <h3 className={`text-xl font-bold mb-2 transition-colors ${index === currentIndex ? 'text-accent' : 'text-text group-hover:text-text'
+                    }`}>
+                    {project.title}
+                  </h3>
+                  <p className={`text-sm line-clamp-2 transition-colors ${index === currentIndex ? 'text-text/80' : 'text-muted group-hover:text-text/60'
+                    }`}>
+                    {project.description}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Project Display Area */}
@@ -87,13 +105,13 @@ const FeaturedProjects = () => {
                       🚀
                     </div>
                   )}
-                  
+
                   {/* Floating Type Badge */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-text border border-border/50 shadow-lg">
                     {currentProject.projectType}
                   </div>
                 </div>
-                
+
                 {/* Content Area */}
                 <div className="p-4 md:p-6 flex-1 flex flex-col">
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -103,29 +121,29 @@ const FeaturedProjects = () => {
                       </Badge>
                     ))}
                   </div>
-                  
+
                   <div className="flex-1">
                     <p className="text-muted text-lg leading-relaxed">
                       {currentProject.description}
                     </p>
                   </div>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-border/50">
                     {currentProject.liveUrl && currentProject.liveUrl !== '#' && (
-                      <a 
-                        href={currentProject.liveUrl} 
-                        target="_blank" 
-                        rel="noreferrer" 
+                      <a
+                        href={currentProject.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
                         className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-background rounded-xl font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-accent/20"
                       >
                         <ExternalLink size={20} /> View Live Site
                       </a>
                     )}
                     {currentProject.githubUrl && (
-                      <a 
-                        href={currentProject.githubUrl} 
-                        target="_blank" 
-                        rel="noreferrer" 
+                      <a
+                        href={currentProject.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
                         className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-border text-text rounded-xl font-medium hover:bg-surface hover:border-text/20 active:scale-95 transition-all"
                       >
                         <Github size={20} /> View Code

@@ -14,7 +14,11 @@ const Hero = () => {
     { icon: Github, href: profile.socials.github, label: 'GitHub' },
   ]
 
-  const cvUrl = 'https://docs.google.com/document/d/e/2PACX-1vTyJjgW7mDrfLh4epdEhhat08c-Nt5VT8MU3dXITv1fLd5pVfUMbMm4ExWwkTpRNkwQTQvgHO2Ztcc3/pub?embedded=true'
+  /* 
+   * NOTE: We are using the local PDF file now. 
+   * The base path '/portfolio-website-2.0' corresponds to the repository name/GitHub Pages base.
+   */
+  const cvUrl = '/portfolio-website-2.0/project-pics/cv/UI%20DESIGN%20CV%202026.pdf'
 
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-24 md:pt-20 pb-20">

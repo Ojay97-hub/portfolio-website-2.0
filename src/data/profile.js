@@ -16,7 +16,7 @@ export const profile = {
 
 export const skills = [
   'HTML',
-  'CSS', 
+  'CSS',
   'JavaScript',
   'Python',
   'Django',
@@ -57,7 +57,7 @@ export const services = [
     certificate: 'Code Institute Full Stack Software Development'
   },
   {
-    title: 'Backend Development', 
+    title: 'Backend Development',
     description: 'Server-side development with Python, Django, and database management.',
     skills: ['Python Programming', 'Django Framework', 'PostgreSQL', 'API Development'],
     certificate: 'Code Institute Full Stack Software Development'
@@ -207,7 +207,7 @@ export const uiDesigns = [
     title: "FinWiz - Cards & Magic",
     category: "Desktop",
     description: "The Cards page showcases the 'Magic' balance system with AI-powered financial tips. Features quick actions for money transfer, spending categories, and a detailed transaction ledger with real-time insights.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-desktop.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-desktop.webp`,
     tools: ["Figma", "Auto Layout", "Desktop"],
     figmaUrl: "#"
   },
@@ -215,7 +215,7 @@ export const uiDesigns = [
     title: "FinWiz - Accounts Dashboard",
     category: "Desktop",
     description: "Gamified account overview with 'Total Coins' balance, achievement badges, and treasure tracker analytics. Includes spending visualization, upcoming payments, and partner perks for an engaging financial experience.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-desktop.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-desktop.webp`,
     tools: ["Figma", "Data Viz", "Dashboard"],
     figmaUrl: "#"
   },
@@ -223,7 +223,7 @@ export const uiDesigns = [
     title: "FinWiz - Trends & Insights",
     category: "Desktop",
     description: "Comprehensive analytics dashboard with Crystal Ball Insights, spending breakdowns by category, and an interactive Wizard Spending Locator map. Features income allowances and multi-account balance tracking.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-account-desktop.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/current-account-desktop.webp`,
     tools: ["Figma", "Components", "Grid"],
     figmaUrl: "#"
   },
@@ -233,7 +233,7 @@ export const uiDesigns = [
     title: "My Accounts - Tablet View",
     category: "Tablet",
     description: "Adaptive layout for tablet devices, maintaining the card-based structure while optimizing for touch interaction and medium-sized viewports.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-tablet.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-tablet.webp`,
     tools: ["Figma", "Responsive", "Tablet"],
     figmaUrl: "#"
   },
@@ -241,7 +241,7 @@ export const uiDesigns = [
     title: "My Spending - Tablet Analytics",
     category: "Tablet",
     description: "Touch-friendly spending report interface, presenting charts and transaction lists in a layout optimized for tablet ergonomics.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-tablet.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-tablet.webp`,
     tools: ["Figma", "Auto Layout", "Tablet"],
     figmaUrl: "#"
   },
@@ -249,7 +249,7 @@ export const uiDesigns = [
     title: "Current Account - Tablet View",
     category: "Tablet",
     description: "Tablet-optimized transaction history and account management, ensuring legibility and easy access to controls on portable screens.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-tablet.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/current-tablet.webp`,
     tools: ["Figma", "Components", "Tablet"],
     figmaUrl: "#"
   },
@@ -259,7 +259,7 @@ export const uiDesigns = [
     title: "My Accounts - Mobile App",
     category: "Mobile",
     description: "Mobile-first hub for accessing all accounts. Prioritizes essential information and one-handed navigation for on-the-go banking.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-mobile.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/accounts-mobile.webp`,
     tools: ["Figma", "Mobile System", "App"],
     figmaUrl: "#"
   },
@@ -267,7 +267,7 @@ export const uiDesigns = [
     title: "My Spending - Mobile Insights",
     category: "Mobile",
     description: "Compact spending summary and categorization for mobile devices, giving users quick insights into their financial habits anytime.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-mobile.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/spending-mobile.webp`,
     tools: ["Figma", "Mobile", "Data"],
     figmaUrl: "#"
   },
@@ -275,7 +275,7 @@ export const uiDesigns = [
     title: "Current Account - Mobile View",
     category: "Mobile",
     description: "Streamlined transaction list and account actions for mobile, allowing users to check balances and manage funds effortlessly.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-mobile.png?v=8`,
+    image: `${BASE_PATH}/project-pics/figma-exports/current-mobile.webp`,
     tools: ["Figma", "Mobile", "UX"],
     figmaUrl: "#"
   }
@@ -285,7 +285,7 @@ export const qualifications = [
   {
     title: 'BA (Hons) Events Management',
     institution: 'Leeds Beckett University',
-    field: '1st Class Honours', 
+    field: '1st Class Honours',
     year: '2017–2021',
     description: 'First-class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills. My dissertation focused on drug-related deaths and harm-reduction strategies for nightlife & festivals.',
     icon: 'GraduationCap'
@@ -307,7 +307,7 @@ export const featuresList = [
     icon: 'Code'
   },
   {
-    title: 'Backend Development', 
+    title: 'Backend Development',
     description: 'Robust server-side solutions with Python, Django, and database management.',
     icon: 'Server'
   },
