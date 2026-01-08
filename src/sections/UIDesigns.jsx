@@ -1,9 +1,10 @@
 import { useState, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Filter, Smartphone, Tablet, Monitor } from '../lib/icons'
+import { Filter, Smartphone, Tablet, Monitor, Sparkles } from '../lib/icons'
 import Section from '../components/Section'
 import LazyImage from '../components/LazyImage'
 import CustomDropdown from '../components/CustomDropdown'
+import Button from '../components/Button'
 import { uiDesigns } from '../data/profile'
 
 // Add custom scrollbar hiding style
@@ -21,6 +22,8 @@ export default function UIDesigns() {
     const [filter, setFilter] = useState('All')
     const [tabletScreenIndex, setTabletScreenIndex] = useState(0)
     const [mobileScreenIndex, setMobileScreenIndex] = useState(0)
+
+    const baseUrl = import.meta.env.BASE_URL || '/'
 
     // Separate designs by category
     const desktopDesigns = uiDesigns.filter(d => d.category === 'Desktop')
@@ -66,6 +69,33 @@ export default function UIDesigns() {
                 <p className="text-muted-foreground text-lg">
                     A comprehensive banking application designed with a focus on clarity, trust, and user experience across all devices.
                 </p>
+
+                {/* Storytelling CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-6"
+                >
+                    <a
+                        href={`${baseUrl}storytelling.html`}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+                        style={{
+                            background: 'linear-gradient(135deg, #FF6B6B 0%, #FFD93D 50%, #0D9488 100%)',
+                            backgroundSize: '200% 200%',
+                            animation: 'gradient-shift 3s ease infinite'
+                        }}
+                    >
+                        <Sparkles size={18} />
+                        Explore the Design Story
+                    </a>
+                    <style>{`
+                        @keyframes gradient-shift {
+                            0%, 100% { background-position: 0% 50%; }
+                            50% { background-position: 100% 50%; }
+                        }
+                    `}</style>
+                </motion.div>
 
                 {/* Filter Buttons */}
                 <div className="mt-8">

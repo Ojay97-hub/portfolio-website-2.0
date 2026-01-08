@@ -16,7 +16,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        journey: resolve(__dirname, 'journey.html')
+        journey: resolve(__dirname, 'journey.html'),
+        storytelling: resolve(__dirname, 'storytelling.html')
       },
       output: {
         // Better chunk splitting strategy
