@@ -1,4 +1,4 @@
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import LazyImage from '../components/LazyImage'
 
@@ -50,7 +50,7 @@ const FloatingImage = ({ src, alt, className = '', rotate = 0, delay = 0 }) => {
 }
 
 // Principle Card Component
-const PrincipleCard = ({ icon, title, color, children, delay = 0 }) => {
+const PrincipleCard = ({ icon, title, color, children, delay = 0, radius = 'rounded-2xl' }) => {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-50px' })
 
@@ -60,8 +60,7 @@ const PrincipleCard = ({ icon, title, color, children, delay = 0 }) => {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.6, delay, ease: 'easeOut' }}
-            className="bg-white rounded-2xl p-8 shadow-xl border-l-4"
-            style={{ borderLeftColor: color }}
+            className={`bg-white p-8 shadow-xl ${radius}`}
         >
             <div className="flex items-center gap-3 mb-4">
                 <span className="text-3xl">{icon}</span>
@@ -71,6 +70,413 @@ const PrincipleCard = ({ icon, title, color, children, delay = 0 }) => {
                 {children}
             </div>
         </motion.div>
+    )
+}
+
+// Timeline story item data
+const storyItems = [
+    {
+        emoji: '📖',
+        title: 'Once upon a time...',
+        color: '#9B59B6',
+        content: (
+            <>
+                There was a young professional named <strong className="text-[#FFD93D]">Alex</strong> who
+                dreamed of financial freedom. Alex worked hard, earned money, and wanted to feel
+                confident about their finances. But there was a problem...
+            </>
+        ),
+    },
+    {
+        emoji: '😔',
+        title: 'Every day...',
+        color: '#FF6B6B',
+        content: (
+            <>
+                Alex would open their banking app with a sense of <strong className="text-[#FF6B6B]">dread</strong>.
+                Walls of grey numbers. Cold interfaces. Confusing graphs. Every interaction felt like
+                a <em>chore</em>, not an empowering moment.
+            </>
+        ),
+        quote: '"I avoid checking my bank account because it makes me feel anxious..."',
+    },
+    {
+        emoji: '✨',
+        title: 'Until one day...',
+        color: '#FFD93D',
+        content: (
+            <>
+                Alex discovered <strong className="text-[#FFD93D]">FinWiz</strong> — a banking app that
+                felt different. Instead of cold numbers, there was a friendly "Magic Balance". Instead of
+                confusing charts, there was a "Crystal Ball" that explained insights in simple terms.
+                Instead of stress, there was... <em>playfulness</em>.
+            </>
+        ),
+    },
+    {
+        emoji: '🎮',
+        title: 'Because of that...',
+        color: '#0D9488',
+        content: (
+            <>
+                Alex started checking their finances <strong className="text-[#0D9488]">every day</strong> —
+                not out of obligation, but out of <em>curiosity</em>. The "Treasure Tracker" made saving feel
+                like an adventure. Achievement badges celebrated small wins.
+            </>
+        ),
+        badges: [
+            { text: '🏆 7-Day Streak', color: '#0D9488' },
+            { text: '✨ Budget Wizard', color: '#FFD93D' },
+            { text: '🎯 Goal Getter', color: '#9B59B6' },
+        ],
+    },
+    {
+        emoji: '🌟',
+        title: 'Until finally...',
+        color: '#0D9488',
+        isLast: true,
+        content: (
+            <>
+                Alex became the <strong className="text-[#FFD93D]">hero of their own financial story</strong>.
+                No longer avoiding their bank account — they were excited to open the app. They understood
+                where their money was going. They felt <em>in control</em>, not controlled by their finances.
+            </>
+        ),
+        quote: '"Banking doesn\'t have to feel like a chore. It can feel like magic."',
+    },
+]
+
+// Animated Timeline Node with pulse effect
+const TimelineNode = ({ emoji, color, isLast, index }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+    return (
+        <motion.div
+            ref={ref}
+            className={`absolute left-4 md:left-1/2 -translate-x-1/2 ${isLast ? 'w-12 h-12' : 'w-10 h-10'} rounded-full flex items-center justify-center z-20`}
+            style={{
+                background: isLast
+                    ? 'linear-gradient(135deg, #0D9488, #9B59B6)'
+                    : color,
+                boxShadow: `0 0 20px ${color}40, 0 0 40px ${color}20`,
+            }}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 15,
+                delay: index * 0.15,
+            }}
+        >
+            {/* Pulsing ring */}
+            <motion.div
+                className="absolute inset-0 rounded-full border-2"
+                style={{ borderColor: color }}
+                animate={{
+                    scale: [1, 1.5, 1.8],
+                    opacity: [0.6, 0.3, 0],
+                }}
+                transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.3,
+                }}
+            />
+            <span className={isLast ? 'text-xl' : 'text-lg'}>{emoji}</span>
+        </motion.div>
+    )
+}
+
+// Timeline card with slide-in animation
+const TimelineCard = ({ item, index, isRight }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+    return (
+        <motion.div
+            ref={ref}
+            className={`ml-14 md:ml-0 ${isRight ? 'md:w-[calc(50%-4rem)] md:ml-auto md:pl-16' : 'md:w-[calc(50%-4rem)] md:pr-16 md:text-right'}`}
+            initial={{
+                opacity: 0,
+                x: isRight ? 60 : -60,
+                scale: 0.9,
+            }}
+            animate={isInView ? {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+            } : {
+                opacity: 0,
+                x: isRight ? 60 : -60,
+                scale: 0.9,
+            }}
+            transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+                ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+        >
+            <motion.div
+                className={`bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 ${item.isLast ? 'bg-gradient-to-r from-[#0D9488]/20 to-[#9B59B6]/20 border-white/20' : ''}`}
+                whileHover={{
+                    scale: 1.02,
+                    borderColor: `${item.color}50`,
+                    boxShadow: `0 10px 40px ${item.color}20`,
+                }}
+                transition={{ duration: 0.3 }}
+            >
+                <p className="text-purple-300 font-semibold mb-2 italic">{item.title}</p>
+                <p className="text-white/90 text-lg leading-relaxed">{item.content}</p>
+
+                {item.quote && (
+                    <motion.div
+                        className="mt-4 p-4 bg-black/20 rounded-xl border-l-4"
+                        style={{ borderLeftColor: item.color }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                        transition={{ delay: index * 0.1 + 0.3 }}
+                    >
+                        <p className={`text-white/70 italic ${!isRight ? 'text-left' : ''}`}>{item.quote}</p>
+                    </motion.div>
+                )}
+
+                {item.badges && (
+                    <motion.div
+                        className={`flex flex-wrap gap-3 mt-4 ${!isRight ? 'md:justify-end' : 'md:justify-start'}`}
+                        initial={{ opacity: 0 }}
+                        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: index * 0.1 + 0.4 }}
+                    >
+                        {item.badges.map((badge, i) => (
+                            <motion.div
+                                key={i}
+                                className="px-4 py-2 rounded-full text-sm font-semibold"
+                                style={{
+                                    backgroundColor: `${badge.color}20`,
+                                    color: badge.color,
+                                }}
+                                initial={{ scale: 0 }}
+                                animate={isInView ? { scale: 1 } : { scale: 0 }}
+                                transition={{
+                                    type: 'spring',
+                                    delay: index * 0.1 + 0.5 + i * 0.1,
+                                }}
+                            >
+                                {badge.text}
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
+            </motion.div>
+        </motion.div>
+    )
+}
+
+// Main Timeline Section with curved path
+const TimelineSection = () => {
+    const containerRef = useRef(null)
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start 80%', 'end 20%'],
+    })
+
+    const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1])
+    const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3])
+
+    // Curved path that weaves between cards (serpentine pattern)
+    const curvePath = `
+        M 50 0
+        C 50 60, 90 80, 90 120
+        S 10 180, 10 240
+        S 90 300, 90 360
+        S 10 420, 10 480
+        S 50 540, 50 580
+    `
+
+    return (
+        <div ref={containerRef} className="relative" style={{ position: 'relative' }}>
+            {/* Curved SVG Path - Hidden on mobile, shown on desktop */}
+            <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-24 pointer-events-none">
+                <svg
+                    className="w-full h-full"
+                    viewBox="0 0 100 580"
+                    fill="none"
+                    preserveAspectRatio="none"
+                    style={{ height: '100%' }}
+                >
+                    {/* Background path (faded) */}
+                    <path
+                        d={curvePath}
+                        stroke="rgba(255,255,255,0.1)"
+                        strokeWidth="3"
+                        fill="none"
+                        strokeLinecap="round"
+                    />
+                    {/* Animated gradient path */}
+                    <motion.path
+                        d={curvePath}
+                        stroke="url(#timelineGradient)"
+                        strokeWidth="4"
+                        fill="none"
+                        strokeLinecap="round"
+                        style={{ pathLength }}
+                    />
+                    {/* Glow effect path */}
+                    <motion.path
+                        d={curvePath}
+                        stroke="url(#timelineGradient)"
+                        strokeWidth="12"
+                        fill="none"
+                        strokeLinecap="round"
+                        style={{ pathLength, opacity: glowOpacity }}
+                        filter="url(#glow)"
+                    />
+                    <defs>
+                        <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#9B59B6" />
+                            <stop offset="25%" stopColor="#FF6B6B" />
+                            <stop offset="50%" stopColor="#FFD93D" />
+                            <stop offset="75%" stopColor="#0D9488" />
+                            <stop offset="100%" stopColor="#9B59B6" />
+                        </linearGradient>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+            </div>
+
+            {/* Simple gradient line for mobile */}
+            <div className="md:hidden absolute left-4 top-0 bottom-0 w-1 rounded-full overflow-hidden">
+                <motion.div
+                    className="w-full bg-gradient-to-b from-purple-500 via-[#FF6B6B] via-[#FFD93D] to-[#0D9488]"
+                    style={{ height: '100%', scaleY: pathLength, transformOrigin: 'top' }}
+                />
+            </div>
+
+            {/* Timeline items */}
+            <div className="space-y-12 md:space-y-20 relative">
+                {storyItems.map((item, index) => (
+                    <div key={index} className="relative">
+                        <TimelineNode
+                            emoji={item.emoji}
+                            color={item.color}
+                            isLast={item.isLast}
+                            index={index}
+                        />
+                        <TimelineCard
+                            item={item}
+                            index={index}
+                            isRight={index % 2 === 1}
+                        />
+                    </div>
+                ))}
+            </div>
+
+            {/* Floating particles along the path */}
+            {[...Array(5)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="hidden md:block absolute w-2 h-2 rounded-full bg-white/60 left-1/2 -translate-x-1/2"
+                    style={{ top: `${15 + i * 18}%` }}
+                    animate={{
+                        y: [0, -20, 0],
+                        opacity: [0.3, 0.8, 0.3],
+                        scale: [0.8, 1.2, 0.8],
+                    }}
+                    transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: 'easeInOut',
+                    }}
+                />
+            ))}
+        </div>
+    )
+}
+
+
+
+// Design Mission Card with sequential flow animation
+const DesignMissionCard = () => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-50px' })
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start 65%', 'center center'], // Adjusted offset for faster feel
+    })
+
+    // Animation Sequence with Acceleration
+    // 2. Top Border (Center -> Out): Explodes out after impact
+    const topWidth = useTransform(scrollYProgress, [0.2, 0.35], ['0%', '50%'])
+
+    // 3. Side Borders (Top -> Bottom)
+    const sideHeight = useTransform(scrollYProgress, [0.35, 0.55], ['0%', '100%'])
+
+    // 4. Bottom Border (Out -> Center)
+    const bottomWidth = useTransform(scrollYProgress, [0.55, 0.75], ['0%', '50%'])
+
+    // Glow styles
+    const glowStyle = {
+        boxShadow: '0 0 10px 2px rgba(13, 148, 136, 0.5), 0 0 20px 4px rgba(13, 148, 136, 0.3)',
+    }
+
+    return (
+        <div ref={ref} className="mt-16 text-center relative p-[4px] rounded-2xl overflow-hidden" style={{ position: 'relative' }}>
+            {/* Border Segments Layer */}
+            <div className="absolute inset-0 bg-transparent">
+                {/* Top Border segments - Teal gradient to match connector */}
+                <motion.div
+                    className="absolute top-0 left-1/2 h-[50%] bg-gradient-to-l from-[#0D9488] to-[#9B59B6] origin-left"
+                    style={{ width: topWidth, ...glowStyle }}
+                />
+                <motion.div
+                    className="absolute top-0 right-1/2 h-[50%] bg-gradient-to-r from-[#0D9488] to-[#9B59B6] origin-right"
+                    style={{ width: topWidth, ...glowStyle }}
+                />
+
+                {/* Side Borders - Gradient Flow */}
+                <motion.div
+                    className="absolute top-0 right-0 w-[50%] bg-gradient-to-b from-[#9B59B6] via-[#FFD93D] to-[#FF6B6B] origin-top"
+                    style={{ height: sideHeight, ...glowStyle }}
+                />
+                <motion.div
+                    className="absolute top-0 left-0 w-[50%] bg-gradient-to-b from-[#9B59B6] via-[#FFD93D] to-[#FF6B6B] origin-top"
+                    style={{ height: sideHeight, ...glowStyle }}
+                />
+
+                {/* Bottom Borders */}
+                <motion.div
+                    className="absolute bottom-0 right-0 h-[50%] bg-gradient-to-l from-[#FF6B6B] to-[#FFD93D] origin-right"
+                    style={{ width: bottomWidth, ...glowStyle }}
+                />
+                <motion.div
+                    className="absolute bottom-0 left-0 h-[50%] bg-gradient-to-r from-[#FF6B6B] to-[#FFD93D] origin-left"
+                    style={{ width: bottomWidth, ...glowStyle }}
+                />
+            </div>
+
+            {/* Card Background */}
+            <div className="bg-white rounded-xl p-8 shadow-2xl relative z-10 h-full">
+                <h3 className="text-2xl font-bold mb-4" style={{ color: '#9B59B6' }}>
+                    🎯 The Design Mission
+                </h3>
+                <p className="text-muted text-lg leading-relaxed">
+                    Transform Alex's story from <strong>frustration</strong> to <strong>empowerment</strong>.
+                    Create a banking experience that feels approachable, engaging, and even <em>fun</em> —
+                    without sacrificing trust or functionality. Make users the <strong>heroes</strong> of
+                    their financial journey.
+                </p>
+            </div>
+        </div>
+
     )
 }
 
@@ -117,133 +523,11 @@ export default function CaseStudyContent() {
                         </p>
                     </AnimatedSection>
 
-                    {/* Disney Story Arc */}
-                    <div className="space-y-12">
-                        {/* Once upon a time... */}
-                        <AnimatedSection delay={0.1}>
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                                <div className="flex items-start gap-4">
-                                    <span className="text-4xl">📖</span>
-                                    <div>
-                                        <p className="text-purple-300 font-semibold mb-2 italic">Once upon a time...</p>
-                                        <p className="text-white/90 text-lg leading-relaxed">
-                                            There was a young professional named <strong className="text-[#FFD93D]">Alex</strong> who
-                                            dreamed of financial freedom. Alex worked hard, earned money, and wanted to feel
-                                            confident about their finances. But there was a problem...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
+                    {/* Timeline Story Arc with Animated Curved Path */}
+                    <TimelineSection />
 
-                        {/* Every day... */}
-                        <AnimatedSection delay={0.2}>
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                                <div className="flex items-start gap-4">
-                                    <span className="text-4xl">😔</span>
-                                    <div>
-                                        <p className="text-purple-300 font-semibold mb-2 italic">Every day...</p>
-                                        <p className="text-white/90 text-lg leading-relaxed">
-                                            Alex would open their banking app with a sense of <strong className="text-[#FF6B6B]">dread</strong>.
-                                            Walls of grey numbers. Cold interfaces. Confusing graphs. Every interaction felt like
-                                            a <em>chore</em>, not an empowering moment. Alex would quickly check the balance,
-                                            then close the app — avoiding the overwhelming complexity.
-                                        </p>
-                                        <div className="mt-4 p-4 bg-black/20 rounded-xl border-l-4 border-[#FF6B6B]">
-                                            <p className="text-white/70 italic">
-                                                "I avoid checking my bank account because it makes me feel anxious..."
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
-
-                        {/* Until one day... */}
-                        <AnimatedSection delay={0.3}>
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                                <div className="flex items-start gap-4">
-                                    <span className="text-4xl">✨</span>
-                                    <div>
-                                        <p className="text-purple-300 font-semibold mb-2 italic">Until one day...</p>
-                                        <p className="text-white/90 text-lg leading-relaxed">
-                                            Alex discovered <strong className="text-[#FFD93D]">FinWiz</strong> — a banking app that
-                                            felt different. Instead of cold numbers, there was a friendly "Magic Balance". Instead of
-                                            confusing charts, there was a "Crystal Ball" that explained insights in simple terms.
-                                            Instead of stress, there was... <em>playfulness</em>.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
-
-                        {/* Because of that... */}
-                        <AnimatedSection delay={0.4}>
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                                <div className="flex items-start gap-4">
-                                    <span className="text-4xl">🎮</span>
-                                    <div>
-                                        <p className="text-purple-300 font-semibold mb-2 italic">Because of that...</p>
-                                        <p className="text-white/90 text-lg leading-relaxed">
-                                            Alex started checking their finances <strong className="text-[#0D9488]">every day</strong> —
-                                            not out of obligation, but out of <em>curiosity</em>. The "Treasure Tracker" made saving feel
-                                            like an adventure. Achievement badges celebrated small wins. The "Magic" balance turned
-                                            money management into a game worth playing.
-                                        </p>
-                                        <div className="flex gap-3 mt-4">
-                                            <div className="px-4 py-2 bg-[#0D9488]/20 rounded-full text-[#0D9488] text-sm font-semibold">
-                                                🏆 7-Day Streak
-                                            </div>
-                                            <div className="px-4 py-2 bg-[#FFD93D]/20 rounded-full text-[#FFD93D] text-sm font-semibold">
-                                                ✨ Budget Wizard
-                                            </div>
-                                            <div className="px-4 py-2 bg-purple-500/20 rounded-full text-purple-300 text-sm font-semibold">
-                                                🎯 Goal Getter
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
-
-                        {/* Until finally... */}
-                        <AnimatedSection delay={0.5}>
-                            <div className="bg-gradient-to-r from-[#0D9488]/20 to-[#9B59B6]/20 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-                                <div className="flex items-start gap-4">
-                                    <span className="text-4xl">🌟</span>
-                                    <div>
-                                        <p className="text-purple-300 font-semibold mb-2 italic">Until finally...</p>
-                                        <p className="text-white/90 text-lg leading-relaxed">
-                                            Alex became the <strong className="text-[#FFD93D]">hero of their own financial story</strong>.
-                                            No longer avoiding their bank account — they were excited to open the app. They understood
-                                            where their money was going. They were saving more than ever. And most importantly,
-                                            they felt <em>in control</em>, not controlled by their finances.
-                                        </p>
-                                        <div className="mt-4 p-4 bg-black/20 rounded-xl border-l-4 border-[#0D9488]">
-                                            <p className="text-white/80 text-lg font-semibold">
-                                                "Banking doesn't have to feel like a chore. It can feel like magic."
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
-                    </div>
-
-                    {/* The Design Mission */}
-                    <AnimatedSection delay={0.6} className="mt-16 text-center">
-                        <div className="bg-white rounded-2xl p-8 shadow-2xl">
-                            <h3 className="text-2xl font-bold mb-4" style={{ color: colors.purple }}>
-                                🎯 The Design Mission
-                            </h3>
-                            <p className="text-muted text-lg leading-relaxed">
-                                Transform Alex's story from <strong>frustration</strong> to <strong>empowerment</strong>.
-                                Create a banking experience that feels approachable, engaging, and even <em>fun</em> —
-                                without sacrificing trust or functionality. Make users the <strong>heroes</strong> of
-                                their financial journey.
-                            </p>
-                        </div>
-                    </AnimatedSection>
+                    {/* The Design Mission - with animated border trail */}
+                    <DesignMissionCard />
                 </div>
             </section>
 
@@ -271,7 +555,13 @@ export default function CaseStudyContent() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* CLEAR */}
-                        <PrincipleCard icon="✨" title="Clear" color={colors.teal} delay={0}>
+                        <PrincipleCard
+                            icon="✨"
+                            title="Clear"
+                            color={colors.teal}
+                            delay={0}
+                            radius="rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl"
+                        >
                             <p>
                                 <strong className="text-text">8-point grid system</strong> with consistent 16/24 spacing and unified card padding.
                                 Removed most scrollable mini-panels and re-flowed content to fit the viewport — majority of content is
@@ -293,7 +583,13 @@ export default function CaseStudyContent() {
                         </PrincipleCard>
 
                         {/* PLAYFUL */}
-                        <PrincipleCard icon="🎨" title="Playful" color={colors.coral} delay={0.15}>
+                        <PrincipleCard
+                            icon="🎨"
+                            title="Playful"
+                            color={colors.coral}
+                            delay={0.15}
+                            radius="rounded-tr-[3rem] rounded-bl-[3rem] rounded-tl-xl rounded-br-xl"
+                        >
                             <p>
                                 Kept the brand's upbeat flavour through <strong className="text-text">rounded chips and micro-badges</strong>,
                                 but reduced shouty ALL-CAPS to sentence case, using softer motion cues rather than heavy shadows —
@@ -315,7 +611,13 @@ export default function CaseStudyContent() {
                         </PrincipleCard>
 
                         {/* TRUSTWORTHY */}
-                        <PrincipleCard icon="🛡️" title="Trustworthy" color={colors.purple} delay={0.3}>
+                        <PrincipleCard
+                            icon="🛡️"
+                            title="Trustworthy"
+                            color={colors.purple}
+                            delay={0.3}
+                            radius="rounded-tr-[3rem] rounded-bl-[3rem] rounded-tl-xl rounded-br-xl"
+                        >
                             <p>
                                 Replaced mixed shadows/strokes with a <strong className="text-text">single approach</strong> (mostly stroke,
                                 no drop shadow on buttons) and unified corner radii so badges don't compete with CTAs.
@@ -332,7 +634,13 @@ export default function CaseStudyContent() {
                         </PrincipleCard>
 
                         {/* RESPONSIVE */}
-                        <PrincipleCard icon="📱" title="Responsive" color={colors.yellow} delay={0.45}>
+                        <PrincipleCard
+                            icon="📱"
+                            title="Responsive"
+                            color={colors.yellow}
+                            delay={0.45}
+                            radius="rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl"
+                        >
                             <p>
                                 <strong className="text-text">Locked mobile widths</strong> and spacing so repeated modules align precisely
                                 across screens — same widths, same spacing philosophy.

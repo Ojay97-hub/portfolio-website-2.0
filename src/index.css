@@ -59,4 +59,15 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Hide scroll indicator on short viewport heights */
+  .hide-on-short-viewport {
+    display: block;
+  }
+
+  @media (max-height: 964px) {
+    .hide-on-short-viewport {
+      display: none;
+    }
+  }
 }

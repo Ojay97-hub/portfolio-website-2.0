@@ -131,20 +131,122 @@ const CaseStudy = () => {
                         </motion.div>
 
                         <motion.h1
-                            initial={{ y: 40, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
                             className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] mb-8"
                         >
-                            <span className="block text-text">Making</span>
-                            <span className="block bg-gradient-to-r from-[#FF6B6B] via-[#FFD93D] to-[#0D9488] bg-clip-text text-transparent">
-                                Banking
+                            {/* "Making" - rolls in from left */}
+                            <motion.span
+                                className="block text-text cursor-pointer"
+                                initial={{ x: -100, opacity: 0, rotateY: -90 }}
+                                animate={{ x: 0, opacity: 1, rotateY: 0 }}
+                                transition={{ duration: 0.8, delay: 0.5, type: 'spring', stiffness: 100 }}
+                                whileHover={{
+                                    scale: 1.05,
+                                    color: '#0D9488',
+                                    transition: { duration: 0.2 }
+                                }}
+                            >
+                                Making
+                            </motion.span>
+
+                            {/* "Banking" - each letter rolls in with color */}
+                            <span className="block">
+                                {'Banking'.split('').map((letter, i) => (
+                                    <motion.span
+                                        key={i}
+                                        className="inline-block cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(135deg, ${i < 2 ? '#FF6B6B' : i < 4 ? '#FFD93D' : '#0D9488'
+                                                }, ${i < 2 ? '#FFD93D' : i < 4 ? '#0D9488' : '#9B59B6'
+                                                })`,
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            backgroundClip: 'text',
+                                        }}
+                                        initial={{
+                                            y: 50,
+                                            opacity: 0,
+                                            rotateX: -90,
+                                            scale: 0.5
+                                        }}
+                                        animate={{
+                                            y: 0,
+                                            opacity: 1,
+                                            rotateX: 0,
+                                            scale: 1
+                                        }}
+                                        transition={{
+                                            duration: 0.5,
+                                            delay: 0.7 + i * 0.08,
+                                            type: 'spring',
+                                            stiffness: 150,
+                                        }}
+                                        whileHover={{
+                                            scale: 1.2,
+                                            y: -10,
+                                            rotate: [-5, 5, -5, 0],
+                                            transition: { duration: 0.3 }
+                                        }}
+                                    >
+                                        {letter}
+                                    </motion.span>
+                                ))}
                             </span>
+
+                            {/* "Feel Like" - slides up */}
                             <span className="block text-text">
-                                Feel Like{' '}
-                                <span className="inline-block -rotate-3 bg-[#0D9488] text-white px-4 py-1 rounded-xl">
+                                {'Feel Like'.split(' ').map((word, i) => (
+                                    <motion.span
+                                        key={i}
+                                        className="inline-block mr-4 cursor-pointer"
+                                        initial={{ y: 80, opacity: 0, scale: 0.8 }}
+                                        animate={{ y: 0, opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.6,
+                                            delay: 1.3 + i * 0.15,
+                                            type: 'spring',
+                                            stiffness: 120,
+                                        }}
+                                        whileHover={{
+                                            scale: 1.1,
+                                            color: '#FFD93D',
+                                            transition: { duration: 0.2 }
+                                        }}
+                                    >
+                                        {word}
+                                    </motion.span>
+                                ))}
+                                {/* "Magic" - bounces in with wiggle */}
+                                <motion.span
+                                    className="inline-block -rotate-3 bg-[#0D9488] text-white px-4 py-1 rounded-xl cursor-pointer"
+                                    initial={{
+                                        scale: 0,
+                                        rotate: -20,
+                                        opacity: 0
+                                    }}
+                                    animate={{
+                                        scale: 1,
+                                        rotate: -3,
+                                        opacity: 1
+                                    }}
+                                    transition={{
+                                        duration: 0.6,
+                                        delay: 1.6,
+                                        type: 'spring',
+                                        stiffness: 200,
+                                        damping: 10,
+                                    }}
+                                    whileHover={{
+                                        scale: 1.1,
+                                        rotate: [0, -5, 5, -3],
+                                        boxShadow: '0 0 30px rgba(13, 148, 136, 0.6)',
+                                        transition: {
+                                            rotate: { duration: 0.4 },
+                                            scale: { duration: 0.2 }
+                                        }
+                                    }}
+                                >
                                     Magic
-                                </span>
+                                </motion.span>
                             </span>
                         </motion.h1>
 
@@ -162,7 +264,7 @@ const CaseStudy = () => {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.8, delay: 0.9 }}
-                            className="flex flex-wrap items-center justify-center gap-4"
+                            className="flex flex-wrap items-center justify-center gap-4 pb-16 sm:pb-0"
                         >
                             <Button size="lg" variant="primary">
                                 Explore the Journey ↓
@@ -177,7 +279,7 @@ const CaseStudy = () => {
                         </motion.div>
                     </div>
 
-                    {/* Scroll indicator */}
+                    {/* Scroll indicator - hidden on short viewports */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1, y: [0, 10, 0] }}
@@ -185,7 +287,7 @@ const CaseStudy = () => {
                             opacity: { delay: 1.5, duration: 0.5 },
                             y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
                         }}
-                        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                        className="absolute bottom-8 left-1/2 -translate-x-1/2 hide-on-short-viewport"
                     >
                         <div className="w-6 h-10 rounded-full border-2 border-muted flex items-start justify-center p-1.5">
                             <div className="w-1.5 h-3 rounded-full bg-accent" />
