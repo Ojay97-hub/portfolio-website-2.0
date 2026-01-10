@@ -1,6 +1,8 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import LazyImage from '../components/LazyImage'
+import InspirationMoodboard from './InspirationMoodboard'
+import BrandPrinciples from './BrandPrinciples'
 
 // Vibrant color palette
 const colors = {
@@ -531,8 +533,18 @@ export default function CaseStudyContent() {
                 </div>
             </section>
 
-            {/* Curved Divider - Transition from story to principles */}
+            {/* Curved Divider - Transition from story to inspiration */}
             <div className="relative h-32 overflow-hidden" style={{ backgroundColor: '#1a1a2e' }}>
+                <svg className="absolute w-full h-full" viewBox="0 0 1200 100" preserveAspectRatio="none">
+                    <path d="M0,0 Q300,100 600,50 T1200,0 L1200,100 L0,100 Z" fill="#ffffff" />
+                </svg>
+            </div>
+
+            {/* Inspiration / Mood Board Section */}
+            <InspirationMoodboard />
+
+            {/* Curved Divider - Transition from inspiration to principles */}
+            <div className="relative h-32 overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
                 <svg className="absolute w-full h-full" viewBox="0 0 1200 100" preserveAspectRatio="none">
                     <path d="M0,0 Q300,100 600,50 T1200,0 L1200,100 L0,100 Z" fill={colors.teal} />
                 </svg>
@@ -553,112 +565,9 @@ export default function CaseStudyContent() {
                         </p>
                     </AnimatedSection>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {/* CLEAR */}
-                        <PrincipleCard
-                            icon="✨"
-                            title="Clear"
-                            color={colors.teal}
-                            delay={0}
-                            radius="rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl"
-                        >
-                            <p>
-                                <strong className="text-text">8-point grid system</strong> with consistent 16/24 spacing and unified card padding.
-                                Removed most scrollable mini-panels and re-flowed content to fit the viewport — majority of content is
-                                visible without scrolling.
-                            </p>
-                            <p>
-                                <strong className="text-text">Strong grid activation:</strong> Made a conscious effort to use Figma's grid and
-                                column tools for pixel-perfect card positioning throughout all screens.
-                            </p>
-                            <p>
-                                <strong className="text-text">Simplified hierarchy</strong> on My Accounts and Current Account headers:
-                                large balance → single primary CTA → secondary/tertiary actions. Clear information architecture.
-                            </p>
-                            <p>
-                                <strong className="text-text">Data-vis consistency:</strong> Reworked all line charts to share the same
-                                stroke weight, point style, and legend treatment. Aligned axes/labels and made "Crystal Ball Insights"
-                                read left-to-right with sub-headings — avoiding user confusion.
-                            </p>
-                        </PrincipleCard>
-
-                        {/* PLAYFUL */}
-                        <PrincipleCard
-                            icon="🎨"
-                            title="Playful"
-                            color={colors.coral}
-                            delay={0.15}
-                            radius="rounded-tr-[3rem] rounded-bl-[3rem] rounded-tl-xl rounded-br-xl"
-                        >
-                            <p>
-                                Kept the brand's upbeat flavour through <strong className="text-text">rounded chips and micro-badges</strong>,
-                                but reduced shouty ALL-CAPS to sentence case, using softer motion cues rather than heavy shadows —
-                                preserving playfulness without clutter.
-                            </p>
-                            <p>
-                                <strong className="text-text">Tight palette</strong> of brand purples + tints of yellow/peach for highlights,
-                                applied sparingly to emphasise "moments of delight" (achievements, perks) — not core content.
-                            </p>
-                            <p>
-                                Applying <strong className="text-text">purple throughout</strong> really supported that wizardry feel.
-                                Combined with wizard-themed wordplay ("Magic Balance", "Crystal Ball"), it boosted the personality
-                                that users could connect with.
-                            </p>
-                            <p>
-                                <strong className="text-text">Outfit typography</strong> added to the playful factor — it's a nice sans-serif
-                                that's still easy to read at all sizes.
-                            </p>
-                        </PrincipleCard>
-
-                        {/* TRUSTWORTHY */}
-                        <PrincipleCard
-                            icon="🛡️"
-                            title="Trustworthy"
-                            color={colors.purple}
-                            delay={0.3}
-                            radius="rounded-tr-[3rem] rounded-bl-[3rem] rounded-tl-xl rounded-br-xl"
-                        >
-                            <p>
-                                Replaced mixed shadows/strokes with a <strong className="text-text">single approach</strong> (mostly stroke,
-                                no drop shadow on buttons) and unified corner radii so badges don't compete with CTAs.
-                            </p>
-                            <p>
-                                <strong className="text-text">Complete colour audit:</strong> Normalised all purples to a single hue family
-                                (HSL ~255°) and derived neutrals from that hue for text/dividers. Removed "flat black" — body text and
-                                headings now use brand-aligned dark purples for better contrast and coherence.
-                            </p>
-                            <p>
-                                <strong className="text-text">Standardised icon set</strong> and stroke weights. Ensured minimum font size
-                                ≥10pt on data tables for accessibility and legibility.
-                            </p>
-                        </PrincipleCard>
-
-                        {/* RESPONSIVE */}
-                        <PrincipleCard
-                            icon="📱"
-                            title="Responsive"
-                            color={colors.yellow}
-                            delay={0.45}
-                            radius="rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl"
-                        >
-                            <p>
-                                <strong className="text-text">Locked mobile widths</strong> and spacing so repeated modules align precisely
-                                across screens — same widths, same spacing philosophy.
-                            </p>
-                            <p>
-                                On tablet, <strong className="text-text">increased padding from sidenav</strong> and grouped nav items higher
-                                to reduce travel time for touch interactions.
-                            </p>
-                            <p>
-                                Made data-vis and budget sections use <strong className="text-text">full available width</strong> on
-                                tablet/desktop with clear breakpoints.
-                            </p>
-                            <p>
-                                <strong className="text-text">1→4 column progression</strong> as screen sizes increased. The flow of content
-                                feels natural and breakpoints create smooth transitions — designs don't jump into completely different
-                                layouts that could confuse users.
-                            </p>
-                        </PrincipleCard>
+                    {/* Brand Principles Carousel */}
+                    <div className="mt-8">
+                        <BrandPrinciples />
                     </div>
                 </div>
             </section>

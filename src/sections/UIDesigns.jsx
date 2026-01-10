@@ -245,7 +245,7 @@ const DesignCard = forwardRef(({ design, index, getDeviceIcon }, ref) => {
                 className="col-span-1 md:col-span-2 lg:col-span-3 mb-12 last:mb-0 group"
             >
                 {/* Desktop Specific Layout - Large Frame with Browser Window */}
-                <div className="rounded-[2.5rem] bg-[#CCFBF1] dark:bg-[#115E59] p-8 md:p-16 transition-all duration-500 hover:shadow-xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15)]">
+                <div className="rounded-[2.5rem] bg-[#CCFBF1] dark:bg-[#2C7A7B] p-8 md:p-16 transition-all duration-500 hover:shadow-xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15)]">
 
                     {/* Header Content */}
                     <div className="max-w-3xl mx-auto text-center mb-10">

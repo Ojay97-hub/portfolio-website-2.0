@@ -6,10 +6,10 @@ import { scrollToSection } from '../lib/utils'
 const Footer = () => {
   const currentYear = new Date().getFullYear()
   const baseUrl = import.meta.env.BASE_URL || '/'
-  
+
   // Check if we're on the journey page
   const isJourneyPage = window.location.pathname.includes('/journey')
-  
+
   const socialLinks = [
     { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
     { icon: Linkedin, href: profile.socials.linkedin, label: 'LinkedIn' },
@@ -64,7 +64,7 @@ const Footer = () => {
                 <p className="text-muted mb-6 max-w-md">
                   {profile.shortBio}
                 </p>
-                
+
                 {/* Social Links */}
                 <div className="flex gap-4">
                   {socialLinks.map((link, index) => {
@@ -135,6 +135,12 @@ const Footer = () => {
                   >
                     {profile.email}
                   </a>
+                  <a
+                    href="mailto:owen.cotter@novaformadesigns.com"
+                    className="text-accent hover:text-accentSoft transition-colors block"
+                  >
+                    owen.cotter@novaformadesigns.com
+                  </a>
                   <p className="text-muted">
                     Based in {profile.location}
                   </p>
@@ -155,11 +161,10 @@ const Footer = () => {
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="flex items-center gap-2 text-sm text-muted"
+              className="flex flex-col md:items-start items-center gap-1 text-sm text-muted"
             >
-              <span>© {currentYear} {profile.name}. Made with</span>
-              <Heart size={16} className="text-accent fill-accent" />
-              <span>using React & TailwindCSS</span>
+              <p>© 2026 Nova Forma Designs Ltd. All rights reserved.</p>
+              <p className="text-xs opacity-70">Nova Forma Designs Ltd — Company No. 16887888 — United Kingdom</p>
             </motion.div>
 
             {/* Back to top */}
