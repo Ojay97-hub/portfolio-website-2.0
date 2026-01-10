@@ -1,6 +1,6 @@
 import { useState, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Filter, Smartphone, Tablet, Monitor, Sparkles } from '../lib/icons'
+import { Filter, Smartphone, Tablet, Monitor, Sparkles, ChevronDown, ChevronUp } from '../lib/icons'
 import Section from '../components/Section'
 import LazyImage from '../components/LazyImage'
 import CustomDropdown from '../components/CustomDropdown'
@@ -19,9 +19,10 @@ const scrollbarHideStyles = `
 `
 
 export default function UIDesigns() {
-    const [filter, setFilter] = useState('All')
+    const [filter, setFilter] = useState('All Screens')
     const [tabletScreenIndex, setTabletScreenIndex] = useState(0)
     const [mobileScreenIndex, setMobileScreenIndex] = useState(0)
+    const [isExpanded, setIsExpanded] = useState(false)
 
     const baseUrl = import.meta.env.BASE_URL || '/'
 
@@ -43,21 +44,21 @@ export default function UIDesigns() {
     }
 
     const filters = [
-        { name: 'All', icon: Filter },
+        { name: 'All Screens', icon: Filter },
         { name: 'Desktop', icon: Monitor },
         { name: 'Tablet', icon: Tablet },
         { name: 'Mobile', icon: Smartphone }
     ]
 
     // Determine what to show based on filter
-    const showDesktop = filter === 'All' || filter === 'Desktop'
-    const showTablet = filter === 'All' || filter === 'Tablet'
-    const showMobile = filter === 'All' || filter === 'Mobile'
+    const showDesktop = filter === 'All Screens' || filter === 'Desktop'
+    const showTablet = filter === 'All Screens' || filter === 'Tablet'
+    const showMobile = filter === 'All Screens' || filter === 'Mobile'
 
     // Prepare dropdown options with icons and counts
     const dropdownOptions = filters.map(f => ({
         value: f.name,
-        label: f.name === 'All' ? 'All 9 screen types' : `${f.name} (${uiDesigns.filter(d => d.category === f.name).length})`,
+        label: f.name === 'All Screens' ? 'All 9 screen types' : `${f.name} (${uiDesigns.filter(d => d.category === f.name).length})`,
         icon: f.icon
     }))
 
@@ -124,7 +125,7 @@ export default function UIDesigns() {
                                 {f.name}
                                 <span className={`ml-1 text-[10px] px-1.5 py-0.5 rounded-full ${filter === f.name ? 'bg-white/20' : 'bg-gray-100'
                                     }`}>
-                                    {f.name === 'All' ? uiDesigns.length : uiDesigns.filter(d => d.category === f.name).length}
+                                    {f.name === 'All Screens' ? uiDesigns.length : uiDesigns.filter(d => d.category === f.name).length}
                                 </span>
                             </button>
                         ))}
@@ -132,51 +133,126 @@ export default function UIDesigns() {
                 </div>
             </div>
 
-            <div className="space-y-16 pb-20 px-4 md:px-0">
-                {/* Desktop Designs - Full Width Cards */}
-                {showDesktop && (
-                    <div className="space-y-8">
-                        <AnimatePresence mode="popLayout">
-                            {desktopDesigns.map((design, index) => (
-                                <DesignCard
-                                    key={`desktop-${index}`}
-                                    design={design}
-                                    index={index}
+            {/* Expand/Collapse Button */}
+            {!isExpanded && (() => {
+                // Dynamic button content based on filter
+                const getButtonContent = () => {
+                    const FilterIcon = filters.find(f => f.name === filter)?.icon || Monitor
+                    const count = filter === 'All Screens'
+                        ? uiDesigns.length
+                        : uiDesigns.filter(d => d.category === filter).length
+                    const label = filter === 'All Screens'
+                        ? `View All ${count} Screen Designs`
+                        : `View ${count} ${filter} Screens`
+                    const subtitle = filter === 'All Screens'
+                        ? 'Desktop, Tablet & Mobile Views'
+                        : `${filter} screen designs`
+
+                    return { FilterIcon, label, subtitle }
+                }
+
+                const { FilterIcon, label, subtitle } = getButtonContent()
+
+                return (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-center mb-8"
+                    >
+                        <button
+                            onClick={() => setIsExpanded(true)}
+                            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-accent to-accent/80 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 group"
+                        >
+                            <FilterIcon size={20} />
+                            {label}
+                            <ChevronDown size={20} className="group-hover:translate-y-0.5 transition-transform" />
+                        </button>
+                        <p className="text-muted text-sm mt-3">{subtitle}</p>
+                    </motion.div>
+                )
+            })()}
+
+            <AnimatePresence>
+                {isExpanded && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.5, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                    >
+                        {/* Collapse Button */}
+                        <div className="text-center mb-8">
+                            <button
+                                onClick={() => setIsExpanded(false)}
+                                className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-surface border border-border text-muted hover:text-text hover:border-accent transition-all text-sm font-medium"
+                            >
+                                <ChevronUp size={16} />
+                                Collapse Showcase
+                            </button>
+                        </div>
+
+                        <div className="space-y-16 pb-20 px-4 md:px-0">
+                            {/* Desktop Designs - Full Width Cards */}
+                            {showDesktop && (
+                                <div className="space-y-8">
+                                    <AnimatePresence mode="popLayout">
+                                        {desktopDesigns.map((design, index) => (
+                                            <DesignCard
+                                                key={`desktop-${index}`}
+                                                design={design}
+                                                index={index}
+                                                getDeviceIcon={getDeviceIcon}
+                                            />
+                                        ))}
+                                    </AnimatePresence>
+                                </div>
+                            )}
+
+                            {/* Tablet Designs - Single Column with Tabs */}
+                            {showTablet && tabletDesigns.length > 0 && (
+                                <TabbedDeviceSection
+                                    title="Tablet Views"
+                                    icon={Tablet}
+                                    designs={tabletDesigns}
+                                    screenTypes={screenTypes}
+                                    activeIndex={tabletScreenIndex}
+                                    setActiveIndex={setTabletScreenIndex}
                                     getDeviceIcon={getDeviceIcon}
+                                    bgColor="bg-[#F0FDF4]"
                                 />
-                            ))}
-                        </AnimatePresence>
-                    </div>
-                )}
+                            )}
 
-                {/* Tablet Designs - Single Column with Tabs */}
-                {showTablet && tabletDesigns.length > 0 && (
-                    <TabbedDeviceSection
-                        title="Tablet Views"
-                        icon={Tablet}
-                        designs={tabletDesigns}
-                        screenTypes={screenTypes}
-                        activeIndex={tabletScreenIndex}
-                        setActiveIndex={setTabletScreenIndex}
-                        getDeviceIcon={getDeviceIcon}
-                        bgColor="bg-[#F0FDF4]"
-                    />
-                )}
+                            {/* Mobile Designs - Single Column with Tabs */}
+                            {showMobile && mobileDesigns.length > 0 && (
+                                <TabbedDeviceSection
+                                    title="Mobile Views"
+                                    icon={Smartphone}
+                                    designs={mobileDesigns}
+                                    screenTypes={screenTypes}
+                                    activeIndex={mobileScreenIndex}
+                                    setActiveIndex={setMobileScreenIndex}
+                                    getDeviceIcon={getDeviceIcon}
+                                    bgColor="bg-[#FFF1F2]"
+                                />
+                            )}
 
-                {/* Mobile Designs - Single Column with Tabs */}
-                {showMobile && mobileDesigns.length > 0 && (
-                    <TabbedDeviceSection
-                        title="Mobile Views"
-                        icon={Smartphone}
-                        designs={mobileDesigns}
-                        screenTypes={screenTypes}
-                        activeIndex={mobileScreenIndex}
-                        setActiveIndex={setMobileScreenIndex}
-                        getDeviceIcon={getDeviceIcon}
-                        bgColor="bg-[#FFF1F2]"
-                    />
+                            {/* Back to Top Button */}
+                            <div className="text-center pt-12 pb-4">
+                                <button
+                                    onClick={() => {
+                                        document.getElementById('ui-designs')?.scrollIntoView({ behavior: 'smooth' })
+                                    }}
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface border border-border text-muted hover:text-accent hover:border-accent transition-all text-sm font-medium group"
+                                >
+                                    <ChevronUp size={18} className="group-hover:-translate-y-0.5 transition-transform" />
+                                    Back to Top
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
                 )}
-            </div>
+            </AnimatePresence>
         </Section>
     )
 }
@@ -245,7 +321,7 @@ const DesignCard = forwardRef(({ design, index, getDeviceIcon }, ref) => {
                 className="col-span-1 md:col-span-2 lg:col-span-3 mb-12 last:mb-0 group"
             >
                 {/* Desktop Specific Layout - Large Frame with Browser Window */}
-                <div className="rounded-[2.5rem] bg-[#CCFBF1] dark:bg-[#2C7A7B] p-8 md:p-16 transition-all duration-500 hover:shadow-xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15)]">
+                <div className="rounded-[2.5rem] bg-[#F5FBFF] dark:bg-[#38B2AC] p-8 md:p-16 transition-all duration-500 hover:shadow-xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15)]">
 
                     {/* Header Content */}
                     <div className="max-w-3xl mx-auto text-center mb-10">
@@ -286,7 +362,7 @@ const DesignCard = forwardRef(({ design, index, getDeviceIcon }, ref) => {
                     {/* Tags */}
                     <div className="flex justify-center gap-2 mt-8">
                         {design.tools.map((tool, i) => (
-                            <span key={i} className="px-3 py-1 text-xs font-semibold bg-white/50 dark:bg-black/20 text-slate-600 dark:text-slate-400 rounded-lg border border-slate-200 dark:border-slate-700">
+                            <span key={i} className="px-3 py-1 text-xs font-bold bg-white/80 dark:bg-white/20 text-teal-800 dark:text-white rounded-lg border border-teal-100 dark:border-white/20 backdrop-blur-sm">
                                 {tool}
                             </span>
                         ))}

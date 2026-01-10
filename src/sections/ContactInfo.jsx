@@ -49,7 +49,7 @@ const ContactInfo = () => {
           {contactMethods.map((method, index) => {
             const Icon = method.icon
             const isClickable = method.href !== null
-            
+
             const content = (
               <>
                 <div className="mb-4 flex justify-center">
@@ -57,16 +57,16 @@ const ContactInfo = () => {
                     <Icon size={24} className="text-accent" />
                   </div>
                 </div>
-                
+
                 <h3 className="text-lg font-semibold text-text mb-2">
                   {method.title}
                 </h3>
-                
+
                 <div className="text-muted text-sm mb-2">
                   {method.description}
                 </div>
-                
-                <div className={`text-sm font-medium ${isClickable ? 'text-accent flex items-center gap-1' : 'text-text'}`}>
+
+                <div className={`text-sm font-medium ${isClickable ? 'text-accent flex items-center justify-center gap-1' : 'text-text'}`}>
                   {method.value}
                   {isClickable && <ExternalLink size={14} />}
                 </div>

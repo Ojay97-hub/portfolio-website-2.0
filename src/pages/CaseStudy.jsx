@@ -260,23 +260,7 @@ const CaseStudy = () => {
                             a gamified banking app that transforms mundane money management into an engaging adventure.
                         </motion.p>
 
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.8, delay: 0.9 }}
-                            className="flex flex-wrap items-center justify-center gap-4 pb-16 sm:pb-0"
-                        >
-                            <Button size="lg" variant="primary">
-                                Explore the Journey ↓
-                            </Button>
-                            <Button
-                                size="lg"
-                                variant="ghost"
-                                onClick={() => window.location.href = designsUrl}
-                            >
-                                View Final Designs
-                            </Button>
-                        </motion.div>
+
                     </div>
 
                     {/* Scroll indicator - hidden on short viewports */}

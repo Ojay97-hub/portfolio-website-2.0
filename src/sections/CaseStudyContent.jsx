@@ -4,6 +4,7 @@ import LazyImage from '../components/LazyImage'
 import InspirationMoodboard from './InspirationMoodboard'
 import BrandPrinciples from './BrandPrinciples'
 
+const BASE_PATH = import.meta.env.BASE_URL || '/'
 // Vibrant color palette
 const colors = {
     coral: '#FF6B6B',
@@ -482,7 +483,6 @@ const DesignMissionCard = () => {
     )
 }
 
-const BASE_PATH = '/portfolio-website-2.0'
 
 export default function CaseStudyContent() {
     return (
@@ -560,6 +560,17 @@ export default function CaseStudyContent() {
                         <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
                             Brand Principles
                         </h2>
+
+                        {/* Project Context Badge */}
+                        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 text-sm text-white/90 backdrop-blur-sm">
+                            <span className="w-2 h-2 rounded-full bg-[#FFD93D]"></span>
+                            UX Design Institute Assignment
+                        </div>
+
+                        <p className="text-lg text-white/80 max-w-2xl mx-auto mb-6">
+                            This design brief was set by the <a href="https://www.uxdesigninstitute.com/courses/ux-design?campaignid=16684292857&adgroupid=137914792707&adid=737046285823&utm_source=google&utm_medium=cpc&utm_term=ux%20design%20institute&utm_campaign=Search_T1B_UK_PDUX_Diploma_UX_Design_Brand_Exact&hsa_cam=16684292857&hsa_mt=e&hsa_ver=3&hsa_src=g&hsa_ad=737046285823&hsa_net=adwords&hsa_tgt=aud-600340119252:kwd-339228142066&hsa_acc=6247795550&hsa_grp=137914792707&hsa_kw=ux%20design%20institute&gad_source=1&gad_campaignid=16684292857&gbraid=0AAAAAC4YwcmDAyBStkLm96uR2z6gKqVKh&gclid=CjwKCAiAjojLBhAlEiwAcjhrDp7ktXTzsSElYqLCZcoFABAUcPw-YDsgJVMO_Uo3A2IrKLkkEr4K-RoCuGkQAvD_BwE" target="_blank" rel="noopener noreferrer" className="text-[#FFD93D] hover:text-[#FFD93D]/80 transition-colors font-bold underline decoration-2 underline-offset-4">UX Design Institute</a> as part of the Professional Diploma in UX Design.
+                        </p>
+
                         <p className="text-xl text-white/90 max-w-3xl mx-auto">
                             Every design decision was guided by four core principles: <strong>Clear</strong>, <strong>Playful</strong>, <strong>Trustworthy</strong>, and <strong>Responsive</strong>.
                         </p>
@@ -1114,16 +1125,10 @@ export default function CaseStudyContent() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <a
-                                href={`${BASE_PATH}/#ui-designs`}
+                                href={`${BASE_PATH}/`}
                                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-[#0D9488] font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1"
                             >
-                                View All Designs
-                            </a>
-                            <a
-                                href={`${BASE_PATH}/#contact-form`}
-                                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-bold text-lg border-2 border-white/30 hover:bg-white/20 transition-all"
-                            >
-                                Get in Touch
+                                Back to Portfolio
                             </a>
                         </div>
                     </AnimatedSection>
