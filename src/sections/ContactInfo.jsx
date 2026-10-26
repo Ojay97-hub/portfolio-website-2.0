@@ -1,108 +1,53 @@
-import { motion } from 'framer-motion'
-import { Mail, MapPin, Linkedin, Github, ExternalLink } from '../lib/icons'
-import Section from '../components/Section'
-import Card from '../components/Card'
+import { Mail, MapPin, Linkedin, Github } from '../lib/icons'
 import { profile } from '../data/profile'
 
-const ContactInfo = () => {
-  const contactMethods = [
-    {
-      icon: Mail,
-      title: 'Email',
-      value: profile.email,
-      href: `mailto:${profile.email}`,
-      description: 'Send me an email anytime'
-    },
-    {
-      icon: MapPin,
-      title: 'Location',
-      value: profile.location,
-      href: null,
-      description: `Based in ${profile.location}`
-    },
-    {
-      icon: Linkedin,
-      title: 'LinkedIn',
-      value: 'Connect with me',
-      href: profile.socials.linkedin,
-      description: 'Professional network'
-    },
-    {
-      icon: Github,
-      title: 'GitHub',
-      value: 'View my code',
-      href: profile.socials.github,
-      description: 'Open source projects'
-    }
-  ]
+const METHODS = [
+  { icon: Mail, title: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { icon: Linkedin, title: 'LinkedIn', value: 'Connect with me', href: profile.socials.linkedin },
+  { icon: Github, title: 'GitHub', value: 'Browse my code', href: profile.socials.github },
+  { icon: MapPin, title: 'Location', value: profile.location },
+]
 
+const ContactInfo = () => (
+  <section id="contact-info" className="relative pb-24">
+    <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {METHODS.map(({ icon: Icon, title, value, href }, i) => {
+          const isMail = href?.startsWith('mailto:')
+          const inner = (
+            <>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-ink bg-brand-soft">
+                <Icon size={20} className="text-ink" />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink-soft">
+                  {title}
+                </span>
+                <span className="block truncate font-bold text-ink">{value}</span>
+              </span>
+            </>
+          )
 
-  return (
-    <Section
-      id="contact-info"
-      title="Let's Connect"
-      description="Get in touch to discuss your next project or potential collaboration opportunities."
-    >
-      <div className="space-y-16">
-        {/* Contact Methods */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {contactMethods.map((method, index) => {
-            const Icon = method.icon
-            const isClickable = method.href !== null
-
-            const content = (
-              <>
-                <div className="mb-4 flex justify-center">
-                  <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center">
-                    <Icon size={24} className="text-accent" />
-                  </div>
-                </div>
-
-                <h3 className="text-lg font-semibold text-text mb-2">
-                  {method.title}
-                </h3>
-
-                <div className="text-muted text-sm mb-2">
-                  {method.description}
-                </div>
-
-                <div className={`text-sm font-medium ${isClickable ? 'text-accent flex items-center justify-center gap-1' : 'text-text'}`}>
-                  {method.value}
-                  {isClickable && <ExternalLink size={14} />}
-                </div>
-              </>
-            )
-
-            return (
-              <motion.div
-                key={method.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                {isClickable ? (
-                  <a
-                    href={method.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-surface border border-border rounded-2xl p-6 shadow-soft transition card-hover text-center h-full block hover:border-accent/50 transition-colors cursor-pointer"
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <Card className="text-center h-full">
-                    {content}
-                  </Card>
-                )}
-              </motion.div>
-            )
-          })}
-        </div>
-
-      </div>
-    </Section>
-  )
-}
+          return (
+            <li key={title} data-reveal style={{ '--reveal-delay': `${i * 70}ms` }}>
+              {href ? (
+                <a
+                  href={href}
+                  target={isMail ? '_self' : '_blank'}
+                  rel={isMail ? undefined : 'noopener noreferrer'}
+                  className="card-pop flex items-center gap-4 p-5 transition-transform duration-200 hover:-translate-y-1"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div className="card-pop flex items-center gap-4 p-5">{inner}</div>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  </section>
+)
 
 export default ContactInfo

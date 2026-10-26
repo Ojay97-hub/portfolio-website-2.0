@@ -1,5 +1,5 @@
-import { useEffect, Suspense, lazy } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, Suspense, lazy } from 'react'
+import useReveal from './hooks/useReveal'
 
 // Critical components loaded immediately
 import Navbar from './sections/Navbar'
@@ -15,10 +15,21 @@ const ContactInfo = lazy(() => import('./sections/ContactInfo'))
 const ContactForm = lazy(() => import('./sections/ContactForm'))
 const Benefits = lazy(() => import('./sections/Benefits'))
 const Education = lazy(() => import('./sections/Education'))
-const Footer = lazy(() => import('./sections/Footer'))
+const SiteFooter = lazy(() => import('./sections/SiteFooter'))
 
+
+// Each lazy section gets its own boundary so one slow chunk doesn't hold
+// back the rest of the page. min-h reserves space to limit layout shift.
+const Lazy = ({ children, minHeight = 'min-h-[60vh]' }) => (
+  <Suspense fallback={<div className={minHeight} aria-hidden="true" />}>
+    {children}
+  </Suspense>
+)
 
 function App() {
+  const rootRef = useRef(null)
+  useReveal(rootRef)
+
   // Enable smooth scrolling and handle hash navigation
   useEffect(() => {
     // Note: Removed image preloading to avoid "preload not used" warnings
@@ -50,60 +61,28 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div ref={rootRef} className="App nf-root">
       {/* Navigation */}
       <Navbar />
-      
+
       {/* Main Content */}
       <main id="main-content" className="relative">
-        {/* Page Transition */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Hero Section - Always loaded immediately */}
-          <Hero />
-          
-          {/* Lazy-loaded sections with fallback */}
-          <Suspense fallback={
-            <div className="min-h-[200px] flex items-center justify-center">
-              <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
-            </div>
-          }>
-            {/* Featured Projects Section */}
-            <FeaturedProjects />
-            
-            {/* UI Design Showcase Section */}
-            <UIDesigns />
+        {/* Hero Section - Always loaded immediately */}
+        <Hero />
 
-            {/* About Section */}
-            <About />
-
-            {/* Services Section (Combined Skills & What I Do) */}
-            <Services />
-            
-            {/* Benefits Section */}
-            <Benefits />
-            
-            {/* Education Section */}
-            <Education />
-            
-            {/* Contact Form Section (Includes CTA) */}
-            <ContactForm />
-
-            {/* Contact Info Section */}
-            <ContactInfo />
-          </Suspense>
-        </motion.div>
+        <Lazy><FeaturedProjects /></Lazy>
+        <Lazy><UIDesigns /></Lazy>
+        <Lazy><About /></Lazy>
+        {/* Services Section (Combined Skills & What I Do) */}
+        <Lazy><Services /></Lazy>
+        <Lazy><Benefits /></Lazy>
+        <Lazy><Education /></Lazy>
+        {/* Contact Form Section (Includes CTA) */}
+        <Lazy><ContactForm /></Lazy>
+        <Lazy minHeight="min-h-[20vh]"><ContactInfo /></Lazy>
       </main>
-      
-      {/* Footer */}
-      <Suspense fallback={<div className="h-20" />}>
-        <Footer />
-      </Suspense>
-      
-      {/* Removed scroll progress indicator to improve performance */}
+
+      <Lazy minHeight="h-20"><SiteFooter /></Lazy>
     </div>
   )
 }

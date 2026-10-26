@@ -1,179 +1,133 @@
-import { motion } from 'framer-motion'
-import { User, MapPin, Coffee, Code, BookOpen } from '../lib/icons'
-import Section from '../components/Section'
-import Badge from '../components/Badge'
-import Card from '../components/Card'
-import LazyImage from '../components/LazyImage'
+import { BookOpen, Code, Trophy, Briefcase } from '../lib/icons'
 import { profile, skills } from '../data/profile'
-import { getResponsiveImageProps } from '../lib/imageUtils'
-import Button from '../components/Button'
+import PopButton from '../components/nf/PopButton'
+import Sparkle from '../components/nf/Sparkle'
+import LogoMark from '../components/nf/LogoMark'
 
-const About = () => {
-  const stats = [
-    { icon: Code, label: 'Projects Built', value: '5' },
-    { icon: Coffee, label: 'Learning Hours', value: '500+' },
-    { icon: User, label: 'Hackathon Place', value: '3rd' },
-  ]
+const journeyUrl = `${import.meta.env.BASE_URL}journey.html`
 
-  const journeyUrl = `${import.meta.env.BASE_URL}journey.html`
+const STATS = [
+  { icon: Code, value: '5', label: 'Course projects shipped' },
+  { icon: Briefcase, value: '3', label: 'Real client websites' },
+  { icon: Trophy, value: '3rd', label: 'Hackathon placing' },
+]
 
-  return (
-    <Section
-      id="about"
-      title="About Me"
-      description="Get to know more about my background, skills, and what drives my passion for creating exceptional digital experiences."
-    >
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
-        {/* About Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="space-y-6"
-        >
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-muted">
-              <User size={20} />
-              <span className="font-medium">About Owen</span>
-            </div>
-            
-            <div className="space-y-4 text-text">
-              <p>
-                I'm a recent Code Institute graduate and passionate junior developer seeking my first role in the tech industry. 
-                Through my comprehensive bootcamp training, I've built a strong foundation in modern web technologies 
-                and gained hands-on experience with 5 diverse portfolio projects.
-              </p>
-              
-              <p>
-                My journey includes developing everything from interactive JavaScript games to a full-stack e-commerce 
-                platform with Django and Stripe integration. I also earned 3rd place in a hackathon, demonstrating 
-                my ability to collaborate effectively under pressure and deliver results quickly.
-              </p>
-              
-              <p>
-                Combined with my UI design certification, I bring both technical skills and design sensibility 
-                to create well-rounded web solutions. I'm eager to contribute to a team and continue learning 
-                in a professional development environment.
-              </p>
-            </div>
+// Gentle, deterministic tilt so the skill stickers feel hand placed
+const TILTS = [-3, 2, -1, 3, -2, 1]
+
+const About = () => (
+  <section id="about" className="relative py-24 sm:py-32">
+    <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+        {/* Story */}
+        <div>
+          <div data-reveal>
+            <p className="eyebrow mb-7">👋 About me</p>
+            <h2 className="display-lg font-display font-extrabold text-ink">
+              Events manager turned <span className="marker">developer and designer.</span>
+            </h2>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="p-6 bg-surface/60 border border-border rounded-2xl shadow-lg shadow-background/30"
+          <div
+            data-reveal
+            style={{ '--reveal-delay': '100ms' }}
+            className="mt-8 space-y-5 text-lg leading-relaxed text-ink-soft"
           >
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
-                <BookOpen size={20} className="text-accent" />
+            <p>
+              I&apos;m a Code Institute graduate and junior developer based in {profile.location}. Through
+              the bootcamp I built a strong foundation in modern web technologies and shipped five
+              hands on portfolio projects.
+            </p>
+            <p>
+              That journey runs from interactive JavaScript games to a full stack ecommerce platform
+              with Django and Stripe. I also placed 3rd in a hackathon, working fast with a team under
+              pressure.
+            </p>
+            <p>
+              Paired with my UI design certification, I bring both technical skill and a designer&apos;s
+              eye, so what I build looks considered and works properly.
+            </p>
+          </div>
+
+          <div data-reveal style={{ '--reveal-delay': '160ms' }} className="mt-10 grid grid-cols-3 gap-3 sm:gap-4">
+            {STATS.map(({ icon: Icon, value, label }) => (
+              <div key={label} className="card-pop p-4 text-center sm:p-5">
+                <Icon size={20} className="mx-auto text-brand-deep" />
+                <div className="mt-2 font-display text-3xl font-extrabold text-ink">{value}</div>
+                <div className="mt-1 text-xs font-bold leading-snug text-ink-soft">{label}</div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Side cards */}
+        <div className="space-y-8 lg:pt-6">
+          <div data-reveal style={{ '--reveal-delay': '120ms' }} className="relative rotate-[1.5deg] rounded-3xl border-2 border-ink bg-ink p-7 text-cream shadow-pop-lg">
+            <Sparkle size={28} className="absolute -right-3 -top-3 text-brand" />
+            <div className="flex items-center gap-3">
+              <span className="grid h-12 w-12 place-items-center rounded-full border-2 border-brand bg-cream">
+                <LogoMark className="h-9 w-9" />
+              </span>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-eyebrow text-cream/70">
+                Also me
+              </p>
+            </div>
+            <h3 className="mt-3 font-display text-2xl font-extrabold leading-tight">
+              Founder of Nova Forma Designs
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-cream/80">
+              My web design studio. I build clean, professional websites for small businesses and
+              local organisations, from a luxury car dealer to a community hall on the Gower.
+            </p>
+            <a
+              href="https://www.novaformadesigns.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-full border-2 border-cream bg-brand px-4 py-2 text-sm font-bold text-navy transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Visit the studio ↗
+            </a>
+          </div>
+
+          <div data-reveal style={{ '--reveal-delay': '180ms' }} className="card-pop p-7">
+            <div className="flex items-start gap-4">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-ink bg-brand-soft">
+                <BookOpen size={20} className="text-ink" />
+              </span>
               <div>
-                <h3 className="text-lg font-semibold text-text">Explore the Journey Blog</h3>
-                <p className="text-sm text-muted">
-                  Dive deeper into how events management, world travel, and Code Institute shaped my path into remote-friendly software development.
+                <h3 className="font-display text-xl font-extrabold text-ink">The journey blog</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  How events management, world travel and Code Institute shaped my path into remote
+                  friendly software development.
                 </p>
               </div>
             </div>
-            <Button
-              size="sm"
-              onClick={() => {
-                window.location.href = journeyUrl
-              }}
-            >
+            <PopButton href={journeyUrl} variant="ghost" className="mt-6">
               Read the full story
-            </Button>
-          </motion.div>
-
-          {/* Location */}
-          <div className="flex items-center gap-2 text-muted">
-            <MapPin size={20} />
-            <span>Based in {profile.location}</span>
+            </PopButton>
           </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 pt-6">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon
-              return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center"
-                >
-                  <div className="flex justify-center mb-2">
-                    <div className="w-10 h-10 bg-accent/20 rounded-xl flex items-center justify-center">
-                      <Icon size={20} className="text-accent" />
-                    </div>
-                  </div>
-                  <div className="text-xl font-bold text-text mb-1">{stat.value}</div>
-                  <div className="text-xs text-muted">{stat.label}</div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </motion.div>
-
-        {/* Skills & Photo */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="space-y-6"
-        >
-          {/* Profile Image */}
-          <Card className="p-8">
-            <div className="aspect-square bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
-              <LazyImage
-                {...getResponsiveImageProps('/owen-profile.webp', 'profile')}
-                alt="Owen Cotter with his dogs"
-                className="w-full h-full rounded-2xl"
-              />
-            </div>
-            <div className="text-center">
-              <h3 className="text-xl font-semibold text-text mb-2">{profile.name}</h3>
-              <p className="text-muted">{profile.title}</p>
-            </div>
-          </Card>
-
-          {/* Skills */}
-          <Card>
-            <h3 className="text-lg font-semibold text-text mb-4">Skills & Technologies</h3>
-            <div className="flex flex-wrap gap-2">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotate: Math.random() * 4 - 2, // Subtle random tilt
-                    transition: { type: "spring", stiffness: 400, damping: 10 }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.3, delay: index * 0.02 }} // Faster stagger
-                  viewport={{ once: true }}
-                >
-                  <Badge 
-                    variant="default" 
-                    className="cursor-default hover:bg-accent hover:text-background hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 border border-transparent hover:border-accent/30 select-none"
-                  >
-                    {skill}
-                  </Badge>
-                </motion.div>
-              ))}
-            </div>
-          </Card>
-        </motion.div>
+        </div>
       </div>
-    </Section>
-  )
-}
+
+      {/* Skills sticker wall */}
+      <div id="skills" data-reveal className="mt-20">
+        <h3 className="mb-6 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink-soft">
+          Skills &amp; tools I use
+        </h3>
+        <ul className="flex flex-wrap gap-2.5">
+          {skills.map((skill, i) => (
+            <li
+              key={skill}
+              style={{ rotate: `${TILTS[i % TILTS.length]}deg` }}
+              className="rounded-full border-2 border-ink bg-ivory px-3.5 py-1.5 text-sm font-bold text-ink shadow-pop transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-navy"
+            >
+              {skill}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)
 
 export default About

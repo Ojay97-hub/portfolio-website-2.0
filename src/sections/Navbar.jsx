@@ -1,72 +1,62 @@
 import { useState, useEffect, useRef } from 'react'
-import { Menu, X, ChevronDown } from '../lib/icons'
-import { motion, AnimatePresence } from 'framer-motion'
-import Button from '../components/Button'
+import { ChevronDown } from '../lib/icons'
 import { scrollToSection } from '../lib/utils'
 import useScrollSpy from '../hooks/useScrollSpy'
+import useTheme from '../hooks/useTheme'
+import LogoMark from '../components/nf/LogoMark'
+import ThemeToggle from '../components/nf/ThemeToggle'
+
+const baseUrl = import.meta.env.BASE_URL || '/'
+
+const NAV_ITEMS = [
+  { label: 'Work', href: '#featured-projects' },
+  {
+    label: 'Designs',
+    href: '#ui-designs',
+    dropdownItems: [
+      { label: 'UI Showcase', href: '#ui-designs', isSection: true },
+      { label: 'Storytelling', href: `${baseUrl}storytelling.html`, isSection: false, isNew: true },
+    ],
+  },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#services' },
+]
+
+// Defined once so the scroll-spy effect isn't re-run on every render
+const SECTION_IDS = ['hero', 'featured-projects', 'ui-designs', 'about', 'services', 'contact-form']
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [designsDropdownOpen, setDesignsDropdownOpen] = useState(false)
+  const [designsOpen, setDesignsOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const activeSection = useScrollSpy(SECTION_IDS)
+  const { theme, toggleTheme } = useTheme()
 
-  const baseUrl = import.meta.env.BASE_URL || '/'
-
-  const navItems = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Projects', href: '#featured-projects' },
-    {
-      label: 'Designs',
-      href: '#ui-designs',
-      hasDropdown: true,
-      dropdownItems: [
-        { label: 'UI Showcase', href: '#ui-designs', isSection: true },
-        { label: 'Storytelling', href: `${baseUrl}storytelling.html`, isSection: false },
-      ]
-    },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#services' },
-    { label: 'Contact', href: '#contact-form' },
-  ]
-
-  const sectionIds = navItems
-    .filter(item => !item.hasDropdown)
-    .map(item => item.href.slice(1))
-  sectionIds.push('ui-designs') // Add ui-designs for scroll spy
-  const activeSection = useScrollSpy(sectionIds)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Close dropdown when clicking outside
+  // Close the Designs dropdown when clicking outside it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDesignsDropdownOpen(false)
+        setDesignsOpen(false)
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const handleNavClick = (href, isSection = true) => {
+  const go = (href, isSection = true) => {
     if (isSection) {
-      const sectionId = href.slice(1)
-      scrollToSection(sectionId)
+      scrollToSection(href.slice(1))
     } else {
       window.location.href = href
     }
     setIsOpen(false)
-    setDesignsDropdownOpen(false)
+    setDesignsOpen(false)
   }
+
+  const linkClass = (active) =>
+    `rounded-full px-3 py-1.5 text-sm font-bold transition-colors duration-200 ${
+      active ? 'bg-brand-soft text-ink' : 'text-ink-soft hover:text-brand-deep'
+    }`
 
   return (
     <>
@@ -75,223 +65,154 @@ const Navbar = () => {
         Skip to main content
       </a>
 
-      <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border' : 'bg-transparent'}`}>
-        <nav className="container" aria-label="Main navigation">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <button
-                onClick={() => scrollToSection('hero')}
-                className="text-xl font-bold text-accent hover:text-accentSoft transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-2 py-1"
-                aria-label="Go to home section"
-              >
-                Owen Cotter
-              </button>
-            </motion.div>
+      <header className="fixed inset-x-0 top-0 z-40 px-4 pt-4 sm:px-8">
+        <nav
+          aria-label="Main navigation"
+          className="mx-auto flex max-w-6xl items-center justify-between rounded-full border-2 border-ink bg-ivory/95 px-3 py-2 shadow-pop sm:px-4"
+        >
+          {/* Logo */}
+          <button
+            onClick={() => go('#hero')}
+            className="group flex items-center gap-2.5 rounded-full"
+            aria-label="Owen Cotter portfolio, back to top"
+          >
+            <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-ink bg-ivory transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+              <LogoMark className="h-7 w-7" />
+            </span>
+            <span className="font-display text-lg font-extrabold tracking-tight text-ink">
+              Owen Cotter
+            </span>
+            <span className="hidden -rotate-3 rounded-full border-2 border-ink bg-brand-soft px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink sm:inline-block">
+              Portfolio
+            </span>
+          </button>
 
-            {/* Desktop Navigation */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="hidden md:flex items-center space-x-8"
-            >
-              {navItems.map((item) => {
-                const sectionId = item.href.slice(1)
-                const isActive = activeSection === sectionId
+          {/* Desktop navigation */}
+          <ul className="hidden items-center gap-1 md:flex">
+            {NAV_ITEMS.map((item) => {
+              const active = activeSection === item.href.slice(1)
 
-                // Render dropdown for Designs
-                if (item.hasDropdown) {
-                  return (
-                    <div key={item.href} className="relative" ref={dropdownRef}>
-                      <button
-                        onClick={() => setDesignsDropdownOpen(!designsDropdownOpen)}
-                        className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-2 py-1 ${isActive || designsDropdownOpen ? 'text-accent' : 'text-text'
-                          }`}
-                        aria-expanded={designsDropdownOpen}
-                        aria-haspopup="true"
-                      >
-                        {item.label}
-                        <ChevronDown
-                          size={14}
-                          className={`transition-transform duration-200 ${designsDropdownOpen ? 'rotate-180' : ''}`}
-                        />
-                      </button>
-
-                      <AnimatePresence>
-                        {designsDropdownOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute top-full left-0 mt-2 w-48 bg-surface border border-border rounded-xl shadow-lg overflow-hidden z-50"
-                          >
-                            {item.dropdownItems.map((dropdownItem) => (
-                              <button
-                                key={dropdownItem.label}
-                                onClick={() => handleNavClick(dropdownItem.href, dropdownItem.isSection)}
-                                className="w-full text-left px-4 py-3 text-sm font-medium text-text hover:bg-accent/10 hover:text-accent transition-colors flex items-center gap-2"
-                              >
-                                {dropdownItem.label === 'Storytelling' && (
-                                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FFD93D]" />
-                                )}
-                                {dropdownItem.label}
-                                {dropdownItem.label === 'Storytelling' && (
-                                  <span className="ml-auto text-xs px-1.5 py-0.5 rounded-full bg-accent/10 text-accent font-semibold">
-                                    New
-                                  </span>
-                                )}
-                              </button>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  )
-                }
-
+              if (item.dropdownItems) {
                 return (
+                  <li key={item.href} className="relative" ref={dropdownRef}>
+                    <button
+                      onClick={() => setDesignsOpen(!designsOpen)}
+                      className={`flex items-center gap-1 ${linkClass(active || designsOpen)}`}
+                      aria-expanded={designsOpen}
+                      aria-haspopup="true"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        size={14}
+                        className={`transition-transform duration-200 ${designsOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+
+                    {designsOpen && (
+                      <div className="absolute left-0 top-full z-50 mt-3 w-52 overflow-hidden rounded-2xl border-2 border-ink bg-ivory p-1.5 shadow-pop-lg">
+                        {item.dropdownItems.map((d) => (
+                          <button
+                            key={d.label}
+                            onClick={() => go(d.href, d.isSection)}
+                            className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-bold text-ink transition-colors hover:bg-brand-soft"
+                          >
+                            {d.label}
+                            {d.isNew && (
+                              <span className="ml-auto rounded-full border-2 border-ink bg-brand px-2 py-0.5 text-navy font-mono text-[9px] font-bold uppercase tracking-eyebrow">
+                                New
+                              </span>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                )
+              }
+
+              return (
+                <li key={item.href}>
                   <button
-                    key={item.href}
-                    onClick={() => handleNavClick(item.href)}
-                    className={`text-sm font-medium transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-2 py-1 ${isActive ? 'text-accent' : 'text-text'
-                      }`}
-                    aria-current={isActive ? 'page' : undefined}
+                    onClick={() => go(item.href)}
+                    className={linkClass(active)}
+                    aria-current={active ? 'page' : undefined}
                   >
                     {item.label}
                   </button>
-                )
-              })}
+                </li>
+              )
+            })}
 
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => scrollToSection('contact-form')}
+            <li className="ml-2">
+              <button
+                onClick={() => go('#contact-form')}
+                className="rounded-full border-2 border-ink bg-brand px-4 py-2 text-sm font-bold text-navy shadow-pop transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
               >
-                Get In Touch
-              </Button>
-            </motion.div>
+                Let&apos;s chat
+              </button>
+            </li>
+            <li className="ml-2">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            </li>
+          </ul>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="md:hidden p-2 text-text hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md"
+          {/* Mobile: theme toggle + menu toggle */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle theme={theme} onToggle={toggleTheme} className="h-9 w-9" />
+            <button
+              className="rounded-full border-2 border-ink bg-navy-mist px-3 py-1.5"
               onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle mobile menu"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
+              <span className="font-mono text-xs font-bold uppercase tracking-eyebrow text-ink">
+                {isOpen ? 'Close' : 'Menu'}
+              </span>
+            </button>
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden bg-background/95 backdrop-blur-md border-t border-border"
-            >
-              <div className="container py-4">
-                <div className="flex flex-col space-y-2">
-                  {navItems.map((item) => {
-                    const sectionId = item.href.slice(1)
-                    const isActive = activeSection === sectionId
-
-                    // Render expandable section for Designs
-                    if (item.hasDropdown) {
-                      return (
-                        <div key={item.href}>
-                          <button
-                            onClick={() => setDesignsDropdownOpen(!designsDropdownOpen)}
-                            className={`w-full text-left flex items-center justify-between px-4 py-2 text-sm font-medium transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md ${isActive || designsDropdownOpen ? 'text-accent bg-accent/10' : 'text-text'
-                              }`}
-                          >
-                            {item.label}
-                            <ChevronDown
-                              size={14}
-                              className={`transition-transform duration-200 ${designsDropdownOpen ? 'rotate-180' : ''}`}
-                            />
-                          </button>
-                          <AnimatePresence>
-                            {designsDropdownOpen && (
-                              <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="pl-4 py-2 space-y-1">
-                                  {item.dropdownItems.map((dropdownItem) => (
-                                    <button
-                                      key={dropdownItem.label}
-                                      onClick={() => handleNavClick(dropdownItem.href, dropdownItem.isSection)}
-                                      className="w-full text-left px-4 py-2 text-sm text-muted hover:text-accent hover:bg-accent/5 rounded-md transition-colors flex items-center gap-2"
-                                    >
-                                      {dropdownItem.label === 'Storytelling' && (
-                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FFD93D]" />
-                                      )}
-                                      {dropdownItem.label}
-                                      {dropdownItem.label === 'Storytelling' && (
-                                        <span className="ml-auto text-xs px-1.5 py-0.5 rounded-full bg-accent/10 text-accent font-semibold">
-                                          New
-                                        </span>
-                                      )}
-                                    </button>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      )
-                    }
-
-                    return (
-                      <button
-                        key={item.href}
-                        onClick={() => handleNavClick(item.href)}
-                        className={`text-left px-4 py-2 text-sm font-medium transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md ${isActive ? 'text-accent bg-accent/10' : 'text-text'
-                          }`}
-                        aria-current={isActive ? 'page' : undefined}
-                      >
-                        {item.label}
-                      </button>
-                    )
-                  })}
-
-                  <div className="pt-4">
-                    <Button
-                      variant="primary"
-                      size="md"
-                      className="w-full"
-                      onClick={() => {
-                        scrollToSection('contact-form')
-                        setIsOpen(false)
-                      }}
-                    >
-                      Get In Touch
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Mobile navigation */}
+        {isOpen && (
+          <div
+            id="mobile-menu"
+            className="mx-auto mt-2 max-w-6xl rounded-3xl border-2 border-ink bg-ivory p-6 shadow-pop-lg md:hidden"
+          >
+            <ul className="flex flex-col gap-4">
+              {NAV_ITEMS.flatMap((item) =>
+                item.dropdownItems
+                  ? item.dropdownItems.map((d) => ({ ...d, label: d.label === 'UI Showcase' ? 'Designs' : d.label }))
+                  : [{ ...item, isSection: true }]
+              ).map((item) => (
+                <li key={item.label}>
+                  <button
+                    onClick={() => go(item.href, item.isSection)}
+                    className="flex items-center gap-3 font-display text-2xl font-extrabold text-ink"
+                  >
+                    {item.label}
+                    {item.isNew && (
+                      <span className="rounded-full border-2 border-ink bg-brand px-2 py-0.5 text-navy font-mono text-[9px] font-bold uppercase tracking-eyebrow">
+                        New
+                      </span>
+                    )}
+                  </button>
+                </li>
+              ))}
+              <li className="pt-2">
+                <button
+                  onClick={() => go('#contact-form')}
+                  className="w-full rounded-full border-2 border-ink bg-brand px-5 py-3 text-sm font-bold text-navy shadow-pop"
+                >
+                  Let&apos;s chat →
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </header>
     </>
   )
 }
 
 export default Navbar
-

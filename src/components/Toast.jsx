@@ -24,21 +24,21 @@ const Toast = ({
   }
 
   const styles = {
-    success: 'bg-green-500/10 border-green-500/20 text-green-400',
-    error: 'bg-red-500/10 border-red-500/20 text-red-400',
-    warning: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+    success: 'bg-brand text-navy',
+    error: 'bg-red-200 text-red-950',
+    warning: 'bg-yellow-200 text-yellow-950'
   }
 
   const Icon = icons[type]
 
   return (
-    <div className={`fixed top-6 right-6 z-50 max-w-sm w-full transition-all duration-300 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
-      <div className={`flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm ${styles[type]}`}>
+    <div role="status" className={`fixed top-24 right-6 z-50 max-w-sm w-[calc(100%-3rem)] transition-all duration-300 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
+      <div className={`flex items-center gap-3 p-4 rounded-2xl border-2 border-navy shadow-[0_4px_0_0_#0F2233] ${styles[type]}`}>
         <Icon size={20} />
-        <p className="flex-1 text-sm font-medium">{message}</p>
+        <p className="flex-1 text-sm font-bold">{message}</p>
         <button
           onClick={onClose}
-          className="p-1 hover:bg-white/10 rounded-md transition-colors"
+          className="p-1 hover:bg-black/10 rounded-full transition-colors"
           aria-label="Close notification"
         >
           <X size={16} />

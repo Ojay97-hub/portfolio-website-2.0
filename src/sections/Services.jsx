@@ -1,220 +1,111 @@
-import { motion } from 'framer-motion'
-import { 
-  Code, 
-  Server, 
-  Palette, 
-  ArrowRight, 
-  ExternalLink,
-  Database,
-  Gamepad2, 
-  Beer, 
-  Ghost, 
-  Layers, 
-  Coffee,
-  Calendar,
-  ShoppingCart
-} from '../lib/icons'
-
-import Section from '../components/Section'
+import { Code, Server, Palette, Layers, ArrowRight } from '../lib/icons'
 import { projects } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
+import SectionHeader from '../components/nf/SectionHeader'
 
-const Services = () => {
-  // Find projects
-  const p1 = projects.find(p => p.title.includes('(P1)')) // Winchester
-  const p2 = projects.find(p => p.title.includes('(P2)')) // Dino Quiz
-  const p3 = projects.find(p => p.title.includes('(P3)')) // Blackjack
-  const p4 = projects.find(p => p.title.includes('(P4)')) // Eventory
-  const p5 = projects.find(p => p.title.includes('(P5)')) // Jungle Peaks
+const byCode = (code) => projects.find((p) => p.title.includes(`(${code})`))
+const shortTitle = (title) => title.split('(')[0].trim()
 
-  // Assign icons to projects
-  const projectIcons = {
-    [p1?.title]: Beer,
-    [p2?.title]: Ghost,
-    [p3?.title]: Gamepad2,
-    [p4?.title]: Calendar,
-    [p5?.title]: ShoppingCart
-  }
-
-  const serviceCategories = [
-    {
-      title: 'Frontend Development',
-      description: 'Modern, responsive websites using HTML, CSS, JavaScript, and React frameworks.',
-      icon: Code,
-      skills: ['HTML5 & CSS3', 'JavaScript ES6+', 'React', 'Responsive Design'],
-      relatedWork: [p1, p2].filter(Boolean),
-      workType: 'project'
-    },
-    {
-      title: 'Backend Development',
-      description: 'Logic-driven applications with Python and algorithm implementation.',
-      icon: Server,
-      skills: ['Python', 'Object-Oriented Programming', 'Game Logic', 'Algorithms'],
-      relatedWork: [p3].filter(Boolean),
-      workType: 'project'
-    },
-    {
-      title: 'Full Stack Development',
-      description: 'End-to-end web solutions with Django, databases, and payment integration.',
-      icon: Layers,
-      skills: ['Django', 'PostgreSQL', 'Stripe', 'Authentication', 'MVC Architecture'],
-      relatedWork: [p4, p5].filter(Boolean),
-      workType: 'project'
-    }
-  ]
-
-  // UI Design as a separate full-width card
-  const uiDesign = {
+const SERVICES = [
+  {
+    title: 'Frontend Development',
+    description: 'Modern, responsive websites using HTML, CSS, JavaScript and React.',
+    icon: Code,
+    skills: ['HTML5 & CSS3', 'JavaScript ES6+', 'React', 'Responsive Design'],
+    work: [byCode('P1'), byCode('P2')],
+    color: 'bg-brand-soft',
+  },
+  {
+    title: 'Backend Development',
+    description: 'Logic driven applications with Python and solid algorithm implementation.',
+    icon: Server,
+    skills: ['Python', 'Object Oriented Programming', 'Game Logic', 'Algorithms'],
+    work: [byCode('P3')],
+    color: 'bg-navy-mist',
+  },
+  {
+    title: 'Full Stack Development',
+    description: 'End to end web apps with Django, databases, authentication and payments.',
+    icon: Layers,
+    skills: ['Django', 'PostgreSQL', 'Stripe', 'Authentication', 'MVC Architecture'],
+    work: [byCode('P4'), byCode('P5')],
+    color: 'bg-ivory',
+  },
+  {
     title: 'UI Design',
-    description: 'User interface design principles with modern design tools and methodologies.',
+    description: 'Interfaces designed in Figma with components, systems and real user flows.',
     icon: Palette,
     skills: ['Figma', 'Visual Design', 'Wireframing', 'Prototyping', 'Design Systems'],
-    workType: 'design'
-  }
+    designLink: true,
+    color: 'bg-brand',
+  },
+]
 
-  return (
-    <Section
-      id="services"
-      title="What I Do"
-      description="Specialized services backed by hands-on project experience."
-    >
-      {/* Grid for Development Categories */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
-        {serviceCategories.map((category, index) => {
-          const CategoryIcon = category.icon
+const Services = () => (
+  <section id="services" className="relative py-24 sm:py-32">
+    <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <SectionHeader
+        eyebrow="🛠️ What I do"
+        title="Design and code, under one roof."
+        intro="Each skill here is backed by a project you can open and click around."
+      />
 
-          return (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="bg-surface border border-border rounded-3xl p-6 md:p-8 flex flex-col h-full hover:border-accent/50 transition-colors duration-300 group"
-            >
-              {/* Icon & Title */}
-              <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-4 text-accent group-hover:scale-110 transition-transform duration-300">
-                  <CategoryIcon size={28} />
-                </div>
-                <h3 className="text-2xl font-bold text-text mb-2">{category.title}</h3>
-                <p className="text-muted text-base leading-relaxed">
-                  {category.description}
-                </p>
-              </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        {SERVICES.map(({ title, description, icon: Icon, skills, work, designLink, color }, i) => (
+          <article
+            key={title}
+            data-reveal
+            style={{ '--reveal-delay': `${(i % 2) * 100}ms` }}
+            className={`flex flex-col rounded-3xl border-2 border-ink p-7 shadow-pop-lg transition-transform duration-300 ease-bounce hover:-translate-y-1.5 ${color} ${color === 'bg-brand' ? 'text-navy' : 'text-ink'}`}
+          >
+            <span className="grid h-12 w-12 place-items-center rounded-2xl border-2 border-current bg-ivory text-ink">
+              <Icon size={24} />
+            </span>
+            <h3 className="mt-5 font-display text-2xl font-extrabold">{title}</h3>
+            <p className={`mt-2 text-sm leading-relaxed ${color === 'bg-brand' ? 'text-navy/80' : 'text-ink-soft'}`}>
+              {description}
+            </p>
 
-              {/* Skills */}
-              <div className="mb-8 flex-grow">
-                <h4 className="text-sm font-semibold text-text/80 uppercase tracking-wider mb-3">
-                  Core Skills
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <span 
-                      key={skill} 
-                      className="text-xs font-medium px-2.5 py-1 rounded-full bg-background border border-border text-muted"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <div className="mt-5 flex flex-wrap gap-1.5">
+              {skills.map((skill) => (
+                <span key={skill} className="tag-pop">
+                  {skill}
+                </span>
+              ))}
+            </div>
 
-              {/* Related Work */}
-              <div className="pt-6 border-t border-border">
-                <h4 className="text-sm font-semibold text-text/80 uppercase tracking-wider mb-4 flex items-center justify-between">
-                  Featured Work
-                  <ArrowRight size={16} className="text-accent" />
-                </h4>
-                
-                <div className="space-y-3">
-                  {category.relatedWork.map((project) => {
-                    const ProjectIcon = projectIcons[project.title] || Code
-
-                    return (
+            <div className="mt-auto pt-7">
+              {designLink ? (
+                <button
+                  onClick={() => scrollToSection('ui-designs')}
+                  className="group inline-flex items-center gap-2 font-bold underline decoration-2 underline-offset-4"
+                >
+                  See the FinWiz designs
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </button>
+              ) : (
+                <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                  {work.filter(Boolean).map((project) => (
+                    <li key={project.title}>
                       <a
-                        key={project.title}
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-2 -mx-2 rounded-xl hover:bg-accent/5 transition-colors group/project"
+                        className="group inline-flex items-center gap-1.5 text-sm font-bold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:text-brand-deep"
                       >
-                         <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-surface-dark border border-border text-accent">
-                            <ProjectIcon size={20} />
-                         </div>
-                         <div className="flex-grow min-w-0">
-                            <div className="font-medium text-text text-sm truncate group-hover/project:text-accent transition-colors">
-                              {project.title.split('(')[0].trim()}
-                            </div>
-                            <div className="text-xs text-muted truncate flex items-center gap-1">
-                              View Project <ExternalLink size={10} />
-                            </div>
-                         </div>
+                        {shortTitle(project.title)}
+                        <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                       </a>
-                    )
-                  })}
-                </div>
-              </div>
-            </motion.div>
-          )
-        })}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
-
-      {/* Full Width UI Design Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        viewport={{ once: true }}
-        className="bg-surface border border-border rounded-3xl p-6 md:p-8 hover:border-accent/50 transition-colors duration-300 group relative overflow-hidden"
-      >
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="flex-1">
-             <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-4 text-accent group-hover:scale-110 transition-transform duration-300">
-                <Palette size={28} />
-              </div>
-              <h3 className="text-2xl font-bold text-text mb-2">{uiDesign.title}</h3>
-              <p className="text-muted text-base leading-relaxed mb-6 max-w-2xl">
-                {uiDesign.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-6 md:mb-0">
-                {uiDesign.skills.map((skill) => (
-                  <span 
-                    key={skill} 
-                    className="text-xs font-medium px-2.5 py-1 rounded-full bg-background border border-border text-muted"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-          </div>
-
-          <div className="w-full md:w-auto md:min-w-[300px] self-center">
-            <button
-              onClick={() => scrollToSection('ui-designs')}
-              className="w-full group/item flex items-center gap-4 p-4 rounded-2xl bg-background border border-border hover:border-accent/50 transition-all hover:shadow-md text-left"
-            >
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0 text-purple-500">
-                <Palette size={24} />
-              </div>
-              <div>
-                <div className="font-bold text-text text-base group-hover/item:text-accent transition-colors">
-                  View Design Portfolio
-                </div>
-                <div className="text-xs text-muted">
-                  Explore Mobile & Web Prototypes
-                </div>
-              </div>
-              <div className="ml-auto">
-                 <ArrowRight size={18} className="text-muted group-hover/item:text-accent transition-colors" />
-              </div>
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    </Section>
-  )
-}
+    </div>
+  </section>
+)
 
 export default Services

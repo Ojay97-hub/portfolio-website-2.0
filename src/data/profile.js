@@ -3,7 +3,7 @@
 
 export const profile = {
   name: 'Owen Cotter',
-  title: 'Junior Full-Stack Developer & UI Designer',
+  title: 'Junior Full Stack Developer & UI Designer',
   location: 'Swansea, Wales',
   email: 'owenjames97@outlook.com',
   socials: {
@@ -11,7 +11,7 @@ export const profile = {
     github: 'https://github.com/Ojay97-hub',
     portfolio: 'https://owencotter.dev', // Replace with your actual portfolio URL
   },
-  shortBio: "I bridge UI design and development to build web experiences that look considered and work seamlessly. From early Figma concepts to production-ready applications, I apply a designer’s eye to structure, interaction, and implementation.",
+  shortBio: "I bridge UI design and development to build web experiences that look considered and work seamlessly. From early Figma concepts to production ready applications, I apply a designer’s eye to structure, interaction, and implementation.",
 }
 
 export const skills = [
@@ -58,7 +58,7 @@ export const services = [
   },
   {
     title: 'Backend Development',
-    description: 'Server-side development with Python, Django, and database management.',
+    description: 'Server side development with Python, Django, and database management.',
     skills: ['Python Programming', 'Django Framework', 'PostgreSQL', 'API Development'],
     certificate: 'Code Institute Full Stack Software Development'
   },
@@ -72,11 +72,11 @@ export const services = [
 
 export const projects = [
   {
-    title: 'Jungle Peaks Brewing E-Commerce (P5)',
-    description: 'Full-stack e-commerce platform for a brewery with user authentication, payment processing using Stripe, and complete admin functionality. Recently updated based on assessor feedback with improved responsive design and accessibility features.',
-    image: '/project-pics/jungle-peaks-portfolio.webp',
+    title: 'Jungle Peaks Brewing Ecommerce (P5)',
+    description: 'Full stack ecommerce platform for a brewery with user authentication, payment processing using Stripe, and complete admin functionality. Recently updated based on assessor feedback with improved responsive design and accessibility features.',
+    image: '/project-pics/optimized/jungle-peaks-portfolio.webp',
     technologies: ['Django', 'Python', 'PostgreSQL', 'Stripe', 'Bootstrap', 'JavaScript'],
-    liveUrl: 'https://jungle-peaks-update-01b3f62083c2.herokuapp.com/',
+    liveUrl: 'https://jungle-peaks-brewing-co.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/Jungle-Peaks-Brewing-Co',
     featured: true,
     projectType: 'Full Stack'
@@ -86,7 +86,7 @@ export const projects = [
     description: 'Event scheduling application allowing users to create, manage, and track events with user authentication and CRUD functionality.',
     image: '/project-pics/eventory.webp',
     technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
-    liveUrl: 'https://eventory-5d4c90f0ec37.herokuapp.com/',
+    liveUrl: 'https://event-scheduler-9rl6.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/event-scheduler',
     featured: true,
     projectType: 'Full Stack'
@@ -95,8 +95,8 @@ export const projects = [
     title: 'Blackjack Game (P3)',
     description: 'Interactive Blackjack card game built with Python, featuring game logic, scoring system, and user interaction.',
     image: '/project-pics/blackjack.webp',
-    technologies: ['Python', 'Object-Oriented Programming', 'Game Logic'],
-    liveUrl: 'https://black-jack-lvl1-25fdd631e5ae.herokuapp.com/',
+    technologies: ['Python', 'Object Oriented Programming', 'Game Logic'],
+    liveUrl: 'https://black-jack-game-9dbl.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/black-jack-game',
     featured: true,
     projectType: 'Python'
@@ -122,7 +122,7 @@ export const projects = [
     projectType: 'Frontend'
   },
   {
-    title: 'SheCanGitIt Hackathon - Team 4 (3rd Place)',
+    title: 'SheCanGitIt Hackathon: Team 4 (3rd Place)',
     description: 'Collaborative project developed during a hackathon, showcasing teamwork and rapid development skills. Achieved 3rd place.',
     image: '/project-pics/shegitsit.webp',
     technologies: ['HTML5', 'CSS3', 'JavaScript', 'Team Collaboration'],
@@ -135,27 +135,36 @@ export const projects = [
 
 export const education = [
   {
+    title: 'UX Design Online Career Accelerator',
+    institution: "King's College London",
+    description: "Enrolled on King's College London's online UX Design Career Accelerator, building on my UI design certification with a deeper focus on user research, usability testing, information architecture, and end to end UX process through real world projects.",
+    completion: 'Starting 16 Nov 2026',
+    credentials: 'Certificate (Upcoming)',
+    projects: 'Real World UX Projects',
+    skills: ['UX Research', 'Usability Testing', 'Information Architecture', 'Interaction Design', 'Figma']
+  },
+  {
     title: 'UI Design Certification',
     institution: 'Professional Design Institute',
-    description: 'User-centered design principles, wireframing, prototyping, and design systems. Created a comprehensive banking application with 9 responsive screens across mobile, tablet, and desktop platforms.',
+    description: 'User centred design principles, wireframing, prototyping, and design systems. Created a comprehensive banking application with 9 responsive screens across mobile, tablet, and desktop platforms.',
     completion: '2025',
     credentials: 'Certificate',
-    projects: 'Banking App - 9 Responsive Screens',
+    projects: 'Banking App: 9 Responsive Screens',
     skills: ['Figma', 'User Research', 'Wireframing', 'Prototyping', 'Design Systems']
   },
   {
     title: 'Full Stack Software Development',
     institution: 'Code Institute',
-    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 5 portfolio projects demonstrating full-stack development skills.',
+    description: 'Comprehensive bootcamp covering HTML/CSS, JavaScript, Python, Django, and PostgreSQL. Completed 5 portfolio projects demonstrating full stack development skills.',
     completion: '2025',
     credentials: 'Diploma',
     projects: '5 Portfolio Projects',
     skills: ['HTML5/CSS3', 'JavaScript', 'Python', 'Django', 'PostgreSQL', 'Git/GitHub']
   },
   {
-    title: 'Continuous Learning - In Progress',
-    institution: 'Self-Directed & Online Platforms',
-    description: 'Actively expanding technical skills through online courses, documentation, and hands-on projects. Currently focusing on modern development practices and cloud technologies.',
+    title: 'Continuous Learning (In Progress)',
+    institution: 'Self Directed & Online Platforms',
+    description: 'Actively expanding technical skills through online courses, documentation, and hands on projects. Currently focusing on modern development practices and cloud technologies.',
     completion: 'Ongoing',
     credentials: 'Learning Journey',
     projects: 'Personal Projects & Skill Building',
@@ -171,22 +180,22 @@ export const benefits = [
   },
   {
     title: 'Eager to Learn',
-    description: 'Passionate about continuous learning and staying up-to-date with the latest technologies and best practices.',
+    description: 'Passionate about continuous learning and staying up to date with the latest technologies and best practices.',
     icon: 'BookOpen'
   },
   {
     title: 'Strong Foundation',
-    description: 'Solid understanding of full-stack development principles from comprehensive bootcamp training.',
+    description: 'Solid understanding of full stack development principles from comprehensive bootcamp training.',
     icon: 'Building'
   },
   {
     title: 'Project Experience',
-    description: 'Hands-on experience from 5 diverse projects, including e-commerce platforms and interactive applications.',
+    description: 'Hands on experience from 5 diverse projects, including ecommerce platforms and interactive applications.',
     icon: 'Code'
   },
   {
-    title: 'Design-Minded',
-    description: 'Combined technical skills with UI design knowledge for well-rounded development approach.',
+    title: 'Design Minded',
+    description: 'Combined technical skills with UI design knowledge for a well rounded development approach.',
     icon: 'Palette'
   },
   {
@@ -204,78 +213,78 @@ const BASE_PATH = '/portfolio-website-2.0';
 export const uiDesigns = [
   // DESKTOP DESIGNS (3)
   {
-    title: "FinWiz - Cards & Magic",
+    title: "FinWiz: Cards & Magic",
     category: "Desktop",
-    description: "The Cards page showcases the 'Magic' balance system with AI-powered financial tips. Features quick actions for money transfer, spending categories, and a detailed transaction ledger with real-time insights.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-desktop.webp`,
+    description: "The Cards page showcases the 'Magic' balance system with AI powered financial tips. Features quick actions for money transfer, spending categories, and a detailed transaction ledger with real time insights.",
+    image: `${BASE_PATH}/project-pics/optimized/spending-desktop.webp`,
     tools: ["Figma", "Auto Layout", "Desktop"],
     figmaUrl: "#"
   },
   {
-    title: "FinWiz - Accounts Dashboard",
+    title: "FinWiz: Accounts Dashboard",
     category: "Desktop",
     description: "Gamified account overview with 'Total Coins' balance, achievement badges, and treasure tracker analytics. Includes spending visualization, upcoming payments, and partner perks for an engaging financial experience.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-desktop.webp`,
+    image: `${BASE_PATH}/project-pics/optimized/accounts-desktop.webp`,
     tools: ["Figma", "Data Viz", "Dashboard"],
     figmaUrl: "#"
   },
   {
-    title: "FinWiz - Trends & Insights",
+    title: "FinWiz: Trends & Insights",
     category: "Desktop",
-    description: "Comprehensive analytics dashboard with Crystal Ball Insights, spending breakdowns by category, and an interactive Wizard Spending Locator map. Features income allowances and multi-account balance tracking.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-account-desktop.webp`,
+    description: "Comprehensive analytics dashboard with Crystal Ball Insights, spending breakdowns by category, and an interactive Wizard Spending Locator map. Features income allowances and multi account balance tracking.",
+    image: `${BASE_PATH}/project-pics/optimized/current-account-desktop.webp`,
     tools: ["Figma", "Components", "Grid"],
     figmaUrl: "#"
   },
 
   // TABLET DESIGNS (3)
   {
-    title: "My Accounts - Tablet View",
+    title: "My Accounts: Tablet View",
     category: "Tablet",
-    description: "Adaptive layout for tablet devices, maintaining the card-based structure while optimizing for touch interaction and medium-sized viewports.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-tablet.webp`,
+    description: "Adaptive layout for tablet devices, maintaining the card based structure while optimizing for touch interaction and medium sized viewports.",
+    image: `${BASE_PATH}/project-pics/optimized/accounts-tablet.webp`,
     tools: ["Figma", "Responsive", "Tablet"],
     figmaUrl: "#"
   },
   {
-    title: "My Spending - Tablet Analytics",
+    title: "My Spending: Tablet Analytics",
     category: "Tablet",
-    description: "Touch-friendly spending report interface, presenting charts and transaction lists in a layout optimized for tablet ergonomics.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-tablet.webp`,
+    description: "Touch friendly spending report interface, presenting charts and transaction lists in a layout optimized for tablet ergonomics.",
+    image: `${BASE_PATH}/project-pics/optimized/spending-tablet.webp`,
     tools: ["Figma", "Auto Layout", "Tablet"],
     figmaUrl: "#"
   },
   {
-    title: "Current Account - Tablet View",
+    title: "Current Account: Tablet View",
     category: "Tablet",
-    description: "Tablet-optimized transaction history and account management, ensuring legibility and easy access to controls on portable screens.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-tablet.webp`,
+    description: "Tablet optimised transaction history and account management, ensuring legibility and easy access to controls on portable screens.",
+    image: `${BASE_PATH}/project-pics/optimized/current-tablet.webp`,
     tools: ["Figma", "Components", "Tablet"],
     figmaUrl: "#"
   },
 
   // MOBILE DESIGNS (3)
   {
-    title: "My Accounts - Mobile App",
+    title: "My Accounts: Mobile App",
     category: "Mobile",
-    description: "Mobile-first hub for accessing all accounts. Prioritizes essential information and one-handed navigation for on-the-go banking.",
-    image: `${BASE_PATH}/project-pics/figma-exports/accounts-mobile.webp`,
+    description: "Mobile first hub for accessing all accounts. Prioritizes essential information and one handed navigation for banking on the go.",
+    image: `${BASE_PATH}/project-pics/optimized/accounts-mobile.webp`,
     tools: ["Figma", "Mobile System", "App"],
     figmaUrl: "#"
   },
   {
-    title: "My Spending - Mobile Insights",
+    title: "My Spending: Mobile Insights",
     category: "Mobile",
     description: "Compact spending summary and categorization for mobile devices, giving users quick insights into their financial habits anytime.",
-    image: `${BASE_PATH}/project-pics/figma-exports/spending-mobile.webp`,
+    image: `${BASE_PATH}/project-pics/optimized/spending-mobile.webp`,
     tools: ["Figma", "Mobile", "Data"],
     figmaUrl: "#"
   },
   {
-    title: "Current Account - Mobile View",
+    title: "Current Account: Mobile View",
     category: "Mobile",
     description: "Streamlined transaction list and account actions for mobile, allowing users to check balances and manage funds effortlessly.",
-    image: `${BASE_PATH}/project-pics/figma-exports/current-mobile.webp`,
+    image: `${BASE_PATH}/project-pics/optimized/current-mobile.webp`,
     tools: ["Figma", "Mobile", "UX"],
     figmaUrl: "#"
   }
@@ -283,18 +292,18 @@ export const uiDesigns = [
 
 export const qualifications = [
   {
-    title: 'BA (Hons) Events Management',
+    title: 'BSc (Hons) Events Management',
     institution: 'Leeds Beckett University',
     field: '1st Class Honours',
-    year: '2017–2021',
-    description: 'First-class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills. My dissertation focused on drug-related deaths and harm-reduction strategies for nightlife & festivals.',
+    year: '2017 to 2021',
+    description: 'First class honours degree with work placement experience in Florida, USA for 1 year. Developed strong project management and organizational skills. My dissertation focused on drug related deaths and harm reduction strategies for nightlife & festivals.',
     icon: 'GraduationCap'
   },
   {
     title: 'MSc International Events Management',
     institution: 'Leeds Beckett University',
     field: 'Merit',
-    year: '2022–2023',
+    year: '2021 to 2022',
     description: 'Advanced postgraduate study in international event management with Merit classification. Specialized in experiential marketing and brand event transfer, further understanding the importance of brand and personality fit.',
     icon: 'Award'
   }
@@ -308,16 +317,16 @@ export const featuresList = [
   },
   {
     title: 'Backend Development',
-    description: 'Robust server-side solutions with Python, Django, and database management.',
+    description: 'Robust server side solutions with Python, Django, and database management.',
     icon: 'Server'
   },
   {
     title: 'UI Design',
-    description: 'User-centered design process from research to high-fidelity prototypes.',
+    description: 'User centred design process from research to high fidelity prototypes.',
     icon: 'Palette'
   },
   {
-    title: 'E-commerce Solutions',
+    title: 'Ecommerce Solutions',
     description: 'Complete online store development with payment processing and inventory management.',
     icon: 'ShoppingCart'
   }

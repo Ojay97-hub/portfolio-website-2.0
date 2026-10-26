@@ -1,30 +1,40 @@
 {
-  "name": "Owen Cotter - Full-Stack Developer & UI Designer",
+  "name": "Owen Cotter Portfolio | Full Stack Developer & UI Designer",
   "short_name": "Owen Cotter",
-  "description": "Junior Full-Stack Developer & UI Designer portfolio showcasing web development projects and UI designs",
+  "description": "Portfolio of Owen Cotter, Junior Full Stack Developer and UI Designer, showcasing web development projects and UI designs",
   "start_url": "/portfolio-website-2.0/",
   "scope": "/portfolio-website-2.0/",
   "display": "standalone",
-  "background_color": "#1a1a2e",
-  "theme_color": "#8ab4f8",
+  "background_color": "#F7FCFC",
+  "theme_color": "#3FD2C6",
   "orientation": "portrait-primary",
   "lang": "en-US",
   "dir": "ltr",
   "icons": [
     {
-      "src": "/portfolio-website-2.0/icons/icon-192x192.svg",
+      "src": "/portfolio-website-2.0/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/portfolio-website-2.0/icons/icon-512x512.svg",
+      "src": "/portfolio-website-2.0/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/portfolio-website-2.0/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
-  "categories": ["portfolio", "developer", "design"],
+  "categories": [
+    "portfolio",
+    "developer",
+    "design"
+  ],
   "screenshots": [
     {
       "src": "/portfolio-website-2.0/owen-profile.webp",

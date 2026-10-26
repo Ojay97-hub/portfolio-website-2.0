@@ -163,8 +163,7 @@ const Footer = () => {
               viewport={{ once: true }}
               className="flex flex-col md:items-start items-center gap-1 text-sm text-muted"
             >
-              <p>© 2026 Nova Forma Designs Ltd. All rights reserved.</p>
-              <p className="text-xs opacity-70">Nova Forma Designs Ltd — Company No. 16887888 — United Kingdom</p>
+              <p>© {currentYear} Nova Forma Designs. All rights reserved.</p>
             </motion.div>
 
             {/* Back to top */}

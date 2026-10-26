@@ -1,44 +1,17 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Send, Loader2, Sparkles } from '../lib/icons'
-import Section from '../components/Section'
-import Card from '../components/Card'
+import emailjs from '@emailjs/browser'
+import { Send, Loader2 } from '../lib/icons'
 import Input from '../components/Input'
 import Textarea from '../components/Textarea'
-import Button from '../components/Button'
 import Toast from '../components/Toast'
+import Sparkle from '../components/nf/Sparkle'
 import { validateEmail, validateRequired } from '../lib/utils'
 
-const AnimatedCharacters = ({ text, className, delay = 0, isAccent = false }) => {
-  // Split text into words to handle wrapping correctly
-  const words = text.split(" ");
-
-  return (
-    <span className={className}>
-      {words.map((word, index) => (
-        <span key={index} className="inline-block whitespace-nowrap mr-[0.25em] last:mr-0">
-          {word.split("").map((char, i) => (
-            <motion.span
-              key={i}
-              initial={{ y: 20, opacity: 0, rotateX: -90 }}
-              whileInView={{ y: 0, opacity: 1, rotateX: 0 }}
-              transition={{
-                type: "spring",
-                damping: 12,
-                stiffness: 200,
-                delay: delay + (index * 0.1) + (i * 0.03)
-              }}
-              viewport={{ once: true }}
-              className={`inline-block ${isAccent ? 'text-accent' : ''}`}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </span>
-  );
-};
+const STATS = [
+  { value: '2025', label: 'Graduate year' },
+  { value: '6', label: 'Portfolio projects' },
+  { value: '3rd', label: 'Hackathon place' },
+]
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +22,7 @@ const ContactForm = () => {
   
   const [errors, setErrors] = useState({})
   const [toast, setToast] = useState({ message: '', type: '', isVisible: false })
+  const [isSending, setIsSending] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -84,89 +58,85 @@ const ContactForm = () => {
     setToast(prev => ({ ...prev, isVisible: false }))
   }
 
-  const handleSubmit = (e) => {
+  const openMailClient = () => {
+    const subject = `Portfolio Contact from ${formData.name}`
+    const body = `${formData.message}
+
+From: ${formData.name} (${formData.email})`
+    window.location.href = `mailto:owenjames97@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
 
-    // Construct mailto link
-    const subject = `Portfolio Contact from ${formData.name}`
-    const body = `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
-    const mailtoLink = `mailto:owenjames97@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
-    // Open user's email client
-    window.location.href = mailtoLink
-    
-    // Reset form
-    setFormData({ name: '', email: '', message: '' })
+    // Fall back to mailto if EmailJS isn't configured
+    if (!serviceId || !templateId || !publicKey) {
+      openMailClient()
+      return
+    }
+
+    setIsSending(true)
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          reply_to: formData.email,
+          message: formData.message
+        },
+        { publicKey }
+      )
+      setFormData({ name: '', email: '', message: '' })
+      setToast({ message: "Message sent! I'll get back to you soon.", type: 'success', isVisible: true })
+    } catch (error) {
+      console.error('EmailJS send failed:', error)
+      setToast({ message: 'Could not send your message. Opening your email client instead.', type: 'error', isVisible: true })
+      openMailClient()
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
     <>
-      <Section
-        id="contact-form"
-        className="bg-background"
-      >
-         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative z-10 text-center max-w-4xl mx-auto mb-12"
-        >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 text-accent text-sm font-bold mb-4"
-            >
-              <Sparkles size={16} />
-              Ready to Start My Career?
-            </motion.div>
-            
-            <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight font-heading overflow-hidden py-2">
-              <AnimatedCharacters text="Ready to Start My" delay={0.2} />
-              {' '}
-              <AnimatedCharacters text="Career" className="text-accent" delay={0.6} isAccent />
-              {' '}
-              <AnimatedCharacters text="Journey" delay={0.8} />
+      <section id="contact-form" className="dotgrid relative border-t-2 border-ink py-24 sm:py-32">
+        <div className="mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
+          {/* Pitch */}
+          <div data-reveal className="relative">
+            <p className="eyebrow mb-7">💬 Get in touch</p>
+            <h2 className="display-lg font-display font-extrabold text-ink">
+              Ready to start my <span className="marker">career journey.</span>
             </h2>
-            
-            <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto text-balance mb-8">
-              I'm actively seeking my first role as a developer where I can contribute my skills, 
-              learn from experienced professionals, and grow into a valuable team member.
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
+              I&apos;m looking for my first developer role, somewhere I can contribute, learn from
+              experienced people and grow into a valuable member of the team.
             </p>
 
-            {/* Trust indicators - Simplified */}
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center text-muted text-sm font-medium uppercase tracking-wider">
-               <div className="flex flex-col items-center">
-                <span className="text-2xl md:text-3xl font-bold text-accent mb-1 font-heading">2025</span>
-                <span>Graduate Year</span>
-              </div>
-              <div className="w-px h-12 bg-border hidden md:block"></div>
-              <div className="flex flex-col items-center">
-                <span className="text-2xl md:text-3xl font-bold text-accent mb-1 font-heading">6</span>
-                <span>Portfolio Projects</span>
-              </div>
-              <div className="w-px h-12 bg-border hidden md:block"></div>
-              <div className="flex flex-col items-center">
-                <span className="text-2xl md:text-3xl font-bold text-accent mb-1 font-heading">3rd</span>
-                <span>Hackathon Place</span>
-              </div>
-            </div>
-        </motion.div>
+            <dl className="mt-10 flex flex-wrap gap-3">
+              {STATS.map(({ value, label }) => (
+                <div key={label} className="card-pop px-5 py-4">
+                  <dt className="sr-only">{label}</dt>
+                  <dd className="font-display text-3xl font-extrabold text-ink">{value}</dd>
+                  <dd className="text-xs font-bold text-ink-soft">{label}</dd>
+                </div>
+              ))}
+            </dl>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
-        >
-          <Card className="shadow-lg border-border bg-surface">
+            <Sparkle size={40} className="absolute -bottom-6 right-10 hidden text-brand lg:block" />
+          </div>
+
+          {/* Form */}
+          <div data-reveal style={{ '--reveal-delay': '120ms' }} className="card-pop p-6 sm:p-8">
             <form onSubmit={handleSubmit} noValidate>
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -210,25 +180,24 @@ const ContactForm = () => {
                   rows={6}
                 />
                 
-                <Button
+                <button
                   type="submit"
-                  variant="primary"
-                  size="lg"
-                  className="w-full text-lg py-4 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                  disabled={isSending}
+                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full border-2 border-ink bg-brand px-7 py-4 text-base font-bold text-navy shadow-pop transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none disabled:cursor-wait disabled:opacity-70"
                 >
-                  <Send size={20} className="mr-2" />
-                  Open Email Client
-                </Button>
+                  {isSending ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
+                  {isSending ? 'Sending…' : 'Send message'}
+                </button>
               </div>
             </form>
-            
-            <div className="mt-6 text-center text-sm text-muted flex items-center justify-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <p>Usually respond within 24 hours</p>
-            </div>
-          </Card>
-        </motion.div>
-      </Section>
+
+            <p className="mt-6 flex items-center justify-center gap-2 text-sm font-bold text-ink-soft">
+              <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />
+              Usually replies within 24 hours
+            </p>
+          </div>
+        </div>
+      </section>
 
       <Toast
         message={toast.message}

@@ -1,223 +1,178 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowDown, Search, Github, Linkedin, Mail, X, ChevronDown, ChevronUp, ExternalLink } from '../lib/icons'
-import Button from '../components/Button'
+import { Github, Linkedin, Mail, X } from '../lib/icons'
 import { profile } from '../data/profile'
 import { scrollToSection } from '../lib/utils'
+import PopButton from '../components/nf/PopButton'
+import Sticker from '../components/nf/Sticker'
+import Sparkle from '../components/nf/Sparkle'
+import LogoMark from '../components/nf/LogoMark'
+
+const baseUrl = import.meta.env.BASE_URL || '/'
+const CV_URL = `${baseUrl}project-pics/cv/UI%20DESIGN%20CV%202026.pdf`
+
+const SOCIAL_LINKS = [
+  { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
+  { icon: Linkedin, href: profile.socials.linkedin, label: 'LinkedIn' },
+  { icon: Github, href: profile.socials.github, label: 'GitHub' },
+]
 
 const Hero = () => {
   const [showCV, setShowCV] = useState(false)
 
-  const socialLinks = [
-    { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
-    { icon: Linkedin, href: profile.socials.linkedin, label: 'LinkedIn' },
-    { icon: Github, href: profile.socials.github, label: 'GitHub' },
-  ]
-
-  /* 
-   * NOTE: We are using the local PDF file now. 
-   * The base path '/portfolio-website-2.0' corresponds to the repository name/GitHub Pages base.
-   */
-  const cvUrl = '/portfolio-website-2.0/project-pics/cv/UI%20DESIGN%20CV%202026.pdf'
-
   return (
-    <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-24 md:pt-20 pb-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-      </div>
+    <section
+      id="hero"
+      className="dotgrid relative overflow-hidden pb-20 pt-32 sm:pt-36 lg:flex lg:min-h-[100svh] lg:flex-col lg:justify-center lg:pb-24"
+    >
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-soft/40 to-transparent" />
 
-      <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Main Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
+        {/* Copy */}
+        <div>
+          <p data-reveal className="eyebrow mb-7">
+            <span className="text-brand-deep">✦</span> {profile.title}
+          </p>
+
+          <h1
+            data-reveal
+            style={{ '--reveal-delay': '80ms' }}
+            className="display-xl font-display font-extrabold text-ink"
           >
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-accentDark font-medium mb-4"
-            >
-              Hello, I'm
-            </motion.p>
+            Hi, I&apos;m Owen. I design it, <span className="marker">then I build it</span>{' '}
+            <span className="doodle-underline">for real.</span>
+          </h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-text mb-6"
-            >
-              {profile.name}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-xl md:text-2xl text-accentDark mb-8"
-            >
-              {profile.title}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-lg text-muted max-w-2xl mx-auto text-balance mb-12"
-            >
-              {profile.shortBio}
-            </motion.p>
-          </motion.div>
-
-          {/* Call to Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-            className="flex flex-col items-center gap-6 mb-8"
+          <p
+            data-reveal
+            style={{ '--reveal-delay': '160ms' }}
+            className="mt-8 max-w-lg text-lg leading-relaxed text-ink-soft"
           >
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => scrollToSection('contact-form')}
-                className="w-full sm:w-auto min-w-[140px]"
-              >
-                <Mail size={20} className="mr-2" />
-                Hire Me
-              </Button>
+            {profile.shortBio}
+          </p>
 
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => setShowCV(!showCV)}
-                className="w-full sm:w-auto min-w-[140px]"
-                aria-label="View CV"
-                aria-expanded={showCV}
-              >
-                <Search size={20} className="mr-2" />
-                {showCV ? 'Hide CV' : 'View CV'}
-                {showCV ? (
-                  <ChevronUp size={18} className="ml-2" />
-                ) : (
-                  <ChevronDown size={18} className="ml-2" />
-                )}
-              </Button>
-            </div>
+          <div
+            data-reveal
+            style={{ '--reveal-delay': '240ms' }}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <PopButton onClick={() => scrollToSection('contact-form')}>Hire me</PopButton>
+            <PopButton variant="ghost" onClick={() => scrollToSection('featured-projects')}>
+              View my work
+            </PopButton>
+            <button
+              onClick={() => setShowCV(!showCV)}
+              aria-expanded={showCV}
+              aria-controls="cv-viewer"
+              className="rounded-full px-3 py-2 text-sm font-bold text-ink underline decoration-brand decoration-2 underline-offset-4 transition-colors hover:text-brand-deep"
+            >
+              {showCV ? 'Hide CV' : 'View CV'}
+            </button>
+          </div>
 
+          {/* Meta row: Nova Forma + socials */}
+          <div
+            data-reveal
+            style={{ '--reveal-delay': '320ms' }}
+            className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4"
+          >
             <a
               href="https://www.novaformadesigns.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-accentDark hover:text-accent transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-3 py-2"
+              className="group inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-brand-deep"
             >
-              <ExternalLink size={18} />
-              Nova Forma Designs
+              <LogoMark className="h-6 w-6 transition-transform duration-300 group-hover:rotate-12" />
+              <span>
+                Founder of <span className="text-ink">Nova Forma Designs</span> ↗
+              </span>
             </a>
-          </motion.div>
+            <span aria-hidden className="hidden h-2 w-2 rounded-full bg-brand sm:block" />
+            <div className="flex items-center gap-2">
+              {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => {
+                const isMail = href.startsWith('mailto:')
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    target={isMail ? '_self' : '_blank'}
+                    rel={isMail ? undefined : 'noopener noreferrer'}
+                    aria-label={label}
+                    className="grid h-10 w-10 place-items-center rounded-full border-2 border-ink bg-ivory text-ink shadow-pop transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-navy hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
+                  >
+                    <Icon size={18} />
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
 
-          {/* CV Dropdown Iframe */}
-          <AnimatePresence>
-            {showCV && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="overflow-hidden mb-8"
-              >
-                <motion.div
-                  initial={{ y: -20 }}
-                  animate={{ y: 0 }}
-                  exit={{ y: -20 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                  className="relative bg-white rounded-2xl shadow-2xl border border-border overflow-hidden"
-                >
-                  {/* CV Header Bar */}
-                  <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary to-primary/80 text-white">
-                    <div className="flex items-center gap-3">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                      </div>
-                      <span className="text-sm font-medium">Owen Cotter - CV</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={cvUrl.replace('?embedded=true', '')}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg transition-colors"
-                      >
-                        Open Full Screen
-                      </a>
-                      <button
-                        onClick={() => setShowCV(false)}
-                        className="p-1 hover:bg-white/20 rounded-lg transition-colors"
-                        aria-label="Close CV"
-                      >
-                        <X size={18} />
-                      </button>
-                    </div>
-                  </div>
+        {/* Portrait card with stickers */}
+        <div
+          data-reveal
+          style={{ '--reveal-delay': '200ms' }}
+          className="relative mx-auto w-full max-w-[340px] lg:max-w-[380px]"
+        >
+          <Sparkle size={40} className="absolute -left-10 top-6 text-brand" />
+          <Sparkle size={22} className="absolute -right-6 bottom-24 text-ink" />
 
-                  {/* CV Iframe Container - A4 Aspect Ratio */}
-                  <div className="bg-gray-100 p-4">
-                    <div className="relative w-full mx-auto" style={{ maxWidth: '800px' }}>
-                      {/* A4 aspect ratio container (1:1.414) */}
-                      <div className="relative w-full" style={{ paddingBottom: '141.4%' }}>
-                        <iframe
-                          src={cvUrl}
-                          title="Owen Cotter CV"
-                          className="absolute inset-0 w-full h-full bg-white rounded-lg shadow-lg"
-                          style={{ border: 'none' }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="relative rotate-[3deg] rounded-[2rem] border-2 border-ink bg-brand p-3 shadow-pop-lg transition-transform duration-500 ease-bounce hover:rotate-0">
+            <img
+              src={`${baseUrl}owen-profile.webp`}
+              alt="Owen Cotter"
+              width={400}
+              height={530}
+              fetchPriority="high"
+              decoding="async"
+              className="aspect-[400/530] w-full rounded-[1.4rem] border-2 border-ink object-cover"
+            />
+          </div>
 
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="flex justify-center items-center gap-6 mb-16"
-          >
-            {socialLinks.map((link, index) => {
-              const Icon = link.icon
-              return (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith('mailto:') ? '_self' : '_blank'}
-                  rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
-                  className="p-3 text-muted hover:text-accent hover:bg-accent/10 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background"
-                  aria-label={link.label}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 1.3 + index * 0.1 }}
-                >
-                  <Icon size={24} />
-                </motion.a>
-              )
-            })}
-          </motion.div>
-
-
+          <div className="absolute -left-6 top-10 sm:-left-12">
+            <Sticker rotate={-8} className="bg-ivory">Figma → Code</Sticker>
+          </div>
+          <div className="absolute -right-4 top-1/2 sm:-right-10">
+            <Sticker rotate={6} className="bg-brand-soft">React · Django</Sticker>
+          </div>
+          <div className="absolute -bottom-4 left-6">
+            <Sticker rotate={-3} className="bg-ivory">📍 {profile.location}</Sticker>
+          </div>
         </div>
       </div>
+
+      {/* CV viewer - only mounts (and fetches the PDF) when opened */}
+      {showCV && (
+        <div id="cv-viewer" className="relative mx-auto mt-16 w-full max-w-4xl px-5 sm:px-8">
+          <div className="overflow-hidden rounded-3xl border-2 border-ink bg-ivory shadow-pop-lg">
+            <div className="flex items-center justify-between border-b-2 border-ink bg-cream px-4 py-2.5">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink">
+                Owen Cotter · CV
+              </span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={CV_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border-2 border-ink bg-brand px-3 py-1 text-xs font-bold text-navy"
+                >
+                  Open full screen
+                </a>
+                <button
+                  onClick={() => setShowCV(false)}
+                  className="grid h-8 w-8 place-items-center rounded-full border-2 border-ink bg-ivory"
+                  aria-label="Close CV"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+            {/* A4 aspect ratio */}
+            <div className="relative w-full bg-navy-mist" style={{ paddingBottom: '141.4%' }}>
+              <iframe src={CV_URL} title="Owen Cotter CV" className="absolute inset-0 h-full w-full border-0" />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

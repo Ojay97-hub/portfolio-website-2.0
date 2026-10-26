@@ -1,162 +1,150 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github } from '../lib/icons'
-import Section from '../components/Section'
-import Badge from '../components/Badge'
-import LazyImage from '../components/LazyImage'
-import CustomDropdown from '../components/CustomDropdown'
+import { Coffee, ExternalLink, Github } from '../lib/icons'
 import { projects } from '../data/profile'
-import { getResponsiveImageProps } from '../lib/imageUtils'
+import { getImageUrl } from '../lib/imageUtils'
+import BrowserFrame from '../components/nf/BrowserFrame'
+import SectionHeader from '../components/nf/SectionHeader'
 
-const FeaturedProjects = () => {
-  const featuredProjects = projects.filter(project => project.featured)
-  const [currentIndex, setCurrentIndex] = useState(0)
+const hostOf = (url) => {
+  try {
+    return new URL(url).host
+  } catch {
+    return undefined
+  }
+}
 
-  if (featuredProjects.length === 0) return null
+const hasLive = (project) => project.liveUrl && project.liveUrl !== '#'
 
-  const currentProject = featuredProjects[currentIndex]
+// Free Render instances sleep when idle, so warn (nicely) about the wake up
+const WakeUpNote = ({ project }) =>
+  project.liveUrl?.includes('onrender.com') ? (
+    <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-ink-faint">
+      <Coffee size={14} className="mt-0.5 shrink-0 text-brand-deep" />
+      <span>
+        Lives on a free server that naps when nobody&apos;s around. Give it 30 to 60 seconds to wake
+        up. Not broken, just not a morning person.
+      </span>
+    </p>
+  ) : null
 
-  // Prepare dropdown options
-  const dropdownOptions = featuredProjects.map((project, index) => ({
-    value: index,
-    label: project.title
-  }))
+const ProjectLinks = ({ project }) => (
+  <div className="flex flex-wrap gap-2">
+    {hasLive(project) && (
+      <a
+        href={project.liveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-brand px-3.5 py-1.5 text-xs font-bold text-navy shadow-pop transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
+      >
+        <ExternalLink size={14} /> Live site
+      </a>
+    )}
+    {project.githubUrl && (
+      <a
+        href={project.githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-ivory px-3.5 py-1.5 text-xs font-bold text-ink shadow-pop transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:bg-navy-mist hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
+      >
+        <Github size={14} /> Code
+      </a>
+    )}
+  </div>
+)
+
+const ProjectCard = ({ project, featured = false, delay = 0 }) => {
+  const live = hasLive(project)
+  const Frame = live ? 'a' : 'div'
+  const frameProps = live
+    ? {
+        href: project.liveUrl,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        'aria-label': `Visit the ${project.title} live site`,
+      }
+    : {}
 
   return (
-    <Section
-      id="featured-projects"
-      title="Featured Projects"
-      description="Showcase of my most significant development work."
-      className="bg-background relative overflow-hidden"
+    <article
+      data-reveal
+      style={{ '--reveal-delay': `${delay}ms` }}
+      className="group relative"
     >
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
-        {/* Project Navigation List */}
-        {/* Navigation Wrapper */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-3">
-          {/* Mobile Dropdown */}
-          <div className="lg:hidden">
-            <CustomDropdown
-              options={dropdownOptions}
-              value={currentIndex}
-              onChange={(val) => setCurrentIndex(val)}
-              placeholder="Select a project..."
+      <Frame
+        {...frameProps}
+        className={`relative block transition-transform duration-300 ease-bounce group-hover:-translate-y-2 ${featured ? '' : 'group-hover:rotate-[-1deg]'}`}
+      >
+        <span className="absolute -right-2 -top-3 z-10 rotate-6 rounded-lg border-2 border-ink bg-ivory px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink shadow-pop transition-transform duration-300 group-hover:rotate-12">
+          {project.projectType}
+        </span>
+
+        <BrowserFrame url={live ? hostOf(project.liveUrl) : 'github.com'}>
+          <div className="relative aspect-[16/10] overflow-hidden bg-navy-mist">
+            <img
+              src={getImageUrl(project.image)}
+              alt={`Screenshot of ${project.title}`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           </div>
+        </BrowserFrame>
+      </Frame>
 
-          {/* Desktop List */}
-          <div className="hidden lg:flex flex-col gap-3">
-            {featuredProjects.map((project, index) => (
-              <button
-                key={project.title}
-                onClick={() => setCurrentIndex(index)}
-                className={`group text-left p-6 rounded-2xl transition-all duration-300 border relative overflow-hidden ${index === currentIndex
-                  ? 'bg-surface border-accent/50 shadow-lg'
-                  : 'bg-transparent border-transparent hover:bg-surface/30'
-                  }`}
-              >
-                {/* Active Indicator */}
-                {index === currentIndex && (
-                  <motion.div
-                    layoutId="activeProject"
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-accent"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  />
-                )}
-
-                <div className="relative z-10 pl-3">
-                  <h3 className={`text-xl font-bold mb-2 transition-colors ${index === currentIndex ? 'text-accent' : 'text-text group-hover:text-text'
-                    }`}>
-                    {project.title}
-                  </h3>
-                  <p className={`text-sm line-clamp-2 transition-colors ${index === currentIndex ? 'text-text/80' : 'text-muted group-hover:text-text/60'
-                    }`}>
-                    {project.description}
-                  </p>
-                </div>
-              </button>
+      <div className={featured ? 'mt-6 grid gap-5 px-1 md:grid-cols-[1fr_auto] md:items-start' : 'mt-5 px-1'}>
+        <div>
+          <h3
+            className={`font-display font-extrabold leading-tight text-ink transition-colors group-hover:text-brand-deep ${featured ? 'text-2xl md:text-3xl' : 'text-xl'}`}
+          >
+            {project.title}
+          </h3>
+          <p className={`mt-2 text-sm leading-relaxed text-ink-soft ${featured ? 'max-w-2xl' : 'line-clamp-3'}`}>
+            {project.description}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {project.technologies.map((tech) => (
+              <span key={tech} className="tag-pop">
+                {tech}
+              </span>
             ))}
           </div>
+          <WakeUpNote project={project} />
         </div>
-
-        {/* Project Display Area */}
-        <div className="w-full lg:w-2/3 relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="h-full"
-            >
-              <div className="bg-surface/20 border border-border rounded-3xl overflow-hidden p-2 md:p-3 h-full flex flex-col backdrop-blur-sm">
-                {/* Image Container */}
-                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface shadow-inner">
-                  {currentProject.image ? (
-                    <LazyImage
-                      {...getResponsiveImageProps(currentProject.image, 'featured')}
-                      alt={currentProject.title}
-                      className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl">
-                      🚀
-                    </div>
-                  )}
-
-                  {/* Floating Type Badge */}
-                  <div className="absolute top-4 right-4 bg-background/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-text border border-border/50 shadow-lg">
-                    {currentProject.projectType}
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="p-4 md:p-6 flex-1 flex flex-col">
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {currentProject.technologies.map(tech => (
-                      <Badge key={tech} variant="outline" className="bg-surface/50 hover:bg-accent/10 transition-colors cursor-default">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  <div className="flex-1">
-                    <p className="text-muted text-lg leading-relaxed">
-                      {currentProject.description}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-border/50">
-                    {currentProject.liveUrl && currentProject.liveUrl !== '#' && (
-                      <a
-                        href={currentProject.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-background rounded-xl font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-accent/20"
-                      >
-                        <ExternalLink size={20} /> View Live Site
-                      </a>
-                    )}
-                    {currentProject.githubUrl && (
-                      <a
-                        href={currentProject.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-border text-text rounded-xl font-medium hover:bg-surface hover:border-text/20 active:scale-95 transition-all"
-                      >
-                        <Github size={20} /> View Code
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        <div className={featured ? '' : 'mt-4'}>
+          <ProjectLinks project={project} />
         </div>
       </div>
-    </Section>
+    </article>
+  )
+}
+
+const FeaturedProjects = () => {
+  const featuredProjects = projects.filter((p) => p.featured)
+  if (featuredProjects.length === 0) return null
+
+  const [lead, ...rest] = featuredProjects
+
+  return (
+    <section id="featured-projects" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionHeader
+          eyebrow="📂 Selected work"
+          title="Real projects, built end to end."
+          intro="From a brewery shop with Stripe checkout to a Python card game, every one of these was designed, built and shipped by me."
+        />
+
+        <div className="mb-20">
+          <ProjectCard project={lead} featured />
+        </div>
+
+        <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
+          {rest.map((project, i) => (
+            <div key={project.title} className={i % 3 === 1 ? 'lg:translate-y-10' : ''}>
+              <ProjectCard project={project} delay={(i % 3) * 100} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
