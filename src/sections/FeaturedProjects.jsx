@@ -1,4 +1,4 @@
-import { Coffee, ExternalLink, Github } from '../lib/icons'
+import { Coffee, ExternalLink, Github, GraduationCap } from '../lib/icons'
 import { projects } from '../data/profile'
 import { getImageUrl } from '../lib/imageUtils'
 import BrowserFrame from '../components/nf/BrowserFrame'
@@ -20,8 +20,8 @@ const WakeUpNote = ({ project }) =>
     <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-ink-faint">
       <Coffee size={14} className="mt-0.5 shrink-0 text-brand-deep" />
       <span>
-        Lives on a free server that naps when nobody&apos;s around. Give it 30 to 60 seconds to wake
-        up. Not broken, just not a morning person.
+        {project.wakeNote ??
+          "Lives on a free server that naps when nobody's around. Give it 30 to 60 seconds to wake up. Not broken, just not a morning person."}
       </span>
     </p>
   ) : null
@@ -92,6 +92,12 @@ const ProjectCard = ({ project, featured = false, delay = 0 }) => {
 
       <div className={featured ? 'mt-6 grid gap-5 px-1 md:grid-cols-[1fr_auto] md:items-start' : 'mt-5 px-1'}>
         <div>
+          {project.course && (
+            <p className="mb-2 inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-brand-soft px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink">
+              <GraduationCap size={12} aria-hidden="true" />
+              {project.course}
+            </p>
+          )}
           <h3
             className={`font-display font-extrabold leading-tight text-ink transition-colors group-hover:text-brand-deep ${featured ? 'text-2xl md:text-3xl' : 'text-xl'}`}
           >
@@ -129,19 +135,31 @@ const FeaturedProjects = () => {
         <SectionHeader
           eyebrow="📂 Selected work"
           title="Real projects, built end to end."
-          intro="From a brewery shop with Stripe checkout to a Python card game, every one of these was designed, built and shipped by me."
+          intro="My five Code Institute Full Stack Software Development portfolio projects, plus a hackathon podium finish. From a brewery shop with Stripe checkout to a Python card game, every one was designed, built and shipped by me."
         />
 
         <div className="mb-20">
           <ProjectCard project={lead} featured />
         </div>
 
-        <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-          {rest.map((project, i) => (
-            <div key={project.title} className={i % 3 === 1 ? 'lg:translate-y-10' : ''}>
-              <ProjectCard project={project} delay={(i % 3) * 100} />
-            </div>
-          ))}
+        {/* Half-width tracks (4 at md, 6 at lg) so a short last row can be centred */}
+        <div className="grid gap-x-8 gap-y-16 md:grid-cols-4 lg:grid-cols-6 lg:gap-y-28">
+          {rest.map((project, i) => {
+            const lgFullRows = Math.floor(rest.length / 3) * 3
+            const lgLeftover = rest.length - lgFullRows
+            const mdLeftover = rest.length % 2
+            const classes = ['md:col-span-2']
+            if (i % 3 === 1 && i < lgFullRows) classes.push('lg:translate-y-10')
+            if (i === lgFullRows && lgLeftover === 2) classes.push('lg:col-start-2')
+            if (i === lgFullRows && lgLeftover === 1) classes.push('lg:col-start-3')
+            if (mdLeftover && i === rest.length - 1) classes.push('md:col-start-2')
+            if (mdLeftover && i === rest.length - 1 && lgLeftover !== 1) classes.push('lg:col-start-auto')
+            return (
+              <div key={project.title} className={classes.join(' ')}>
+                <ProjectCard project={project} delay={(i % 3) * 100} />
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>

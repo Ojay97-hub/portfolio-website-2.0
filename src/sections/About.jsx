@@ -12,6 +12,33 @@ const STATS = [
   { icon: Trophy, value: '3rd', label: 'Hackathon placing' },
 ]
 
+const logoUrl = (file) => `${import.meta.env.BASE_URL}institutions/${file}`
+
+const INSTITUTIONS = [
+  {
+    name: 'Code Institute',
+    logo: logoUrl('code-institute.svg'),
+    course: 'Diploma in Full Stack Software Development',
+    status: 'Completed 2025',
+    focus: 'HTML, CSS, JavaScript, Python, Django and PostgreSQL, across five portfolio projects.',
+  },
+  {
+    name: 'UX Design Institute',
+    logo: logoUrl('ux-design-institute.svg'),
+    course: 'UI Design Certificate',
+    status: 'Completed 2025',
+    focus: 'Design systems, wireframing and prototyping in Figma, ending in the nine FinWiz screens.',
+  },
+  {
+    name: "King's College London",
+    logo: logoUrl('kings-college-london.svg'),
+    course: 'UX Design Career Accelerator',
+    status: 'Starting Nov 2026',
+    upcoming: true,
+    focus: 'User research, usability testing and information architecture through real world UX projects.',
+  },
+]
+
 // Gentle, deterministic tilt so the skill stickers feel hand placed
 const TILTS = [-3, 2, -1, 3, -2, 1]
 
@@ -122,6 +149,42 @@ const About = () => (
               className="rounded-full border-2 border-ink bg-ivory px-3.5 py-1.5 text-sm font-bold text-ink shadow-pop transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-navy"
             >
               {skill}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Where the skills came from */}
+      <div data-reveal className="mt-16">
+        <h3 className="mb-6 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink-soft">
+          Where I learnt them
+        </h3>
+        <ul className="grid gap-5 md:grid-cols-3">
+          {INSTITUTIONS.map((inst) => (
+            <li key={inst.name} className="card-pop flex flex-col p-6">
+              <div className="flex items-center justify-between gap-3">
+                {/* White plate keeps each brand's own colours legible in both themes */}
+                <span className="flex h-16 items-center rounded-xl border-2 border-ink bg-white px-3 py-2">
+                  <img
+                    src={inst.logo}
+                    alt={`${inst.name} logo`}
+                    loading="lazy"
+                    className="h-full w-auto max-w-[8.5rem] object-contain"
+                  />
+                </span>
+                <span
+                  className={`shrink-0 whitespace-nowrap rounded-full border-2 border-ink px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow ${
+                    inst.upcoming ? 'border-dashed bg-ivory text-ink-soft' : 'bg-brand text-navy'
+                  }`}
+                >
+                  {inst.status}
+                </span>
+              </div>
+              <h4 className="mt-5 font-display text-xl font-extrabold leading-tight text-ink">
+                {inst.name}
+              </h4>
+              <p className="mt-1 text-sm font-bold text-brand-deep">{inst.course}</p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">{inst.focus}</p>
             </li>
           ))}
         </ul>

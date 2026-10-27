@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Monitor, Smartphone, Tablet } from '../lib/icons'
+import { ExternalLink, GraduationCap, Monitor, Smartphone, Tablet } from '../lib/icons'
 import { uiDesigns } from '../data/profile'
 import BrowserFrame from '../components/nf/BrowserFrame'
 import PopButton from '../components/nf/PopButton'
@@ -7,6 +7,10 @@ import SectionHeader from '../components/nf/SectionHeader'
 import Sparkle from '../components/nf/Sparkle'
 
 const baseUrl = import.meta.env.BASE_URL || '/'
+
+// The UX Design Institute working file behind the nine FinWiz screens
+const FIGMA_FILE_URL =
+  'https://www.figma.com/design/t0se78v9LXEty073PK3dKa/Owen_Cotter_UI_assignment_UXDI?node-id=144-144'
 
 const DEVICES = [
   { name: 'Desktop', icon: Monitor },
@@ -88,7 +92,7 @@ const UIDesigns = () => {
               FinWiz: a banking app, designed for <span className="marker">every screen.</span>
             </>
           }
-          intro="Nine screens across desktop, tablet and mobile, designed in Figma with a focus on clarity, trust and a little bit of magic."
+          intro="Designed for my UX Design Institute UI design course: nine screens across desktop, tablet and mobile, built in Figma with a focus on clarity, trust and a little bit of magic."
         />
 
         <div className="grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -129,6 +133,10 @@ const UIDesigns = () => {
             </div>
 
             <div className="card-pop mt-8 p-6">
+              <p className="mb-3 inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-brand-soft px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink">
+                <GraduationCap size={12} aria-hidden="true" />
+                UX Design Institute · Course project
+              </p>
               <h3 className="font-display text-2xl font-extrabold leading-tight text-ink">{active.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink-soft">{active.description}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
@@ -143,6 +151,15 @@ const UIDesigns = () => {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <PopButton href={`${baseUrl}storytelling.html`} variant="ink">
                 Read the design story
+              </PopButton>
+              <PopButton
+                href={FIGMA_FILE_URL}
+                variant="ghost"
+                arrow={false}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink size={16} aria-hidden="true" /> View the Figma file
               </PopButton>
               <span className="font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink-soft">
                 Scroll inside the screen ↓

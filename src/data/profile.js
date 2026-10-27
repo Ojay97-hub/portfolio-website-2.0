@@ -79,7 +79,9 @@ export const projects = [
     liveUrl: 'https://jungle-peaks-brewing-co.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/Jungle-Peaks-Brewing-Co',
     featured: true,
-    projectType: 'Full Stack'
+    projectType: 'Full Stack',
+    course: 'Code Institute · Project 5',
+    wakeNote: 'Brewed on a free server that naps between customers. Give it 30 to 60 seconds to pour the first pint.'
   },
   {
     title: 'Eventory Event Scheduler (P4)',
@@ -89,7 +91,9 @@ export const projects = [
     liveUrl: 'https://event-scheduler-9rl6.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/event-scheduler',
     featured: true,
-    projectType: 'Full Stack'
+    projectType: 'Full Stack',
+    course: 'Code Institute · Project 4',
+    wakeNote: 'Runs on a free server that sleeps between events. Give it 30 to 60 seconds to check its calendar and turn up.'
   },
   {
     title: 'Blackjack Game (P3)',
@@ -99,7 +103,9 @@ export const projects = [
     liveUrl: 'https://black-jack-game-9dbl.onrender.com/',
     githubUrl: 'https://github.com/Ojay97-hub/black-jack-game',
     featured: true,
-    projectType: 'Python'
+    projectType: 'Python',
+    course: 'Code Institute · Project 3',
+    wakeNote: 'The dealer is on a free server and takes a break between hands. Give it 30 to 60 seconds to shuffle back to the table.'
   },
   {
     title: 'Dinosaur Quiz (P2)',
@@ -109,7 +115,8 @@ export const projects = [
     liveUrl: 'https://ojay97-hub.github.io/Dinosaur-Quiz-/',
     githubUrl: 'https://github.com/Ojay97-hub/Dinosaur-Quiz-',
     featured: true,
-    projectType: 'Frontend'
+    projectType: 'Frontend',
+    course: 'Code Institute · Project 2'
   },
   {
     title: 'The Winchester Pub Website (P1)',
@@ -119,7 +126,8 @@ export const projects = [
     liveUrl: 'https://ojay97-hub.github.io/The-Winchester/',
     githubUrl: 'https://github.com/Ojay97-hub/The-Winchester',
     featured: true,
-    projectType: 'Frontend'
+    projectType: 'Frontend',
+    course: 'Code Institute · Project 1'
   },
   {
     title: 'SheCanGitIt Hackathon: Team 4 (3rd Place)',
