@@ -1,4 +1,4 @@
-import { Coffee, ExternalLink, Github, GraduationCap } from '../lib/icons'
+import { Coffee, CreditCard, ExternalLink, Github, GraduationCap } from '../lib/icons'
 import { projects } from '../data/profile'
 import { getImageUrl } from '../lib/imageUtils'
 import BrowserFrame from '../components/nf/BrowserFrame'
@@ -23,6 +23,14 @@ const WakeUpNote = ({ project }) =>
         {project.wakeNote ??
           "Lives on a free server that naps when nobody's around. Give it 30 to 60 seconds to wake up. Not broken, just not a morning person."}
       </span>
+    </p>
+  ) : null
+
+const TestPaymentNote = ({ project }) =>
+  project.testNote ? (
+    <p className="mt-2 flex items-start gap-2 text-xs leading-relaxed text-ink-faint">
+      <CreditCard size={14} className="mt-0.5 shrink-0 text-brand-deep" />
+      <span>{project.testNote}</span>
     </p>
   ) : null
 
@@ -114,6 +122,7 @@ const ProjectCard = ({ project, featured = false, delay = 0 }) => {
             ))}
           </div>
           <WakeUpNote project={project} />
+          <TestPaymentNote project={project} />
         </div>
         <div className={featured ? '' : 'mt-4'}>
           <ProjectLinks project={project} />

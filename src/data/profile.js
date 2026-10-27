@@ -81,7 +81,8 @@ export const projects = [
     featured: true,
     projectType: 'Full Stack',
     course: 'Code Institute · Project 5',
-    wakeNote: 'Brewed on a free server that naps between customers. Give it 30 to 60 seconds to pour the first pint.'
+    wakeNote: 'Brewed on a free server that naps between customers. Give it 30 to 60 seconds to pour the first pint.',
+    testNote: 'Want to try checkout? Stripe is in test mode, so use card number 4242 4242 4242 4242 with any future expiry date, any 3-digit CVC and any postcode. No real money moves.'
   },
   {
     title: 'Eventory Event Scheduler (P4)',

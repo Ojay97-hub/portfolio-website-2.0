@@ -1,9 +1,9 @@
 import { useEffect, Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
-import Button from '../components/Button'
+import LogoMark from '../components/nf/LogoMark'
 
 const CaseStudyContent = lazy(() => import('../sections/CaseStudyContent'))
-const Footer = lazy(() => import('../sections/Footer'))
+const SiteFooter = lazy(() => import('../sections/SiteFooter'))
 
 const CaseStudy = () => {
     useEffect(() => {
@@ -20,35 +20,36 @@ const CaseStudy = () => {
                 Skip to main content
             </a>
 
-            <header className="sticky top-0 left-0 right-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
-                <div className="container flex items-center justify-between h-16">
-                    <a
-                        href={homeUrl}
-                        className="text-xl font-bold text-accent hover:text-accentSoft transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background rounded-md px-2 py-1"
-                    >
-                        Owen Cotter
+            <header className="sticky top-0 z-40 px-4 pt-4 sm:px-8">
+                <nav
+                    aria-label="Main navigation"
+                    className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border-2 border-ink bg-ivory/95 px-3 py-2 shadow-pop sm:px-4"
+                >
+                    <a href={homeUrl} className="group flex items-center gap-2.5" aria-label="Owen Cotter portfolio home">
+                        <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-ink bg-ivory transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+                            <LogoMark className="h-7 w-7" />
+                        </span>
+                        <span className="font-display text-lg font-extrabold tracking-tight text-ink">Owen Cotter</span>
+                        <span className="hidden -rotate-3 rounded-full border-2 border-ink bg-brand-soft px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink sm:inline-block">
+                            Case study
+                        </span>
                     </a>
 
-                    <div className="flex items-center gap-3">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                                window.location.href = designsUrl
-                            }}
+                    <div className="flex items-center gap-2">
+                        <a
+                            href={designsUrl}
+                            className="hidden rounded-full px-3 py-1.5 text-sm font-bold text-ink-soft transition-colors hover:text-brand-deep sm:block"
                         >
                             View Designs
-                        </Button>
-                        <Button
-                            size="sm"
-                            onClick={() => {
-                                window.location.href = homeUrl
-                            }}
+                        </a>
+                        <a
+                            href={homeUrl}
+                            className="rounded-full border-2 border-ink bg-brand px-4 py-2 text-sm font-bold text-navy shadow-pop transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
                         >
                             Back to portfolio
-                        </Button>
+                        </a>
                     </div>
-                </div>
+                </nav>
             </header>
 
             <main id="case-study-main" className="relative">
@@ -291,7 +292,7 @@ const CaseStudy = () => {
             </main>
 
             <Suspense fallback={<div className="h-20" />}>
-                <Footer />
+                <SiteFooter homeUrl={homeUrl} />
             </Suspense>
         </div>
     )
